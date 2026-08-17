@@ -420,17 +420,17 @@
     <div id="game-screen">
         <div class="header">
             <div class="title">⚽ Scratch Arcade: Dodge the Ball!</div>
-            <div class="badge">STAGE 1: 30s WARM-UP</div>
+            <div class="badge">STAGE 1: 15s WARM-UP</div>
         </div>
         <div class="game-instructions">
-            Use <b>LEFT / RIGHT Arrows</b> (or <b>A / D</b>) to dodge falling basketballs! survive 30 seconds to unlock the Quiz!
+            Use <b>LEFT / RIGHT Arrows</b> (or <b>A / D</b>) to dodge falling basketballs! Survive 15 seconds to unlock the Quiz!
         </div>
 
         <div class="game-canvas-container">
             <canvas id="gameCanvas" width="600" height="350"></canvas>
             <div class="game-overlay" id="game-overlay">
                 <h2 style="font-size: 28px; color: #facc15; margin-bottom: 10px;">Ready to Play?</h2>
-                <p style="color: #e9d5ff; margin-bottom: 20px; font-size: 15px;">Dodge as many balls as possible in 30 seconds!</p>
+                <p style="color: #e9d5ff; margin-bottom: 20px; font-size: 15px;">Dodge as many balls as possible in 15 seconds!</p>
                 <button class="start-btn" onclick="startGame()">START GAME 🚀</button>
             </div>
         </div>
@@ -553,13 +553,13 @@
     }
 
     /* ===================================================
-       GAME ENGINE (STAGE 1 - 30s DODGE THE BALL)
+       GAME ENGINE (STAGE 1 - 15s DODGE THE BALL)
        =================================================== */
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
 
     let gameActive = false;
-    let gameTimer = 30;
+    let gameTimer = 15;
     let gameInterval;
     let animationFrameId;
 
@@ -685,7 +685,7 @@
     function startGame() {
         document.getElementById('game-overlay').style.display = 'none';
         gameActive = true;
-        gameTimer = 30;
+        gameTimer = 15;
         dodgedCount = 0;
         balls = [];
         player.x = canvas.width / 2 - 20;
@@ -693,7 +693,7 @@
         const ballSpawner = setInterval(() => {
             if (gameActive) spawnBall();
             else clearInterval(ballSpawner);
-        }, 600);
+        }, 500);
 
         gameInterval = setInterval(() => {
             gameTimer--;
