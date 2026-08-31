@@ -348,14 +348,14 @@
             q: "Which sprite acts as the virtual AI assistant in STEMpedia's AI Home Automation project to receive voice commands?",
             code: null,
             options: [
-                { text: "Abby", correct: true, exp: "Abby is selected as the main assistant sprite that listens to voice input and triggers home appliances." },
+                { text: "Abby", correct: false, exp: "Abby is used in driver/card recognition tutorials." },
                 { text: "Tobi", correct: false, exp: "Tobi is the default bear sprite in PictoBlox, not used as the assistant here." },
-                { text: "John", correct: false, exp: "John is used in driver/card recognition tutorials." },
+                { text: "John", correct: true, exp: "John is selected as the main assistant sprite that listens to voice input and triggers home appliances." },
                 { text: "Dev", correct: false, exp: "Dev is a different standard PictoBlox character." }
             ]
         },
         {
-            q: "Which specific PictoBlox block is used by Abby to capture the user's voice input for a duration of 5 seconds?",
+            q: "Which specific PictoBlox block is used by John to capture the user's voice input for a duration of 5 seconds?",
             code: null,
             options: [
                 { text: "recognize speech for (5) sec in (English)", correct: true, exp: "This block opens the microphone for 5 seconds to convert voice into text." },
@@ -365,7 +365,7 @@
             ]
         },
         {
-            q: "In Abby's script, how does the program verify if the user commanded the room lights to turn on?",
+            q: "In John's script, how does the program verify if the user commanded the room lights to turn on?",
             code: "if <(speech recognition result) contains [Lights on]?> then\n    speak [Switching on the Lights]\n    broadcast [Lights ON]\nend",
             options: [
                 { text: "By checking if (speech recognition result) contains 'Lights on'", correct: true, exp: "The 'contains' block checks if the spoken words match the keyword string." },
@@ -375,20 +375,20 @@
             ]
         },
         {
-            q: "How does Abby communicate back to the user after recognizing a command in this project?",
+            q: "How does John communicate back to the user after recognizing a command in this project?",
             code: null,
             options: [
-                { text: "Using 'speak ()' from Text to Speech and 'say ()' from Looks", correct: true, exp: "The project uses both 'speak' (audio synthesis) and 'say' (speech bubble) so Abby talks and shows text." },
+                { text: "Using 'speak ()' from Text to Speech and 'say ()' from Looks", correct: true, exp: "The project uses both 'speak' (audio synthesis) and 'say' (speech bubble) so John talks and shows text." },
                 { text: "By playing guitar notes using the Music extension", correct: false, exp: "Music extension is not used for voice responses." },
-                { text: "By changing the backdrop color directly", correct: false, exp: "Abby speaks verbally rather than just changing backgrounds." },
+                { text: "By changing the backdrop color directly", correct: false, exp: "John speaks verbally rather than just changing backgrounds." },
                 { text: "By printing output to the terminal only", correct: false, exp: "Scratch block-based projects use stage visual/audio outputs." }
             ]
         },
         {
-            q: "How does Abby's script signal the Lamp sprite to turn ON without directly modifying the Lamp's code inside her own block?",
+            q: "How does John's script signal the Lamp sprite to turn ON without directly modifying the Lamp's code inside her own block?",
             code: null,
             options: [
-                { text: "By sending a 'broadcast [Lights ON]' message", correct: true, exp: "Broadcast blocks allow Abby to send event signals across different sprites." },
+                { text: "By sending a 'broadcast [Lights ON]' message", correct: true, exp: "Broadcast blocks allow John to send event signals across different sprites." },
                 { text: "By changing a physical pin output on Arduino", correct: false, exp: "This project is animated on stage using broadcasts rather than microcontroller pin programming." },
                 { text: "By moving Abby to x: 0 y: 0", correct: false, exp: "Positioning does not trigger sprite actions." },
                 { text: "By setting variable [Lights] to 100", correct: false, exp: "The STEMpedia script specifically uses broadcast messages." }
@@ -415,7 +415,7 @@
             ]
         },
         {
-            q: "In the STEMpedia tutorial, what action occurs when Abby recognizes the voice command 'play song' or 'radio on'?",
+            q: "What action occurs when John recognizes the voice command 'play song' or 'radio on'?",
             code: "when I receive [Radio ON v]\nplay sound [Spiderman v] until done",
             options: [
                 { text: "The Radio sprite plays the Spider-Man theme sound track", correct: true, exp: "The Radio script triggers the loaded audio track when receiving the Radio ON broadcast." },
