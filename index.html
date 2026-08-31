@@ -44,13 +44,12 @@
         }
 
         .title {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 800;
             color: #facc15;
             display: flex;
             align-items: center;
             gap: 10px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .badge {
@@ -60,12 +59,6 @@
             padding: 6px 14px;
             border-radius: 9999px;
             font-weight: 800;
-            box-shadow: 0 4px 10px rgba(236, 72, 153, 0.4);
-        }
-
-        /* --- QUIZ STYLES --- */
-        #quiz-screen {
-            animation: fadeIn 0.4s ease-in-out;
         }
 
         .stats-bar {
@@ -142,7 +135,7 @@
         }
 
         .question-text {
-            font-size: 20px;
+            font-size: 19px;
             font-weight: 700;
             line-height: 1.4;
             margin-bottom: 15px;
@@ -156,10 +149,9 @@
             font-family: 'Courier New', Courier, monospace;
             border-radius: 8px;
             margin-bottom: 15px;
-            font-size: 15px;
+            font-size: 14px;
             color: #f1f5f9;
             white-space: pre-wrap;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
         }
 
         .options-grid {
@@ -175,14 +167,11 @@
             border: 2px solid #6b21a8;
             padding: 16px 20px;
             border-radius: 14px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
             text-align: left;
             cursor: pointer;
             transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
         }
 
         .option-btn:hover:not(:disabled) {
@@ -195,14 +184,12 @@
             background-color: #14532d !important;
             border-color: #22c55e !important;
             color: #bbf7d0 !important;
-            animation: pulseGreen 0.4s ease;
         }
 
         .option-btn.wrong {
             background-color: #7f1d1d !important;
             border-color: #ef4444 !important;
             color: #fecdd3 !important;
-            animation: shake 0.4s ease;
         }
 
         .explanation-box {
@@ -212,14 +199,12 @@
             padding: 16px;
             margin-bottom: 20px;
             display: none;
-            animation: fadeIn 0.3s ease-in-out;
         }
 
         .explanation-title {
             font-weight: 800;
             color: #38bdf8;
             margin-bottom: 5px;
-            font-size: 16px;
         }
 
         .explanation-text {
@@ -237,33 +222,18 @@
             font-weight: 800;
             border-radius: 12px;
             cursor: pointer;
-            transition: all 0.2s;
             display: none;
             margin-left: auto;
-            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
         }
 
-        .next-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.6);
-        }
-
-        /* --- RESULTS STYLES --- */
         .results-card {
             text-align: center;
             display: none;
-            animation: zoomIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .results-card h2 {
-            font-size: 34px;
-            color: #facc15;
-            margin-bottom: 10px;
         }
 
         .score-circle {
-            width: 160px;
-            height: 160px;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
             background-color: #1e1b4b;
             border: 6px solid #22c55e;
@@ -271,12 +241,11 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            margin: 25px auto;
-            box-shadow: 0 0 30px rgba(34, 197, 94, 0.4);
+            margin: 20px auto;
         }
 
         .score-num {
-            font-size: 44px;
+            font-size: 40px;
             font-weight: 800;
             color: #4ade80;
         }
@@ -285,75 +254,20 @@
             background: linear-gradient(135deg, #22c55e, #16a34a);
             color: white;
             border: none;
-            padding: 16px 40px;
-            font-size: 18px;
+            padding: 14px 36px;
+            font-size: 16px;
             font-weight: 800;
-            border-radius: 14px;
+            border-radius: 12px;
             cursor: pointer;
-            margin-top: 15px;
-            transition: all 0.2s;
-            box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3);
-        }
-
-        .restart-btn:hover {
-            transform: scale(1.05);
-        }
-
-        /* --- POPUP MODAL --- */
-        .popup-modal {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.8);
-            background-color: #2e1065;
-            border: 4px solid #facc15;
-            padding: 25px 35px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
-            z-index: 100;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .popup-modal.active {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        /* --- ANIMATIONS --- */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes zoomIn {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-8px); }
-            40%, 80% { transform: translateX(8px); }
-        }
-
-        @keyframes pulseGreen {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-            100% { transform: scale(1); }
         }
     </style>
 </head>
 <body>
 
 <div class="main-container">
-    <!-- QUIZ SCREEN -->
     <div id="quiz-screen">
         <div class="header">
-            <div class="title">🤖 PictoBlox AI Home Automation Assessment</div>
+            <div class="title">🤖 STEMpedia PictoBlox AI Home Automation Quiz</div>
             <div class="badge" id="question-number">Q1 / 10</div>
         </div>
 
@@ -374,7 +288,7 @@
         </div>
 
         <div class="question-box">
-            <div class="question-text" id="question-text">Loading question...</div>
+            <div class="question-text" id="question-text">Loading...</div>
             <div class="code-snippet" id="code-snippet" style="display: none;"></div>
         </div>
 
@@ -388,43 +302,24 @@
         <button class="next-btn" id="next-btn" onclick="nextQuestion()">Next Question ➔</button>
     </div>
 
-    <!-- RESULTS SCREEN -->
     <div class="results-card" id="results-screen">
         <h2>🎉 Assessment Complete!</h2>
-        <p style="font-size: 18px; color: #e9d5ff;">Here is the performance breakdown for AI Home Automation concepts:</p>
-        
+        <p>Here is your performance on the STEMpedia AI Home Automation project:</p>
         <div class="score-circle">
             <div class="score-num" id="final-score">0/10</div>
             <div style="font-size: 12px; color: #a855f7; font-weight: 800;">TOTAL SCORE</div>
         </div>
-
         <p id="feedback-msg" style="font-size: 18px; font-weight: 700; margin-bottom: 20px;"></p>
-
         <button class="restart-btn" onclick="restartQuiz()">Retake Quiz 🔄</button>
-    </div>
-
-    <!-- POPUP MODAL -->
-    <div class="popup-modal" id="popup-modal">
-        <div style="font-size: 50px; margin-bottom: 5px;" id="popup-emoji">🎉</div>
-        <div style="font-size: 22px; font-weight: 800;" id="popup-title">Awesome!</div>
-        <p style="margin: 5px 0 0 0; color: #e9d5ff;" id="popup-sub"></p>
     </div>
 </div>
 
 <script>
-    /* ===================================================
-       SYNTHESIZED AUDIO ENGINE (No External Media Files)
-       =================================================== */
     let audioCtx = null;
-
     function playSound(type) {
         try {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            }
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume().catch(() => {});
-            }
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             osc.connect(gain);
@@ -434,141 +329,124 @@
                 osc.type = 'triangle';
                 osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
                 osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1);
-                osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2);
-                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.4);
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.3);
             } else if (type === 'wrong') {
                 osc.type = 'sawtooth';
                 osc.frequency.setValueAtTime(220, audioCtx.currentTime);
                 osc.frequency.setValueAtTime(174.61, audioCtx.currentTime + 0.15);
-                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.4);
-            } else if (type === 'tick') {
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-                gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.05);
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.3);
             }
         } catch(e) {}
     }
 
-    /* ===================================================
-       QUIZ DATA & ENGINE (STRICTLY PICTOBLOX AI EXTENSION)
-       =================================================== */
     const questions = [
         {
-            q: "In PictoBlox, which AI extension block captures audio input from the microphone to convert spoken voice commands into text for home automation?",
+            q: "Which sprite acts as the virtual AI assistant in STEMpedia's AI Home Automation project to receive voice commands?",
             code: null,
             options: [
-                { text: "recognize speech in [English v]", correct: true, exp: "The Speech Recognition block within the AI extension processes microphone audio and converts it to text variables." },
-                { text: "pen down", correct: false, exp: "Pen extension draws lines on stage." },
-                { text: "play sound [Meow v] until done", correct: false, exp: "Plays standard sprite audio." },
-                { text: "set instrument to (1)", correct: false, exp: "Music extension MIDI setting." }
+                { text: "Abby", correct: true, exp: "Abby is selected as the main assistant sprite that listens to voice input and triggers home appliances." },
+                { text: "Tobi", correct: false, exp: "Tobi is the default bear sprite in PictoBlox, not used as the assistant here." },
+                { text: "John", correct: false, exp: "John is used in driver/card recognition tutorials." },
+                { text: "Dev", correct: false, exp: "Dev is a different standard PictoBlox character." }
             ]
         },
         {
-            q: "What is the primary function of Artificial Intelligence (AI) in an AI-powered Home Automation project?",
+            q: "Which specific PictoBlox block is used by Abby to capture the user's voice input for a duration of 5 seconds?",
             code: null,
             options: [
-                { text: "To manually click buttons on the screen", correct: false, exp: "Manual clicks do not use AI." },
-                { text: "To analyze sensory inputs (like speech, faces, or objects) and execute automated decisions", correct: true, exp: "AI processes camera or audio feeds to trigger actuators automatically without manual intervention." },
-                { text: "To replace hardware microcontrollers completely", correct: false, exp: "AI works alongside hardware boards to switch physical pins." },
-                { text: "To change backdrop colors randomly", correct: false, exp: "Basic sprite animation." }
+                { text: "recognize speech for (5) sec in (English)", correct: true, exp: "This block opens the microphone for 5 seconds to convert voice into text." },
+                { text: "ask [What is your command?] and wait", correct: false, exp: "This opens a text input box, not voice recognition." },
+                { text: "listen to sound for (5) secs", correct: false, exp: "This is not a valid PictoBlox block." },
+                { text: "speak [recognize voice] for (5) secs", correct: false, exp: "The speak block is from Text-to-Speech and outputs audio instead of listening." }
             ]
         },
         {
-            q: "Which PictoBlox AI Extension block must be executed first in a loop to capture video frames before reading face or object data?",
-            code: "forever\n    [ ??? ]\n    if <(number of faces) > [0]> then\n        set pin (13) output [HIGH v]\n    end\nend",
+            q: "In Abby's script, how does the program verify if the user commanded the room lights to turn on?",
+            code: "if <(speech recognition result) contains [Lights on]?> then\n    speak [Switching on the Lights]\n    broadcast [Lights ON]\nend",
             options: [
-                { text: "analyse image from [camera v]", correct: true, exp: "'analyse image from camera' grabs a frame and runs computer vision algorithms to update detected variables." },
-                { text: "turn camera off", correct: false, exp: "Disables image processing." },
-                { text: "hide sprite", correct: false, exp: "Hides visual sprite graphic." },
-                { text: "reset timer", correct: false, exp: "Resets internal Scratch timer." }
+                { text: "By checking if (speech recognition result) contains 'Lights on'", correct: true, exp: "The 'contains' block checks if the spoken words match the keyword string." },
+                { text: "By measuring if <loudness > 50>", correct: false, exp: "Loudness checks sound volume, not command content." },
+                { text: "By checking if <key [space v] pressed?>", correct: false, exp: "Key press checks keyboard input." },
+                { text: "By checking if <touching [Lamp v]?>", correct: false, exp: "Touching checks sprite collision." }
             ]
         },
         {
-            q: "How does the AI Extension's Face Detection feature enhance a Smart Home Security Door system?",
+            q: "How does Abby communicate back to the user after recognizing a command in this project?",
             code: null,
             options: [
-                { text: "By detecting facial expression or presence to trigger a servo motor lock", correct: true, exp: "Face detection outputs attributes like expression or face count to trigger physical door locks." },
-                { text: "By turning off the local network", correct: false, exp: "Disables system connectivity." },
-                { text: "By changing room temperature units", correct: false, exp: "Facial analysis does not measure temperature." },
-                { text: "By playing random sound effects on keypress", correct: false, exp: "Standard event handling." }
+                { text: "Using 'speak ()' from Text to Speech and 'say ()' from Looks", correct: true, exp: "The project uses both 'speak' (audio synthesis) and 'say' (speech bubble) so Abby talks and shows text." },
+                { text: "By playing guitar notes using the Music extension", correct: false, exp: "Music extension is not used for voice responses." },
+                { text: "By changing the backdrop color directly", correct: false, exp: "Abby speaks verbally rather than just changing backgrounds." },
+                { text: "By printing output to the terminal only", correct: false, exp: "Scratch block-based projects use stage visual/audio outputs." }
             ]
         },
         {
-            q: "When building a voice-controlled fan, how do you verify if the user commanded the fan to turn on?",
-            code: "if <(speech result) contains [turn on fan]?> then\n    set pin (13) output [HIGH v]\nend",
-            options: [
-                { text: "Check if (speech result) contains 'turn on fan'", correct: true, exp: "Evaluating if the parsed speech string contains key command words correctly triggers hardware pins." },
-                { text: "Check if <loudness > 50>", correct: false, exp: "Loudness measures raw volume, not spoken words." },
-                { text: "Check if <touching mouse-pointer?>", correct: false, exp: "Mouse hover condition." },
-                { text: "Check if <key space pressed?>", correct: false, exp: "Manual keyboard input." }
-            ]
-        },
-        {
-            q: "Which electronic actuator module connected to a microcontroller lets PictoBlox safely turn real high-voltage appliances ON or OFF?",
+            q: "How does Abby's script signal the Lamp sprite to turn ON without directly modifying the Lamp's code inside her own block?",
             code: null,
             options: [
-                { text: "Relay Module", correct: true, exp: "Relays allow low-voltage microcontroller logic pins to safely switch high-voltage AC appliance circuits." },
-                { text: "Ultrasonic Sensor", correct: false, exp: "Measures distance." },
-                { text: "LDR (Light Dependent Resistor)", correct: false, exp: "Analog light sensor." },
-                { text: "Buzzer", correct: false, exp: "Audio output device." }
+                { text: "By sending a 'broadcast [Lights ON]' message", correct: true, exp: "Broadcast blocks allow Abby to send event signals across different sprites." },
+                { text: "By changing a physical pin output on Arduino", correct: false, exp: "This project is animated on stage using broadcasts rather than microcontroller pin programming." },
+                { text: "By moving Abby to x: 0 y: 0", correct: false, exp: "Positioning does not trigger sprite actions." },
+                { text: "By setting variable [Lights] to 100", correct: false, exp: "The STEMpedia script specifically uses broadcast messages." }
             ]
         },
         {
-            q: "How does an AI Smart Lighting system use Computer Vision to conserve energy when a room is empty?",
-            code: "forever\n    analyse image from [camera v]\n    if <(number of faces) = [0]> then\n        set pin (10) output [LOW v]\n    end\nend",
+            q: "When the Lamp sprite receives the broadcast 'Lights ON', how does it visually look like it turned on?",
+            code: "when I receive [Lights ON v]\nswitch costume to [lamp-light-animation2 v]",
             options: [
-                { text: "It sets output pin to LOW when 'number of faces' equals 0", correct: true, exp: "When no human faces are detected in the frame, the AI turns off the lighting pin to save power." },
-                { text: "It waits for a manual keypress", correct: false, exp: "Not automated." },
-                { text: "It deletes script variables", correct: false, exp: "Does not control hardware." },
-                { text: "It reboots the computer", correct: false, exp: "Irrelevant system command." }
+                { text: "It switches its costume to 'lamp-light-animation2'", correct: true, exp: "Changing the costume to the glowing lamp costume provides the visual 'ON' state." },
+                { text: "It glides across the bedroom stage", correct: false, exp: "The lamp remains stationary in the bedroom." },
+                { text: "It increases its size by 200%", correct: false, exp: "Size stays constant." },
+                { text: "It spins 360 degrees", correct: false, exp: "Rotation is not used for the lamp." }
             ]
         },
         {
-            q: "Which built-in feature of the PictoBlox AI Extension can be used for a Smart Delivery Box that alerts the home owner when a package is detected?",
+            q: "How is the Fan sprite animated to simulate continuous spinning when it receives 'Fan ON'?",
+            code: "when I receive [Fan ON v]\nrepeat until <(speech recognition result) contains [fan off]>\n    next costume\n    wait (0.001) seconds\nend",
+            options: [
+                { text: "Using a 'repeat until' loop cycling 'next costume' until 'fan off' is recognized", correct: true, exp: "Cycling through fan costumes inside a repeat until loop creates the spinning animation." },
+                { text: "Using a 'turn clockwise 15 degrees' block inside a forever loop", correct: false, exp: "The STEMpedia script rotates fan costumes rather than degree turns." },
+                { text: "By moving the fan left and right across the stage", correct: false, exp: "The fan stays mounted in position." },
+                { text: "By changing the fan color effect continuously", correct: false, exp: "Color effects are not used for spinning." }
+            ]
+        },
+        {
+            q: "In the STEMpedia tutorial, what action occurs when Abby recognizes the voice command 'play song' or 'radio on'?",
+            code: "when I receive [Radio ON v]\nplay sound [Spiderman v] until done",
+            options: [
+                { text: "The Radio sprite plays the Spider-Man theme sound track", correct: true, exp: "The Radio script triggers the loaded audio track when receiving the Radio ON broadcast." },
+                { text: "The Radio sprite hides from the stage", correct: false, exp: "The radio remains visible." },
+                { text: "The camera feed turns on", correct: false, exp: "Camera is not used in this specific project." },
+                { text: "The text-to-speech reads out news headlines", correct: false, exp: "The radio specifically plays the project's sound clip." }
+            ]
+        },
+        {
+            q: "How does the room backdrop react when the command 'Lights OFF' is triggered?",
+            code: "when I receive [Lights OFF v]\nset brightness effect to (-50)",
+            options: [
+                { text: "The Stage sets its brightness effect to a negative value (-50) to darken the room", correct: true, exp: "Decreasing stage brightness simulates turning off ambient room lights." },
+                { text: "The Stage switches to a completely black costume", correct: false, exp: "It uses graphic brightness effects rather than costume changes." },
+                { text: "The Stage deletes all sprites", correct: false, exp: "Sprites remain on stage." },
+                { text: "The Stage stops all running scripts", correct: false, exp: "The main loop continues running so it can listen for further commands." }
+            ]
+        },
+        {
+            q: "Which two PictoBlox Extensions are strictly required to build this stage-based Home Automation project?",
             code: null,
             options: [
-                { text: "Object Detection / Recognition", correct: true, exp: "The AI extension's Object Detection identifies items like boxes, packages, or vehicles in the camera feed." },
-                { text: "Sound Pitch Shift", correct: false, exp: "Audio effect control." },
-                { text: "Costume Switcher", correct: false, exp: "2D graphics manipulation." },
-                { text: "Stage Backdrop Blender", correct: false, exp: "Visual backdrop styling." }
-            ]
-        },
-        {
-            q: "In an automated Smart Home, how do sensor inputs and AI processing complement each other?",
-            code: null,
-            options: [
-                { text: "Sensors capture environmental conditions while AI processes raw data to make automated adjustments", correct: true, exp: "Sensors provide environmental telematics, and AI algorithms process that data to execute precise outputs." },
-                { text: "Sensors replace the main processing script", correct: false, exp: "Sensors are hardware inputs, not software code." },
-                { text: "AI runs only when connected to a printer", correct: false, exp: "Printers are unrelated output devices." },
-                { text: "The system runs non-stop at max power", correct: false, exp: "Defeats automation efficiency." }
-            ]
-        },
-        {
-            q: "Why is a continuous loop (`forever` block) required around camera analysis blocks in PictoBlox AI home automation scripts?",
-            code: "when green flag clicked\nforever\n    analyse image from [camera v]\n    // AI logic here\nend",
-            options: [
-                { text: "To continuously process incoming video frames in real time so the system responds instantly to changes", correct: true, exp: "AI computer vision requires continuous frame sampling in a loop to detect live changes in the room." },
-                { text: "To increase speaker volume over time", correct: false, exp: "Audio property manipulation." },
-                { text: "To prevent hardware microcontrollers from starting", correct: false, exp: "Loops keep execution active." },
-                { text: "To erase variables from memory", correct: false, exp: "Variables are retained during execution." }
+                { text: "Speech Recognition and Text to Speech", correct: true, exp: "Speech Recognition listens to user voice commands, and Text to Speech lets Abby talk back." },
+                { text: "Face Detection and Micro:bit", correct: false, exp: "Face detection is not used in this project." },
+                { text: "Arduino Actuators and Dabble", correct: false, exp: "This tutorial is purely soft-simulated on stage without hardware board extensions." },
+                { text: "Machine Learning and Pen Extension", correct: false, exp: "Neither ML model training nor Pen drawing is required for this voice project." }
             ]
         }
     ];
 
-    let currentQ = 0;
-    let quizScore = 0;
-    let quizTimer;
-    let quizTimeLeft = 25;
-    let answered = false;
+    let currentQ = 0, quizScore = 0, quizTimer, quizTimeLeft = 25, answered = false;
 
     function loadQuestion() {
         answered = false;
@@ -582,12 +460,8 @@
         document.getElementById('progress-fill').style.width = `${((currentQ + 1) / questions.length) * 100}%`;
         
         const codeBox = document.getElementById('code-snippet');
-        if (q.code) {
-            codeBox.innerText = q.code;
-            codeBox.style.display = 'block';
-        } else {
-            codeBox.style.display = 'none';
-        }
+        if (q.code) { codeBox.innerText = q.code; codeBox.style.display = 'block'; } 
+        else { codeBox.style.display = 'none'; }
 
         const grid = document.getElementById('options-grid');
         grid.innerHTML = '';
@@ -605,11 +479,7 @@
         quizTimer = setInterval(() => {
             quizTimeLeft--;
             updateTimerUI();
-            if (quizTimeLeft <= 5 && quizTimeLeft > 0) playSound('tick');
-            if (quizTimeLeft <= 0) {
-                clearInterval(quizTimer);
-                autoTimeOut();
-            }
+            if (quizTimeLeft <= 0) { clearInterval(quizTimer); autoTimeOut(); }
         }, 1000);
     }
 
@@ -630,9 +500,7 @@
 
         btns.forEach((btn, i) => {
             btn.disabled = true;
-            if (q.options[i].correct) {
-                btn.classList.add('correct');
-            }
+            if (q.options[i].correct) btn.classList.add('correct');
         });
 
         if (selected.correct) {
@@ -640,11 +508,9 @@
             quizScore++;
             document.getElementById('current-score').innerText = quizScore * 10;
             playSound('correct');
-            showPopup(true, "Correct!", "Great job on PictoBlox AI logic.");
         } else {
             btns[idx].classList.add('wrong');
             playSound('wrong');
-            showPopup(false, "Incorrect", "Review the logic explanation below.");
         }
 
         document.getElementById('explanation-text').innerText = selected.exp;
@@ -655,72 +521,40 @@
     function autoTimeOut() {
         if (answered) return;
         answered = true;
-
         const q = questions[currentQ];
         const btns = document.querySelectorAll('.option-btn');
         btns.forEach((btn, i) => {
             btn.disabled = true;
             if (q.options[i].correct) btn.classList.add('correct');
         });
-
         playSound('wrong');
-        showPopup(false, "Time's Up!", "Keep an eye on the countdown.");
-
-        document.getElementById('explanation-text').innerText = "Time expired! Monitor the timer closely while analyzing PictoBlox AI blocks.";
+        document.getElementById('explanation-text').innerText = "Time expired! Review the STEMpedia script logic.";
         document.getElementById('explanation-box').style.display = 'block';
         document.getElementById('next-btn').style.display = 'block';
     }
 
-    function showPopup(isCorrect, title, sub) {
-        const modal = document.getElementById('popup-modal');
-        document.getElementById('popup-emoji').innerText = isCorrect ? "🎉" : "🤖";
-        document.getElementById('popup-title').innerText = title;
-        document.getElementById('popup-title').style.color = isCorrect ? "#4ade80" : "#f43f5e";
-        document.getElementById('popup-sub').innerText = sub;
-
-        modal.classList.add('active');
-        setTimeout(() => {
-            modal.classList.remove('active');
-        }, 1500);
-    }
-
     function nextQuestion() {
         currentQ++;
-        if (currentQ < questions.length) {
-            loadQuestion();
-        } else {
-            showResults();
-        }
+        if (currentQ < questions.length) loadQuestion();
+        else showResults();
     }
 
     function showResults() {
         document.getElementById('quiz-screen').style.display = 'none';
         document.getElementById('results-screen').style.display = 'block';
         document.getElementById('final-score').innerText = `${quizScore}/${questions.length}`;
-
         const msg = document.getElementById('feedback-msg');
-        if (quizScore === 10) {
-            msg.innerText = "Perfect Score! You understand PictoBlox AI Home Automation inside and out.";
-            msg.style.color = "#4ade80";
-        } else if (quizScore >= 7) {
-            msg.innerText = "Great Work! Solid understanding of AI blocks and smart home hardware.";
-            msg.style.color = "#38bdf8";
-        } else {
-            msg.innerText = "Needs Review! Go back over the AI extension blocks and retry.";
-            msg.style.color = "#facc15";
-        }
+        msg.innerText = quizScore >= 7 ? "Great job! Perfect understanding of STEMpedia's PictoBlox logic." : "Review Abby's broadcast blocks and try again!";
     }
 
     function restartQuiz() {
-        currentQ = 0;
-        quizScore = 0;
+        currentQ = 0; quizScore = 0;
         document.getElementById('current-score').innerText = 0;
         document.getElementById('results-screen').style.display = 'none';
         document.getElementById('quiz-screen').style.display = 'block';
         loadQuestion();
     }
 
-    // Initialize Quiz immediately on load
     loadQuestion();
 </script>
 </body>
