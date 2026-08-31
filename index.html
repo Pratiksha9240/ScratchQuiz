@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scratch: Dodge the Ball & Quiz!</title>
+    <title>PictoBlox: Home Automation AI Quiz!</title>
     <style>
         * {
             box-sizing: border-box;
@@ -419,7 +419,7 @@
     <!-- STAGE 1: DODGE THE BALL GAME -->
     <div id="game-screen">
         <div class="header">
-            <div class="title">⚽ Scratch Arcade: Dodge the Ball!</div>
+            <div class="title">🏠 Arcade: Dodge & AI Smart Home!</div>
             <div class="badge">STAGE 1: 15s WARM-UP</div>
         </div>
         <div class="game-instructions">
@@ -439,7 +439,7 @@
     <!-- STAGE 2: QUIZ SCREEN -->
     <div id="quiz-screen">
         <div class="header">
-            <div class="title">🧠 Scratch Logic Quiz</div>
+            <div class="title">🤖 PictoBlox AI Home Automation Quiz</div>
             <div class="badge" id="question-number">Q1 / 10</div>
         </div>
 
@@ -477,7 +477,7 @@
     <!-- STAGE 3: RESULTS SCREEN -->
     <div class="results-card" id="results-screen">
         <h2>🎉 Challenge Mastered!</h2>
-        <p style="font-size: 18px; color: #e9d5ff;">Outstanding performance on both game & code logic!</p>
+        <p style="font-size: 18px; color: #e9d5ff;">Outstanding job on the game and AI Home Automation logic!</p>
         
         <div class="score-circle">
             <div class="score-num" id="final-score">0/10</div>
@@ -553,7 +553,7 @@
     }
 
     /* ===================================================
-       GAME ENGINE (STAGE 1 - 15s DODGE THE BALL)
+       GAME ENGINE (STAGE 1 - 15s WARM-UP GAME)
        =================================================== */
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
@@ -600,16 +600,13 @@
     function updateGame() {
         if (!gameActive) return;
 
-        // Player Movement
         if (keys.left && player.x > 0) player.x -= player.speed;
         if (keys.right && player.x < canvas.width - player.width) player.x += player.speed;
 
-        // Ball Logic
         for (let i = balls.length - 1; i >= 0; i--) {
             let b = balls[i];
             b.y += b.speed;
 
-            // Collision Detection with Player
             let closestX = Math.max(player.x, Math.min(b.x, player.x + player.width));
             let closestY = Math.max(player.y, Math.min(b.y, player.y + player.height));
             let distX = b.x - closestX;
@@ -618,13 +615,11 @@
 
             if (distance < b.radius) {
                 playSound('hit');
-                // Penalty visual effect & push ball away
                 balls.splice(i, 1);
-                player.x = canvas.width / 2 - 20; // reset player back center
+                player.x = canvas.width / 2 - 20;
                 continue;
             }
 
-            // Successfully Dodged Ball
             if (b.y - b.radius > canvas.height) {
                 balls.splice(i, 1);
                 dodgedCount++;
@@ -638,7 +633,6 @@
     function renderGame() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Draw Stage Floor Line
         ctx.strokeStyle = '#38bdf8';
         ctx.lineWidth = 4;
         ctx.beginPath();
@@ -646,22 +640,17 @@
         ctx.lineTo(canvas.width, canvas.height - 5);
         ctx.stroke();
 
-        // Draw Player Sprite (Scratch-style Yellow Robot/Cat box)
         ctx.fillStyle = '#facc15';
         ctx.shadowColor = '#facc15';
         ctx.shadowBlur = 10;
         ctx.fillRect(player.x, player.y, player.width, player.height);
         ctx.shadowBlur = 0;
 
-        // Player Eyes
         ctx.fillStyle = '#1e1b4b';
         ctx.fillRect(player.x + 8, player.y + 10, 7, 7);
         ctx.fillRect(player.x + 25, player.y + 10, 7, 7);
-
-        // Player Smile
         ctx.fillRect(player.x + 12, player.y + 26, 16, 4);
 
-        // Draw Bouncing Basketballs
         balls.forEach(b => {
             ctx.beginPath();
             ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
@@ -675,7 +664,6 @@
             ctx.stroke();
         });
 
-        // HUD: Timer & Score Overlay on Canvas
         ctx.fillStyle = '#ffffff';
         ctx.font = 'bold 18px Segoe UI';
         ctx.fillText(`⏱️ Time Left: ${gameTimer}s`, 15, 30);
@@ -724,107 +712,107 @@
 
 
     /* ===================================================
-       QUIZ ENGINE (STAGE 2)
+       QUIZ ENGINE (PICTOBLOX AI HOME AUTOMATION)
        =================================================== */
     const questions = [
         {
-            q: "Which block starts your code when you click the main play button in Scratch?",
+            q: "In PictoBlox, which extension allows you to recognize spoken voice commands like 'turn on lights' to control a smart home?",
             code: null,
             options: [
-                { text: "when space key pressed", correct: false, exp: "Starts code only when pressing the spacebar." },
-                { text: "when green flag clicked", correct: true, exp: "The green flag is the universal start button in Scratch!" },
-                { text: "when this sprite clicked", correct: false, exp: "Runs code only when clicking directly on the sprite." },
-                { text: "when backdrop switches to level 1", correct: false, exp: "Triggers code after a backdrop change, not game start." }
+                { text: "Speech Recognition / Artificial Intelligence Extension", correct: true, exp: "The Speech Recognition and AI extensions process audio input and convert speech into text commands!" },
+                { text: "Pen Extension", correct: false, exp: "The Pen extension draws shapes on the stage." },
+                { text: "Music Extension", correct: false, exp: "Plays instrument notes and sound effects." },
+                { text: "Text to Speech Extension", correct: false, exp: "Converts text into spoken audio output rather than recognizing user speech." }
             ]
         },
         {
-            q: "How do you make your main character move right across the stage?",
+            q: "What is the primary function of Artificial Intelligence (AI) in an AI-powered Home Automation system?",
             code: null,
             options: [
-                { text: "change y by 10", correct: false, exp: "Changing y moves your character UP, not right." },
-                { text: "change x by -10", correct: false, exp: "Negative x moves the character to the LEFT." },
-                { text: "change x by 10", correct: true, exp: "Positive x values move sprites to the RIGHT horizontally!" },
-                { text: "turn right 90 degrees", correct: false, exp: "Turning degrees rotates the sprite in place without moving it." }
+                { text: "To manually click buttons on the screen", correct: false, exp: "Manual clicking does not require AI." },
+                { text: "To analyze inputs (like face, speech, or gestures) and make smart decisions automatically", correct: true, exp: "AI interprets sensory input like voice or face data to trigger smart home devices!" },
+                { text: "To replace hardware microcontrollers completely", correct: false, exp: "AI works alongside microcontrollers (like Quarky or Evive) to control real hardware." },
+                { text: "To change backdrop colors randomly", correct: false, exp: "That is basic visual animation, not AI." }
             ]
         },
         {
-            q: "Looking at the logic below, what condition checks if the player got hit by the bouncing ball?",
-            code: "if <touching [Basketball] ?> then\n    broadcast [Game Over]\nend",
+            q: "Which PictoBlox Artificial Intelligence block is used to continuously analyze images from the camera for face or gesture recognition?",
+            code: "forever\n    analyse image from [camera v]\nend",
             options: [
-                { text: "touching color red?", correct: false, exp: "Color sensing works best for walls/floors, not main sprites." },
-                { text: "touching Basketball?", correct: true, exp: "Directly detects contact between the player sprite and the ball!" },
-                { text: "key space pressed?", correct: false, exp: "Checks keyboard key press, not sprite collision." },
-                { text: "distance to mouse-pointer", correct: false, exp: "Measures distance instead of detecting actual contact." }
+                { text: "analyse image from [camera]", correct: true, exp: "'analyse image from camera' captures video frames and runs AI model inference on them." },
+                { text: "turn camera off", correct: false, exp: "Disables image processing." },
+                { text: "say [Processing...]", correct: false, exp: "Displays text speech bubbles." },
+                { text: "play sound [Meow]", correct: false, exp: "Triggers audio output." }
             ]
         },
         {
-            q: "Which block set allows the ball to clone itself continuously so new balls keep appearing?",
+            q: "How can facial recognition AI enhance a Smart Home Security Gate system in PictoBlox?",
             code: null,
             options: [
-                { text: "repeat 10 -> create clone of myself", correct: false, exp: "Spawns only 10 balls total, then stops forever." },
-                { text: "forever -> create clone of myself -> wait 2 seconds", correct: true, exp: "The forever loop paired with a delay keeps spawning new balls!" },
-                { text: "if touching edge then delete this clone", correct: false, exp: "Deletes clones at the edge instead of creating new ones." },
-                { text: "hide -> show", correct: false, exp: "Toggles visibility without generating new objects." }
+                { text: "By opening the door automatically when a recognized family member is detected", correct: true, exp: "Facial recognition matches stored face models to safely unlock doors for authorized family members." },
+                { text: "By turning off the Wi-Fi connection", correct: false, exp: "Smart security systems rely on connections to process and alert." },
+                { text: "By changing room temperatures randomly", correct: false, exp: "Facial recognition deals with identity, not HVAC control." },
+                { text: "By playing music when someone touches a key", correct: false, exp: "This is basic key sensing, not face recognition security." }
             ]
         },
         {
-            q: "To make a ball fall DOWN from the top of the screen, how should you alter its position in a loop?",
-            code: null,
+            q: "When using the Natural Language Processing (NLP) or Speech Recognition blocks, what condition checks if the user said 'turn on fan'?",
+            code: "if <(speech result) contains [turn on fan]?> then\n    set pin (13) output [HIGH v]\nend",
             options: [
-                { text: "change y by -5", correct: true, exp: "Decreasing y moves a sprite downwards toward the bottom!" },
-                { text: "change y by 5", correct: false, exp: "Increasing y pushes the sprite UP toward the ceiling." },
-                { text: "change x by -5", correct: false, exp: "Moves the sprite left instead of down." },
-                { text: "move 5 steps", correct: false, exp: "Moves forward in whatever direction the sprite is currently facing." }
+                { text: "if <speech result contains 'turn on fan'>", correct: true, exp: "Checking if the parsed speech result contains specific keywords triggers the appropriate smart appliance output!" },
+                { text: "if <loudness > 50>", correct: false, exp: "Loudness checks sound volume, not spoken command words." },
+                { text: "if <touching mouse-pointer?>", correct: false, exp: "Detects cursor hover, not speech." },
+                { text: "if <key space pressed?>", correct: false, exp: "Checks physical key presses." }
             ]
         },
         {
-            q: "To drop the ball from random top positions so it isn't predictable, which block combination works best?",
+            q: "Which electronic component controlled via PictoBlox acts as an automated switch to turn high-voltage home lights ON or OFF?",
             code: null,
             options: [
-                { text: "go to x: 0 y: 180", correct: false, exp: "Drops the ball from the exact center top every single time." },
-                { text: "go to x: pick random -200 to 200 y: 180", correct: true, exp: "Sets y to the top (180) and x randomly across the stage width!" },
-                { text: "glide 1 secs to x: 0 y: 0", correct: false, exp: "Glides to the center of the screen instead of spawning at top." },
-                { text: "point in direction pick random 1 to 10", correct: false, exp: "Rotates sprite angle instead of changing position." }
+                { text: "Relay Module", correct: true, exp: "Relays allow low-voltage microcontrollers (like Quarky/Arduino) to safely control high-voltage home appliances!" },
+                { text: "Ultrasonic Sensor", correct: false, exp: "Measures distance, does not switch appliances." },
+                { text: "LDR (Light Dependent Resistor)", correct: false, exp: "Senses ambient light levels." },
+                { text: "Buzzer", correct: false, exp: "Emits audio alert sounds." }
             ]
         },
         {
-            q: "How do you track how many balls the player successfully dodged?",
-            code: null,
+            q: "How does an AI-enabled Smart Lighting system automatically turn lights on when a person enters a room?",
+            code: "forever\n    analyse image from [camera v]\n    if <(number of faces) > [0]> then\n        turn ON room light\n    else\n        turn OFF room light\n    end\nend",
             options: [
-                { text: "Create a Variable named 'Score' and use 'change Score by 1'", correct: true, exp: "Variables store numerical values like score or health!" },
-                { text: "Use a 'say Hello!' block", correct: false, exp: "Displays text speech bubble without counting points." },
-                { text: "Add a new backdrop called 'Score'", correct: false, exp: "Switches background picture, doesn't calculate math." },
-                { text: "Use 'change size by 10'", correct: false, exp: "Makes sprite bigger instead of counting score." }
+                { text: "By checking if 'number of faces detected' is greater than 0 using computer vision", correct: true, exp: "Computer vision detects human presence by counting faces in the camera frame to manage lighting efficiency!" },
+                { text: "By waiting for the user to press a spacebar", correct: false, exp: "Manual input defeats automated AI detection." },
+                { text: "By resetting the timer every second", correct: false, exp: "Timers do not sense physical human presence." },
+                { text: "By checking if mouse is down", correct: false, exp: "Mouse input is not automated room sensing." }
             ]
         },
         {
-            q: "When programming a JUMP for your character, what sequence of vertical movements is required?",
+            q: "Which PictoBlox extension allows you to train your own custom Machine Learning models (e.g., recognizing custom hand gestures for appliance control)?",
             code: null,
             options: [
-                { text: "change y by 50, wait 0.2 secs, change y by -50", correct: true, exp: "Moves UP (+50), pauses briefly in air, then comes DOWN (-50)!" },
-                { text: "change x by 50, change x by -50", correct: false, exp: "Moves right and left horizontally, not jumping upward." },
-                { text: "turn 180 degrees", correct: false, exp: "Flips your character upside down!" },
-                { text: "hide, wait 1 sec, show", correct: false, exp: "Makes character invisible instead of jumping." }
+                { text: "Teachable Machine / Machine Learning Environment", correct: true, exp: "Teachable Machine in PictoBlox lets users train custom image, pose, or audio models for home automation control!" },
+                { text: "Paint Editor", correct: false, exp: "Used for creating sprite costumes." },
+                { text: "Sound Editor", correct: false, exp: "Used for trimming and modifying audio clips." },
+                { text: "Variable Manager", correct: false, exp: "Used for creating numerical and string data variables." }
             ]
         },
         {
-            q: "What block instantly stops ALL movement and scripts when the ball hits the player?",
+            q: "In an automated Smart Home HVAC system, how do AI and sensors work together efficiently?",
             code: null,
             options: [
-                { text: "delete this clone", correct: false, exp: "Only deletes 1 ball, while the rest of the game keeps running." },
-                { text: "stop all", correct: true, exp: "'stop all' halts all timers, movement, and scripts project-wide!" },
-                { text: "hide", correct: false, exp: "Makes sprite invisible but code continues executing." },
-                { text: "clear graphic effects", correct: false, exp: "Resets visual effects like color or brightness." }
+                { text: "Sensors gather environmental data (temperature/presence), and AI predicts/adjusts the ideal cooling state", correct: true, exp: "Combining sensor telemetry with AI decision-making optimizes comfort and reduces energy consumption!" },
+                { text: "The system runs full power 24/7 without stopping", correct: false, exp: "Continuous operation wastes energy and ignores smart automation." },
+                { text: "AI deletes sensor code whenever it gets warm", correct: false, exp: "AI executes code logic rather than deleting project scripts." },
+                { text: "Sensors replace the main microcontroller unit", correct: false, exp: "Sensors supply inputs to microcontrollers, they do not replace them." }
             ]
         },
         {
-            q: "What happens if you spawn endless ball clones without using 'delete this clone' when they hit the bottom edge?",
+            q: "Why is Machine Learning Model Training necessary before running an AI Home Automation gesture recognition system?",
             code: null,
             options: [
-                { text: "The game speeds up automatically", correct: false, exp: "Too many active objects lag the game, not speed it up." },
-                { text: "Nothing, Scratch supports infinite clones", correct: false, exp: "Scratch has a hard limit on total active clones allowed." },
-                { text: "The game lags and stops spawning after 300 clones", correct: true, exp: "Scratch caps clones at 300! You must delete off-screen clones!" },
-                { text: "The score resets to zero automatically", correct: false, exp: "Clone caps lag performance, they don't reset variables." }
+                { text: "To teach the AI algorithm to distinguish between different gestures by collecting sample images", correct: true, exp: "Supervised ML training requires dataset samples so the AI can accurately classify new user gestures in real time!" },
+                { text: "To make the microchip consume less electricity", correct: false, exp: "Model training teaches classification, not power management." },
+                { text: "To increase speaker volume output", correct: false, exp: "Volume is an audio hardware property." },
+                { text: "To draw background graphics in PictoBlox", correct: false, exp: "Graphic design is unrelated to model training." }
             ]
         }
     ];
@@ -905,7 +893,7 @@
             quizScore++;
             document.getElementById('current-score').innerText = quizScore * 10;
             playSound('correct');
-            showPopup(true, "🎉 Spot On!", "Great logic knowledge!");
+            showPopup(true, "🎉 Spot On!", "Great PictoBlox AI knowledge!");
         } else {
             btns[idx].classList.add('wrong');
             playSound('wrong');
@@ -931,7 +919,7 @@
         playSound('wrong');
         showPopup(false, "⏰ Time's Up!", "Keep an eye on the 25-second countdown!");
 
-        document.getElementById('explanation-text').innerText = "Time expired! Always monitor the timer while thinking through Scratch code blocks.";
+        document.getElementById('explanation-text').innerText = "Time expired! Monitor the timer closely while analyzing PictoBlox AI blocks.";
         document.getElementById('explanation-box').style.display = 'block';
         document.getElementById('next-btn').style.display = 'block';
     }
@@ -965,13 +953,13 @@
 
         const msg = document.getElementById('feedback-msg');
         if (quizScore === 10) {
-            msg.innerText = "🌟 Perfect Score! You are a Scratch Game Master!";
+            msg.innerText = "🌟 Perfect Score! You are an AI Home Automation Expert!";
             msg.style.color = "#4ade80";
         } else if (quizScore >= 7) {
-            msg.innerText = "👏 Great Work! You fully understand game mechanics!";
+            msg.innerText = "👏 Great Work! You fully understand PictoBlox AI concepts!";
             msg.style.color = "#38bdf8";
         } else {
-            msg.innerText = "💪 Good Try! Practice the Scratch blocks and take it again!";
+            msg.innerText = "💪 Good Try! Review the AI extension blocks and take it again!";
             msg.style.color = "#facc15";
         }
     }
@@ -986,7 +974,6 @@
         renderGame();
     }
 
-    // Render initial canvas preview behind overlay
     renderGame();
 </script>
 </body>
