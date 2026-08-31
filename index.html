@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PictoBlox: Home Automation AI Quiz!</title>
+    <title>PictoBlox AI Home Automation Quiz</title>
     <style>
         * {
             box-sizing: border-box;
@@ -44,7 +44,7 @@
         }
 
         .title {
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 800;
             color: #facc15;
             display: flex;
@@ -63,70 +63,9 @@
             box-shadow: 0 4px 10px rgba(236, 72, 153, 0.4);
         }
 
-        /* --- STAGE 1: GAME STYLES --- */
-        #game-screen {
-            text-align: center;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        .game-instructions {
-            font-size: 16px;
-            color: #e9d5ff;
-            margin-bottom: 15px;
-        }
-
-        .game-canvas-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto 20px auto;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 4px solid #38bdf8;
-            box-shadow: 0 8px 25px rgba(56, 189, 248, 0.3);
-        }
-
-        #gameCanvas {
-            background: linear-gradient(to bottom, #0284c7 0%, #0369a1 100%);
-            display: block;
-            width: 100%;
-            height: 350px;
-        }
-
-        .game-overlay {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(46, 16, 101, 0.85);
-            backdrop-filter: blur(4px);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-        }
-
-        .start-btn {
-            background: linear-gradient(135deg, #22c55e, #16a34a);
-            color: white;
-            border: none;
-            padding: 16px 40px;
-            font-size: 22px;
-            font-weight: 800;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 10px 25px rgba(34, 197, 94, 0.4);
-            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .start-btn:hover {
-            transform: scale(1.08);
-            box-shadow: 0 15px 30px rgba(34, 197, 94, 0.6);
-        }
-
-        /* --- STAGE 2: QUIZ STYLES --- */
+        /* --- QUIZ STYLES --- */
         #quiz-screen {
-            display: none;
-            animation: slideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: fadeIn 0.4s ease-in-out;
         }
 
         .stats-bar {
@@ -309,7 +248,7 @@
             box-shadow: 0 6px 20px rgba(168, 85, 247, 0.6);
         }
 
-        /* --- STAGE 3: RESULTS STYLES --- */
+        /* --- RESULTS STYLES --- */
         .results-card {
             text-align: center;
             display: none;
@@ -390,11 +329,6 @@
             to { opacity: 1; }
         }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         @keyframes zoomIn {
             from { opacity: 0; transform: scale(0.8); }
             to { opacity: 1; transform: scale(1); }
@@ -416,30 +350,10 @@
 <body>
 
 <div class="main-container">
-    <!-- STAGE 1: DODGE THE BALL GAME -->
-    <div id="game-screen">
-        <div class="header">
-            <div class="title">🏠 Arcade: Dodge & AI Smart Home!</div>
-            <div class="badge">STAGE 1: 15s WARM-UP</div>
-        </div>
-        <div class="game-instructions">
-            Use <b>LEFT / RIGHT Arrows</b> (or <b>A / D</b>) to dodge falling basketballs! Survive 15 seconds to unlock the Quiz!
-        </div>
-
-        <div class="game-canvas-container">
-            <canvas id="gameCanvas" width="600" height="350"></canvas>
-            <div class="game-overlay" id="game-overlay">
-                <h2 style="font-size: 28px; color: #facc15; margin-bottom: 10px;">Ready to Play?</h2>
-                <p style="color: #e9d5ff; margin-bottom: 20px; font-size: 15px;">Dodge as many balls as possible in 15 seconds!</p>
-                <button class="start-btn" onclick="startGame()">START GAME 🚀</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- STAGE 2: QUIZ SCREEN -->
+    <!-- QUIZ SCREEN -->
     <div id="quiz-screen">
         <div class="header">
-            <div class="title">🤖 PictoBlox AI Home Automation Quiz</div>
+            <div class="title">🤖 PictoBlox AI Home Automation Assessment</div>
             <div class="badge" id="question-number">Q1 / 10</div>
         </div>
 
@@ -474,26 +388,26 @@
         <button class="next-btn" id="next-btn" onclick="nextQuestion()">Next Question ➔</button>
     </div>
 
-    <!-- STAGE 3: RESULTS SCREEN -->
+    <!-- RESULTS SCREEN -->
     <div class="results-card" id="results-screen">
-        <h2>🎉 Challenge Mastered!</h2>
-        <p style="font-size: 18px; color: #e9d5ff;">Outstanding job on the game and AI Home Automation logic!</p>
+        <h2>🎉 Assessment Complete!</h2>
+        <p style="font-size: 18px; color: #e9d5ff;">Here is the performance breakdown for AI Home Automation concepts:</p>
         
         <div class="score-circle">
             <div class="score-num" id="final-score">0/10</div>
-            <div style="font-size: 12px; color: #a855f7; font-weight: 800;">QUIZ SCORE</div>
+            <div style="font-size: 12px; color: #a855f7; font-weight: 800;">TOTAL SCORE</div>
         </div>
 
         <p id="feedback-msg" style="font-size: 18px; font-weight: 700; margin-bottom: 20px;"></p>
 
-        <button class="restart-btn" onclick="restartWholeExperience()">Play & Retake Quiz 🔄</button>
+        <button class="restart-btn" onclick="restartQuiz()">Retake Quiz 🔄</button>
     </div>
 
     <!-- POPUP MODAL -->
     <div class="popup-modal" id="popup-modal">
         <div style="font-size: 50px; margin-bottom: 5px;" id="popup-emoji">🎉</div>
         <div style="font-size: 22px; font-weight: 800;" id="popup-title">Awesome!</div>
-        <p style="margin: 5px 0 0 0; color: #e9d5ff;" id="popup-sub">You've unlocked the quiz!</p>
+        <p style="margin: 5px 0 0 0; color: #e9d5ff;" id="popup-sub"></p>
     </div>
 </div>
 
@@ -540,186 +454,19 @@
                 gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
                 osc.start();
                 osc.stop(audioCtx.currentTime + 0.05);
-            } else if (type === 'hit') {
-                osc.type = 'square';
-                osc.frequency.setValueAtTime(150, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.2);
-                gain.gain.setValueAtTime(0.4, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.2);
             }
         } catch(e) {}
     }
 
     /* ===================================================
-       GAME ENGINE (STAGE 1 - 15s WARM-UP GAME)
-       =================================================== */
-    const canvas = document.getElementById('gameCanvas');
-    const ctx = canvas.getContext('2d');
-
-    let gameActive = false;
-    let gameTimer = 15;
-    let gameInterval;
-    let animationFrameId;
-
-    let player = {
-        x: canvas.width / 2 - 20,
-        y: canvas.height - 45,
-        width: 40,
-        height: 40,
-        speed: 7,
-        dx: 0
-    };
-
-    let balls = [];
-    let dodgedCount = 0;
-    let keys = {};
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') keys.left = true;
-        if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keys.right = true;
-    });
-
-    document.addEventListener('keyup', (e) => {
-        if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') keys.left = false;
-        if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keys.right = false;
-    });
-
-    function spawnBall() {
-        if (!gameActive) return;
-        const radius = Math.random() * 12 + 12;
-        balls.push({
-            x: Math.random() * (canvas.width - radius * 2) + radius,
-            y: -radius,
-            radius: radius,
-            speed: Math.random() * 3 + 4
-        });
-    }
-
-    function updateGame() {
-        if (!gameActive) return;
-
-        if (keys.left && player.x > 0) player.x -= player.speed;
-        if (keys.right && player.x < canvas.width - player.width) player.x += player.speed;
-
-        for (let i = balls.length - 1; i >= 0; i--) {
-            let b = balls[i];
-            b.y += b.speed;
-
-            let closestX = Math.max(player.x, Math.min(b.x, player.x + player.width));
-            let closestY = Math.max(player.y, Math.min(b.y, player.y + player.height));
-            let distX = b.x - closestX;
-            let distY = b.y - closestY;
-            let distance = Math.sqrt((distX * distX) + (distY * distY));
-
-            if (distance < b.radius) {
-                playSound('hit');
-                balls.splice(i, 1);
-                player.x = canvas.width / 2 - 20;
-                continue;
-            }
-
-            if (b.y - b.radius > canvas.height) {
-                balls.splice(i, 1);
-                dodgedCount++;
-            }
-        }
-
-        renderGame();
-        animationFrameId = requestAnimationFrame(updateGame);
-    }
-
-    function renderGame() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        ctx.strokeStyle = '#38bdf8';
-        ctx.lineWidth = 4;
-        ctx.beginPath();
-        ctx.moveTo(0, canvas.height - 5);
-        ctx.lineTo(canvas.width, canvas.height - 5);
-        ctx.stroke();
-
-        ctx.fillStyle = '#facc15';
-        ctx.shadowColor = '#facc15';
-        ctx.shadowBlur = 10;
-        ctx.fillRect(player.x, player.y, player.width, player.height);
-        ctx.shadowBlur = 0;
-
-        ctx.fillStyle = '#1e1b4b';
-        ctx.fillRect(player.x + 8, player.y + 10, 7, 7);
-        ctx.fillRect(player.x + 25, player.y + 10, 7, 7);
-        ctx.fillRect(player.x + 12, player.y + 26, 16, 4);
-
-        balls.forEach(b => {
-            ctx.beginPath();
-            ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
-            ctx.fillStyle = '#f97316';
-            ctx.shadowColor = '#f97316';
-            ctx.shadowBlur = 8;
-            ctx.fill();
-            ctx.shadowBlur = 0;
-            ctx.strokeStyle = '#7c2d12';
-            ctx.lineWidth = 2;
-            ctx.stroke();
-        });
-
-        ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 18px Segoe UI';
-        ctx.fillText(`⏱️ Time Left: ${gameTimer}s`, 15, 30);
-        ctx.fillText(`🏀 Dodged: ${dodgedCount}`, canvas.width - 140, 30);
-    }
-
-    function startGame() {
-        document.getElementById('game-overlay').style.display = 'none';
-        gameActive = true;
-        gameTimer = 15;
-        dodgedCount = 0;
-        balls = [];
-        player.x = canvas.width / 2 - 20;
-
-        const ballSpawner = setInterval(() => {
-            if (gameActive) spawnBall();
-            else clearInterval(ballSpawner);
-        }, 500);
-
-        gameInterval = setInterval(() => {
-            gameTimer--;
-            if (gameTimer <= 5 && gameTimer > 0) playSound('tick');
-            if (gameTimer <= 0) {
-                clearInterval(gameInterval);
-                clearInterval(ballSpawner);
-                endGameAndTransition();
-            }
-        }, 1000);
-
-        updateGame();
-    }
-
-    function endGameAndTransition() {
-        gameActive = false;
-        cancelAnimationFrame(animationFrameId);
-        playSound('correct');
-
-        showPopup(true, "🎮 Warm-up Complete!", `You dodged ${dodgedCount} balls! Loading Quiz...`);
-
-        setTimeout(() => {
-            document.getElementById('game-screen').style.display = 'none';
-            document.getElementById('quiz-screen').style.display = 'block';
-            loadQuestion();
-        }, 2000);
-    }
-
-
-    /* ===================================================
-       QUIZ ENGINE (PICTOBLOX AI HOME AUTOMATION)
+       QUIZ DATA & ENGINE
        =================================================== */
     const questions = [
         {
             q: "In PictoBlox, which extension allows you to recognize spoken voice commands like 'turn on lights' to control a smart home?",
             code: null,
             options: [
-                { text: "Speech Recognition / Artificial Intelligence Extension", correct: true, exp: "The Speech Recognition and AI extensions process audio input and convert speech into text commands!" },
+                { text: "Speech Recognition / Artificial Intelligence Extension", correct: true, exp: "The Speech Recognition and AI extensions process audio input and convert speech into text commands." },
                 { text: "Pen Extension", correct: false, exp: "The Pen extension draws shapes on the stage." },
                 { text: "Music Extension", correct: false, exp: "Plays instrument notes and sound effects." },
                 { text: "Text to Speech Extension", correct: false, exp: "Converts text into spoken audio output rather than recognizing user speech." }
@@ -730,16 +477,16 @@
             code: null,
             options: [
                 { text: "To manually click buttons on the screen", correct: false, exp: "Manual clicking does not require AI." },
-                { text: "To analyze inputs (like face, speech, or gestures) and make smart decisions automatically", correct: true, exp: "AI interprets sensory input like voice or face data to trigger smart home devices!" },
+                { text: "To analyze inputs (like face, speech, or gestures) and make smart decisions automatically", correct: true, exp: "AI interprets sensory input like voice or face data to trigger smart home devices automatically." },
                 { text: "To replace hardware microcontrollers completely", correct: false, exp: "AI works alongside microcontrollers (like Quarky or Evive) to control real hardware." },
-                { text: "To change backdrop colors randomly", correct: false, exp: "That is basic visual animation, not AI." }
+                { text: "To change backdrop colors randomly", correct: false, exp: "That is basic visual animation, not AI logic." }
             ]
         },
         {
             q: "Which PictoBlox Artificial Intelligence block is used to continuously analyze images from the camera for face or gesture recognition?",
             code: "forever\n    analyse image from [camera v]\nend",
             options: [
-                { text: "analyse image from [camera]", correct: true, exp: "'analyse image from camera' captures video frames and runs AI model inference on them." },
+                { text: "analyse image from [camera]", correct: true, exp: "'analyse image from camera' captures video frames and runs AI model inference on them continuously." },
                 { text: "turn camera off", correct: false, exp: "Disables image processing." },
                 { text: "say [Processing...]", correct: false, exp: "Displays text speech bubbles." },
                 { text: "play sound [Meow]", correct: false, exp: "Triggers audio output." }
@@ -759,7 +506,7 @@
             q: "When using the Natural Language Processing (NLP) or Speech Recognition blocks, what condition checks if the user said 'turn on fan'?",
             code: "if <(speech result) contains [turn on fan]?> then\n    set pin (13) output [HIGH v]\nend",
             options: [
-                { text: "if <speech result contains 'turn on fan'>", correct: true, exp: "Checking if the parsed speech result contains specific keywords triggers the appropriate smart appliance output!" },
+                { text: "if <speech result contains 'turn on fan'>", correct: true, exp: "Checking if the parsed speech result contains specific keywords triggers the appropriate smart appliance output." },
                 { text: "if <loudness > 50>", correct: false, exp: "Loudness checks sound volume, not spoken command words." },
                 { text: "if <touching mouse-pointer?>", correct: false, exp: "Detects cursor hover, not speech." },
                 { text: "if <key space pressed?>", correct: false, exp: "Checks physical key presses." }
@@ -769,7 +516,7 @@
             q: "Which electronic component controlled via PictoBlox acts as an automated switch to turn high-voltage home lights ON or OFF?",
             code: null,
             options: [
-                { text: "Relay Module", correct: true, exp: "Relays allow low-voltage microcontrollers (like Quarky/Arduino) to safely control high-voltage home appliances!" },
+                { text: "Relay Module", correct: true, exp: "Relays allow low-voltage microcontrollers (like Quarky/Arduino) to safely control high-voltage home appliances." },
                 { text: "Ultrasonic Sensor", correct: false, exp: "Measures distance, does not switch appliances." },
                 { text: "LDR (Light Dependent Resistor)", correct: false, exp: "Senses ambient light levels." },
                 { text: "Buzzer", correct: false, exp: "Emits audio alert sounds." }
@@ -779,7 +526,7 @@
             q: "How does an AI-enabled Smart Lighting system automatically turn lights on when a person enters a room?",
             code: "forever\n    analyse image from [camera v]\n    if <(number of faces) > [0]> then\n        turn ON room light\n    else\n        turn OFF room light\n    end\nend",
             options: [
-                { text: "By checking if 'number of faces detected' is greater than 0 using computer vision", correct: true, exp: "Computer vision detects human presence by counting faces in the camera frame to manage lighting efficiency!" },
+                { text: "By checking if 'number of faces detected' is greater than 0 using computer vision", correct: true, exp: "Computer vision detects human presence by counting faces in the camera frame to manage lighting efficiency." },
                 { text: "By waiting for the user to press a spacebar", correct: false, exp: "Manual input defeats automated AI detection." },
                 { text: "By resetting the timer every second", correct: false, exp: "Timers do not sense physical human presence." },
                 { text: "By checking if mouse is down", correct: false, exp: "Mouse input is not automated room sensing." }
@@ -789,7 +536,7 @@
             q: "Which PictoBlox extension allows you to train your own custom Machine Learning models (e.g., recognizing custom hand gestures for appliance control)?",
             code: null,
             options: [
-                { text: "Teachable Machine / Machine Learning Environment", correct: true, exp: "Teachable Machine in PictoBlox lets users train custom image, pose, or audio models for home automation control!" },
+                { text: "Teachable Machine / Machine Learning Environment", correct: true, exp: "Teachable Machine in PictoBlox lets users train custom image, pose, or audio models for home automation control." },
                 { text: "Paint Editor", correct: false, exp: "Used for creating sprite costumes." },
                 { text: "Sound Editor", correct: false, exp: "Used for trimming and modifying audio clips." },
                 { text: "Variable Manager", correct: false, exp: "Used for creating numerical and string data variables." }
@@ -799,7 +546,7 @@
             q: "In an automated Smart Home HVAC system, how do AI and sensors work together efficiently?",
             code: null,
             options: [
-                { text: "Sensors gather environmental data (temperature/presence), and AI predicts/adjusts the ideal cooling state", correct: true, exp: "Combining sensor telemetry with AI decision-making optimizes comfort and reduces energy consumption!" },
+                { text: "Sensors gather environmental data (temperature/presence), and AI predicts/adjusts the ideal cooling state", correct: true, exp: "Combining sensor telemetry with AI decision-making optimizes comfort and reduces energy consumption." },
                 { text: "The system runs full power 24/7 without stopping", correct: false, exp: "Continuous operation wastes energy and ignores smart automation." },
                 { text: "AI deletes sensor code whenever it gets warm", correct: false, exp: "AI executes code logic rather than deleting project scripts." },
                 { text: "Sensors replace the main microcontroller unit", correct: false, exp: "Sensors supply inputs to microcontrollers, they do not replace them." }
@@ -809,7 +556,7 @@
             q: "Why is Machine Learning Model Training necessary before running an AI Home Automation gesture recognition system?",
             code: null,
             options: [
-                { text: "To teach the AI algorithm to distinguish between different gestures by collecting sample images", correct: true, exp: "Supervised ML training requires dataset samples so the AI can accurately classify new user gestures in real time!" },
+                { text: "To teach the AI algorithm to distinguish between different gestures by collecting sample images", correct: true, exp: "Supervised ML training requires dataset samples so the AI can accurately classify new user gestures in real time." },
                 { text: "To make the microchip consume less electricity", correct: false, exp: "Model training teaches classification, not power management." },
                 { text: "To increase speaker volume output", correct: false, exp: "Volume is an audio hardware property." },
                 { text: "To draw background graphics in PictoBlox", correct: false, exp: "Graphic design is unrelated to model training." }
@@ -893,11 +640,11 @@
             quizScore++;
             document.getElementById('current-score').innerText = quizScore * 10;
             playSound('correct');
-            showPopup(true, "🎉 Spot On!", "Great PictoBlox AI knowledge!");
+            showPopup(true, "Correct!", "Great job on PictoBlox logic.");
         } else {
             btns[idx].classList.add('wrong');
             playSound('wrong');
-            showPopup(false, "Nice Try!", "Read the explanation carefully! 🤖");
+            showPopup(false, "Incorrect", "Review the logic explanation below.");
         }
 
         document.getElementById('explanation-text').innerText = selected.exp;
@@ -917,7 +664,7 @@
         });
 
         playSound('wrong');
-        showPopup(false, "⏰ Time's Up!", "Keep an eye on the 25-second countdown!");
+        showPopup(false, "Time's Up!", "Keep an eye on the countdown.");
 
         document.getElementById('explanation-text').innerText = "Time expired! Monitor the timer closely while analyzing PictoBlox AI blocks.";
         document.getElementById('explanation-box').style.display = 'block';
@@ -934,7 +681,7 @@
         modal.classList.add('active');
         setTimeout(() => {
             modal.classList.remove('active');
-        }, 1800);
+        }, 1500);
     }
 
     function nextQuestion() {
@@ -953,28 +700,28 @@
 
         const msg = document.getElementById('feedback-msg');
         if (quizScore === 10) {
-            msg.innerText = "🌟 Perfect Score! You are an AI Home Automation Expert!";
+            msg.innerText = "Perfect Score! You understand PictoBlox AI Home Automation inside and out.";
             msg.style.color = "#4ade80";
         } else if (quizScore >= 7) {
-            msg.innerText = "👏 Great Work! You fully understand PictoBlox AI concepts!";
+            msg.innerText = "Great Work! Solid understanding of AI blocks and smart home hardware.";
             msg.style.color = "#38bdf8";
         } else {
-            msg.innerText = "💪 Good Try! Review the AI extension blocks and take it again!";
+            msg.innerText = "Needs Review! Go back over the AI extension blocks and retry.";
             msg.style.color = "#facc15";
         }
     }
 
-    function restartWholeExperience() {
+    function restartQuiz() {
         currentQ = 0;
         quizScore = 0;
         document.getElementById('current-score').innerText = 0;
         document.getElementById('results-screen').style.display = 'none';
-        document.getElementById('game-screen').style.display = 'block';
-        document.getElementById('game-overlay').style.display = 'flex';
-        renderGame();
+        document.getElementById('quiz-screen').style.display = 'block';
+        loadQuestion();
     }
 
-    renderGame();
+    // Initialize Quiz immediately on load
+    loadQuestion();
 </script>
 </body>
 </html>
