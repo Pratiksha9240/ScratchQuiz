@@ -3,559 +3,486 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PictoBlox AI Home Automation Quiz</title>
+    <title>Scratch Flappy Bird Coding Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        * {
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;600;700&display=swap');
+        
         body {
-            background: linear-gradient(135deg, #4c1d95 0%, #1e1b4b 100%);
-            color: #f8fafc;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #4ec0ca 0%, #2094fa 100%);
         }
-
-        .main-container {
-            background-color: #2e1065;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(168, 85, 247, 0.3);
-            width: 100%;
-            max-width: 800px;
-            padding: 30px;
-            border: 4px solid #a855f7;
-            position: relative;
-            overflow: hidden;
+        .font-fredoka {
+            font-family: 'Fredoka One', cursive;
         }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #581c87;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-        }
-
-        .title {
-            font-size: 22px;
-            font-weight: 800;
-            color: #facc15;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .badge {
-            background: linear-gradient(90deg, #ec4899, #f43f5e);
-            color: white;
+        
+        /* Scratch Block Styling */
+        .scratch-block {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-weight: bold;
             font-size: 14px;
-            padding: 6px 14px;
-            border-radius: 9999px;
-            font-weight: 800;
-        }
-
-        .stats-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            background-color: #3b0764;
-            padding: 12px 20px;
-            border-radius: 16px;
-            border: 1px solid #7e22ce;
-        }
-
-        .timer-box {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 20px;
-            font-weight: 700;
-            color: #f43f5e;
-        }
-
-        .timer-circle {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: conic-gradient(#f43f5e 100%, #581c87 0%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-
-        .timer-circle::before {
-            content: '';
-            position: absolute;
-            width: 34px;
-            height: 34px;
-            background-color: #3b0764;
-            border-radius: 50%;
-        }
-
-        .timer-text {
-            position: relative;
-            z-index: 1;
-            font-size: 16px;
             color: white;
-        }
-
-        .score-box {
-            font-size: 18px;
-            font-weight: 800;
-            color: #4ade80;
-        }
-
-        .progress-bar {
-            height: 10px;
-            width: 100%;
-            background-color: #581c87;
-            border-radius: 5px;
-            margin-bottom: 25px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #38bdf8, #a855f7);
-            width: 10%;
-            transition: width 0.4s ease;
-        }
-
-        .question-box {
-            margin-bottom: 25px;
-        }
-
-        .question-text {
-            font-size: 19px;
-            font-weight: 700;
-            line-height: 1.4;
-            margin-bottom: 15px;
-            color: #f3e8ff;
-        }
-
-        .code-snippet {
-            background-color: #1e1b4b;
-            border-left: 5px solid #facc15;
-            padding: 14px;
-            font-family: 'Courier New', Courier, monospace;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            font-size: 14px;
-            color: #f1f5f9;
-            white-space: pre-wrap;
-        }
-
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .option-btn {
-            background: #3b0764;
-            color: #f3e8ff;
-            border: 2px solid #6b21a8;
-            padding: 16px 20px;
-            border-radius: 14px;
-            font-size: 15px;
-            font-weight: 600;
-            text-align: left;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .option-btn:hover:not(:disabled) {
-            background-color: #581c87;
-            border-color: #a855f7;
-            transform: translateX(5px);
-        }
-
-        .option-btn.correct {
-            background-color: #14532d !important;
-            border-color: #22c55e !important;
-            color: #bbf7d0 !important;
-        }
-
-        .option-btn.wrong {
-            background-color: #7f1d1d !important;
-            border-color: #ef4444 !important;
-            color: #fecdd3 !important;
-        }
-
-        .explanation-box {
-            background-color: #1e1b4b;
-            border: 2px solid #38bdf8;
-            border-radius: 14px;
-            padding: 16px;
-            margin-bottom: 20px;
-            display: none;
-        }
-
-        .explanation-title {
-            font-weight: 800;
-            color: #38bdf8;
-            margin-bottom: 5px;
-        }
-
-        .explanation-text {
-            font-size: 14px;
-            line-height: 1.5;
-            color: #e2e8f0;
-        }
-
-        .next-btn {
-            background: linear-gradient(135deg, #a855f7, #7e22ce);
-            color: white;
-            border: none;
-            padding: 14px 32px;
-            font-size: 16px;
-            font-weight: 800;
-            border-radius: 12px;
-            cursor: pointer;
-            display: none;
-            margin-left: auto;
-        }
-
-        .results-card {
-            text-align: center;
-            display: none;
-        }
-
-        .score-circle {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background-color: #1e1b4b;
-            border: 6px solid #22c55e;
-            display: flex;
-            justify-content: center;
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: inline-flex;
             align-items: center;
-            flex-direction: column;
-            margin: 20px auto;
+            gap: 6px;
+            box-shadow: 0px 3px 0px rgba(0,0,0,0.2);
+            user-select: none;
+        }
+        .sb-hat {
+            background-color: #ffbf00;
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+            color: #4c3e00;
+        }
+        .sb-motion { background-color: #4c97ff; }
+        .sb-looks { background-color: #9966ff; }
+        .sb-control { background-color: #ffab19; }
+        .sb-sensing { background-color: #5cb1d6; }
+        .sb-variables { background-color: #ff8c1a; }
+        .sb-operators { background-color: #59c059; }
+        .sb-slot {
+            background: white;
+            color: #333;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 13px;
         }
 
-        .score-num {
-            font-size: 40px;
-            font-weight: 800;
-            color: #4ade80;
+        /* Pulse Animation */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(0.95); }
         }
-
-        .restart-btn {
-            background: linear-gradient(135deg, #22c55e, #16a34a);
-            color: white;
-            border: none;
-            padding: 14px 36px;
-            font-size: 16px;
-            font-weight: 800;
-            border-radius: 12px;
-            cursor: pointer;
+        .animate-pulse-slow {
+            animation: pulse-ring 2s infinite;
         }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex items-center justify-center p-4">
 
-<div class="main-container">
-    <div id="quiz-screen">
-        <div class="header">
-            <div class="title">🤖 STEMpedia PictoBlox AI Home Automation Quiz</div>
-            <div class="badge" id="question-number">Q1 / 10</div>
+    <!-- Container -->
+    <div class="bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl p-6 sm:p-8 max-w-2xl w-full border-4 border-yellow-300 relative overflow-hidden">
+        
+        <!-- Header / Progress Bar -->
+        <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+                <span class="text-3xl">🐤</span>
+                <h1 class="text-2xl font-fredoka text-yellow-500 tracking-wide drop-shadow-sm">Flappy Scratch!</h1>
+            </div>
+            <div class="text-right">
+                <span id="score" class="text-lg font-bold text-sky-600 bg-sky-100 px-3 py-1 rounded-full">Score: 0</span>
+            </div>
         </div>
 
-        <div class="progress-bar">
-            <div class="progress-fill" id="progress-fill"></div>
-        </div>
-
-        <div class="stats-bar">
-            <div class="timer-box">
-                <div class="timer-circle" id="timer-circle">
-                    <span class="timer-text" id="timer-text">25</span>
+        <!-- Question Counter & Timer -->
+        <div class="flex justify-between items-center bg-sky-50 rounded-2xl p-3 mb-4 border-2 border-sky-200">
+            <div class="font-bold text-sky-700" id="question-number">Question 1 of 10</div>
+            
+            <!-- 25s Countdown Timer -->
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-clock text-amber-500 text-xl"></i>
+                <div class="w-24 bg-gray-200 h-4 rounded-full overflow-hidden border border-gray-300">
+                    <div id="timer-bar" class="bg-amber-400 h-full w-full transition-all duration-1000 ease-linear"></div>
                 </div>
-                <span>Sec Left</span>
-            </div>
-            <div class="score-box">
-                Score: <span id="current-score">0</span> pts
+                <span id="timer-text" class="font-fredoka text-amber-600 min-w-[28px] text-right">25s</span>
             </div>
         </div>
 
-        <div class="question-box">
-            <div class="question-text" id="question-text">Loading...</div>
-            <div class="code-snippet" id="code-snippet" style="display: none;"></div>
+        <!-- Question Container -->
+        <div id="quiz-box">
+            <!-- Question Title -->
+            <h2 id="question-text" class="text-xl font-bold text-slate-800 mb-4 min-h-[56px] flex items-center">
+                Loading question...
+            </h2>
+
+            <!-- Image/Visual Placeholder -->
+            <div id="visual-container" class="bg-sky-100/70 border-2 border-dashed border-sky-300 rounded-2xl p-4 mb-5 flex flex-col items-center justify-center min-h-[140px] text-center">
+                <!-- Dynamic Visual content will be injected here -->
+            </div>
+
+            <!-- 4 Answer Options -->
+            <div id="options-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+                <!-- Buttons injected dynamically -->
+            </div>
+
+            <!-- Feedback / Explanation Card -->
+            <div id="feedback-card" class="hidden rounded-2xl p-4 border-2 transition-all">
+                <div class="flex items-center gap-2 font-bold text-lg mb-1" id="feedback-title">
+                    <!-- Icon + Status -->
+                </div>
+                <p id="feedback-text" class="text-sm font-medium text-slate-700 leading-relaxed"></p>
+            </div>
         </div>
 
-        <div class="options-grid" id="options-grid"></div>
+        <!-- Next / Finish Button -->
+        <button id="next-btn" onclick="nextQuestion()" class="hidden w-full mt-4 bg-yellow-400 hover:bg-yellow-500 text-amber-950 font-fredoka text-xl py-3 rounded-2xl shadow-lg transition transform active:scale-95 flex items-center justify-center gap-2">
+            Next Question <i class="fa-solid fa-arrow-right"></i>
+        </button>
 
-        <div class="explanation-box" id="explanation-box">
-            <div class="explanation-title">💡 Logic Explanation</div>
-            <div class="explanation-text" id="explanation-text"></div>
+        <!-- Final Results Screen (Hidden initially) -->
+        <div id="result-screen" class="hidden text-center py-8">
+            <div class="text-6xl mb-4 animate-bounce">🏆</div>
+            <h2 class="text-3xl font-fredoka text-slate-800 mb-2">Quiz Completed!</h2>
+            <p class="text-slate-600 font-semibold mb-6">You're a Flappy Bird Scratch Master!</p>
+            
+            <div class="bg-yellow-50 border-2 border-yellow-200 rounded-2xl p-6 mb-6 inline-block w-full max-w-sm">
+                <div class="text-sm text-slate-500 uppercase tracking-wider font-bold mb-1">Final Score</div>
+                <div class="text-5xl font-fredoka text-yellow-500" id="final-score">0/10</div>
+            </div>
+
+            <button onclick="restartQuiz()" class="bg-sky-500 hover:bg-sky-600 text-white font-fredoka text-xl py-3 px-8 rounded-2xl shadow-lg transition transform active:scale-95 flex items-center justify-center gap-2 mx-auto">
+                <i class="fa-solid fa-rotate-right"></i> Play Again
+            </button>
         </div>
 
-        <button class="next-btn" id="next-btn" onclick="nextQuestion()">Next Question ➔</button>
     </div>
 
-    <div class="results-card" id="results-screen">
-        <h2>🎉 Assessment Complete!</h2>
-        <p>Here is your performance on the STEMpedia AI Home Automation project:</p>
-        <div class="score-circle">
-            <div class="score-num" id="final-score">0/10</div>
-            <div style="font-size: 12px; color: #a855f7; font-weight: 800;">TOTAL SCORE</div>
-        </div>
-        <p id="feedback-msg" style="font-size: 18px; font-weight: 700; margin-bottom: 20px;"></p>
-        <button class="restart-btn" onclick="restartQuiz()">Retake Quiz 🔄</button>
-    </div>
-</div>
-
-<script>
-    let audioCtx = null;
-    function playSound(type) {
-        try {
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-
-            if (type === 'correct') {
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
-                osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1);
-                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.3);
-            } else if (type === 'wrong') {
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(220, audioCtx.currentTime);
-                osc.frequency.setValueAtTime(174.61, audioCtx.currentTime + 0.15);
-                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+    <script>
+        const quizData = [
+            {
+                type: "Event Trigger",
+                question: "1. Which Scratch event block is best to start your Flappy Bird game when the Green Flag is clicked?",
+                visual: `<div class="scratch-block sb-hat"><i class="fa-solid fa-flag"></i> when green flag clicked</div>`,
+                options: [
+                    "when green flag clicked",
+                    "when space key pressed",
+                    "when this sprite clicked",
+                    "when I receive start"
+                ],
+                correct: 0,
+                explanation: "The 'when green flag clicked' block resets and starts the entire game from the very beginning!"
+            },
+            {
+                type: "Flap Mechanics",
+                question: "2. How do you make Flappy Bird jump UP when you press the Space key?",
+                visual: `
+                    <div class="flex items-center gap-2 bg-white p-3 rounded-xl border border-sky-200">
+                        <span class="text-3xl">🐤</span>
+                        <div class="text-left">
+                            <div class="text-xs text-gray-500 font-bold">TARGET ACTION:</div>
+                            <div class="text-sm font-bold text-sky-600">Jump 10 steps UP on Y-axis</div>
+                        </div>
+                    </div>
+                `,
+                options: [
+                    "change y by 10",
+                    "change x by 10",
+                    "change y by -10",
+                    "turn 15 degrees"
+                ],
+                correct: 0,
+                explanation: "In Scratch, positive Y values move sprites UP! So 'change y by 10' pushes the bird upward."
+            },
+            {
+                type: "Gravity Simulation",
+                question: "3. Flappy Bird needs gravity to fall down continuously. Which block makes the bird fall?",
+                visual: `
+                    <div class="flex flex-col items-center gap-1">
+                        <span class="text-3xl animate-bounce">🐤</span>
+                        <i class="fa-solid fa-arrow-down text-red-500 text-xl"></i>
+                    </div>
+                `,
+                options: [
+                    "change y by 10",
+                    "change y by -5",
+                    "change x by -5",
+                    "set y to 0"
+                ],
+                correct: 1,
+                explanation: "Negative Y numbers pull the bird downwards toward the ground, simulating real gravity!"
+            },
+            {
+                type: "Pipe Obstacle Movement",
+                question: "4. The pipe obstacles move from the right side of the screen to the left. Which block does this?",
+                visual: `
+                    <div class="flex items-center gap-4 bg-white p-3 rounded-xl border border-sky-200">
+                        <div class="text-2xl">🟢</div>
+                        <i class="fa-solid fa-left-long text-sky-500 text-2xl"></i>
+                        <span class="text-xs font-bold text-slate-500">Pipe moves Left</span>
+                    </div>
+                `,
+                options: [
+                    "change y by 5",
+                    "change x by 5",
+                    "change x by -8",
+                    "point in direction 180"
+                ],
+                correct: 2,
+                explanation: "Negative X values move sprites to the LEFT. Changing X by -8 makes pipes scroll smoothly past the bird!"
+            },
+            {
+                type: "Collision Detection",
+                question: "5. How do we detect if Flappy Bird hits a pipe or crashes into the ground?",
+                visual: `
+                    <div class="scratch-block sb-sensing">
+                        touching <span class="sb-slot">Pipe 🟢</span> ?
+                    </div>
+                `,
+                options: [
+                    "if touching Pipe? then",
+                    "if key space pressed? then",
+                    "if mouse down? then",
+                    "if distance < 10 then"
+                ],
+                correct: 0,
+                explanation: "The 'touching [sprite]?' sensing block checks if two sprites are touching each other to trigger Game Over!"
+            },
+            {
+                type: "Score Counter",
+                question: "6. Which block increases your score by 1 every time you safely clear a pipe?",
+                visual: `
+                    <div class="scratch-block sb-variables">
+                        change <span class="sb-slot">Score 🏆</span> by 1
+                    </div>
+                `,
+                options: [
+                    "set Score to 1",
+                    "change Score by 1",
+                    "show variable Score",
+                    "Score = 1"
+                ],
+                correct: 1,
+                explanation: "'change [Score] by 1' adds 1 to your current score. 'set Score to 1' would reset your score to 1 every time!"
+            },
+            {
+                type: "End Game Logic",
+                question: "7. When Flappy Bird crashes, what block stops all scripts so the game ends?",
+                visual: `
+                    <div class="bg-red-100 border-2 border-red-300 p-3 rounded-xl text-red-600 font-bold flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-hand text-xl"></i> GAME OVER!
+                    </div>
+                `,
+                options: [
+                    "stop [all]",
+                    "hide",
+                    "wait 1 secs",
+                    "delete this clone"
+                ],
+                correct: 0,
+                explanation: "The 'stop [all]' control block freezes the entire game, bringing everything to a complete stop on Game Over!"
+            },
+            {
+                type: "Cloning Pipes",
+                question: "8. To create endless incoming pipes without making 100 sprites, what Scratch feature do we use?",
+                visual: `
+                    <div class="scratch-block sb-control">
+                        create clone of <span class="sb-slot">myself</span>
+                    </div>
+                `,
+                options: [
+                    "costume switches",
+                    "broadcast messages",
+                    "Clones (create clone of myself)",
+                    "stamp tool"
+                ],
+                correct: 2,
+                explanation: "Cloning allows one Pipe sprite to duplicate itself forever to make continuous obstacles!"
+            },
+            {
+                type: "Random Pipe Heights",
+                question: "9. To make pipe gaps appear at random heights, which operator block should we place in 'set y to ...'?",
+                visual: `
+                    <div class="scratch-block sb-operators">
+                        pick random <span class="sb-slot">-80</span> to <span class="sb-slot">80</span>
+                    </div>
+                `,
+                options: [
+                    "pick random -80 to 80",
+                    "join hello world",
+                    "round 80",
+                    "80 + 80"
+                ],
+                correct: 0,
+                explanation: "The 'pick random' operator chooses a different height every time a pipe spawns, making the game fun and unpredictable!"
+            },
+            {
+                type: "Game Initialization",
+                question: "10. When starting a fresh game, what should happen to the Score variable?",
+                visual: `
+                    <div class="scratch-block sb-variables">
+                        set <span class="sb-slot">Score 🏆</span> to 0
+                    </div>
+                `,
+                options: [
+                    "change Score by 1",
+                    "set Score to 0",
+                    "show variable Score",
+                    "hide variable Score"
+                ],
+                correct: 1,
+                explanation: "Always reset your score back to 0 at the start of a new game using 'set Score to 0'!"
             }
-        } catch(e) {}
-    }
+        ];
 
-    const questions = [
-        {
-            q: "Which sprite acts as the virtual AI assistant in STEMpedia's AI Home Automation project to receive voice commands?",
-            code: null,
-            options: [
-                { text: "Abby", correct: false, exp: "Abby is used in driver/card recognition tutorials." },
-                { text: "Tobi", correct: false, exp: "Tobi is the default bear sprite in PictoBlox, not used as the assistant here." },
-                { text: "John", correct: true, exp: "John is selected as the main assistant sprite that listens to voice input and triggers home appliances." },
-                { text: "Dev", correct: false, exp: "Dev is a different standard PictoBlox character." }
-            ]
-        },
-        {
-            q: "Which specific PictoBlox block is used by John to capture the user's voice input for a duration of 5 seconds?",
-            code: null,
-            options: [
-                { text: "recognize speech for (5) sec in (English)", correct: true, exp: "This block opens the microphone for 5 seconds to convert voice into text." },
-                { text: "ask [What is your command?] and wait", correct: false, exp: "This opens a text input box, not voice recognition." },
-                { text: "listen to sound for (5) secs", correct: false, exp: "This is not a valid PictoBlox block." },
-                { text: "speak [recognize voice] for (5) secs", correct: false, exp: "The speak block is from Text-to-Speech and outputs audio instead of listening." }
-            ]
-        },
-        {
-            q: "In John's script, how does the program verify if the user commanded the room lights to turn on?",
-            code: "if <(speech recognition result) contains [Lights on]?> then\n    speak [Switching on the Lights]\n    broadcast [Lights ON]\nend",
-            options: [
-                { text: "By checking if (speech recognition result) contains 'Lights on'", correct: true, exp: "The 'contains' block checks if the spoken words match the keyword string." },
-                { text: "By measuring if <loudness > 50>", correct: false, exp: "Loudness checks sound volume, not command content." },
-                { text: "By checking if <key [space v] pressed?>", correct: false, exp: "Key press checks keyboard input." },
-                { text: "By checking if <touching [Lamp v]?>", correct: false, exp: "Touching checks sprite collision." }
-            ]
-        },
-        {
-            q: "How does John communicate back to the user after recognizing a command in this project?",
-            code: null,
-            options: [
-                { text: "Using 'speak ()' from Text to Speech and 'say ()' from Looks", correct: true, exp: "The project uses both 'speak' (audio synthesis) and 'say' (speech bubble) so John talks and shows text." },
-                { text: "By playing guitar notes using the Music extension", correct: false, exp: "Music extension is not used for voice responses." },
-                { text: "By changing the backdrop color directly", correct: false, exp: "John speaks verbally rather than just changing backgrounds." },
-                { text: "By printing output to the terminal only", correct: false, exp: "Scratch block-based projects use stage visual/audio outputs." }
-            ]
-        },
-        {
-            q: "How does John's script signal the Lamp sprite to turn ON without directly modifying the Lamp's code inside her own block?",
-            code: null,
-            options: [
-                { text: "By sending a 'broadcast [Lights ON]' message", correct: true, exp: "Broadcast blocks allow John to send event signals across different sprites." },
-                { text: "By changing a physical pin output on Arduino", correct: false, exp: "This project is animated on stage using broadcasts rather than microcontroller pin programming." },
-                { text: "By moving Abby to x: 0 y: 0", correct: false, exp: "Positioning does not trigger sprite actions." },
-                { text: "By setting variable [Lights] to 100", correct: false, exp: "The STEMpedia script specifically uses broadcast messages." }
-            ]
-        },
-        {
-            q: "When the Lamp sprite receives the broadcast 'Lights ON', how does it visually look like it turned on?",
-            code: "when I receive [Lights ON v]\nswitch costume to [lamp-light-animation2 v]",
-            options: [
-                { text: "It switches its costume to 'lamp-light-animation2'", correct: true, exp: "Changing the costume to the glowing lamp costume provides the visual 'ON' state." },
-                { text: "It glides across the bedroom stage", correct: false, exp: "The lamp remains stationary in the bedroom." },
-                { text: "It increases its size by 200%", correct: false, exp: "Size stays constant." },
-                { text: "It spins 360 degrees", correct: false, exp: "Rotation is not used for the lamp." }
-            ]
-        },
-        {
-            q: "How is the Fan sprite animated to simulate continuous spinning when it receives 'Fan ON'?",
-            code: "when I receive [Fan ON v]\nrepeat until <(speech recognition result) contains [fan off]>\n    next costume\n    wait (0.001) seconds\nend",
-            options: [
-                { text: "Using a 'repeat until' loop cycling 'next costume' until 'fan off' is recognized", correct: true, exp: "Cycling through fan costumes inside a repeat until loop creates the spinning animation." },
-                { text: "Using a 'turn clockwise 15 degrees' block inside a forever loop", correct: false, exp: "The STEMpedia script rotates fan costumes rather than degree turns." },
-                { text: "By moving the fan left and right across the stage", correct: false, exp: "The fan stays mounted in position." },
-                { text: "By changing the fan color effect continuously", correct: false, exp: "Color effects are not used for spinning." }
-            ]
-        },
-        {
-            q: "What action occurs when John recognizes the voice command 'play song' or 'radio on'?",
-            code: "when I receive [Radio ON v]\nplay sound [Spiderman v] until done",
-            options: [
-                { text: "The Radio sprite plays the Spider-Man theme sound track", correct: true, exp: "The Radio script triggers the loaded audio track when receiving the Radio ON broadcast." },
-                { text: "The Radio sprite hides from the stage", correct: false, exp: "The radio remains visible." },
-                { text: "The camera feed turns on", correct: false, exp: "Camera is not used in this specific project." },
-                { text: "The text-to-speech reads out news headlines", correct: false, exp: "The radio specifically plays the project's sound clip." }
-            ]
-        },
-        {
-            q: "How does the room backdrop react when the command 'Lights OFF' is triggered?",
-            code: "when I receive [Lights OFF v]\nset brightness effect to (-50)",
-            options: [
-                { text: "The Stage sets its brightness effect to a negative value (-50) to darken the room", correct: true, exp: "Decreasing stage brightness simulates turning off ambient room lights." },
-                { text: "The Stage switches to a completely black costume", correct: false, exp: "It uses graphic brightness effects rather than costume changes." },
-                { text: "The Stage deletes all sprites", correct: false, exp: "Sprites remain on stage." },
-                { text: "The Stage stops all running scripts", correct: false, exp: "The main loop continues running so it can listen for further commands." }
-            ]
-        },
-        {
-            q: "Which two PictoBlox Extensions are strictly required to build this stage-based Home Automation project?",
-            code: null,
-            options: [
-                { text: "Speech Recognition and Text to Speech", correct: true, exp: "Speech Recognition listens to user voice commands, and Text to Speech lets Abby talk back." },
-                { text: "Face Detection and Micro:bit", correct: false, exp: "Face detection is not used in this project." },
-                { text: "Arduino Actuators and Dabble", correct: false, exp: "This tutorial is purely soft-simulated on stage without hardware board extensions." },
-                { text: "Machine Learning and Pen Extension", correct: false, exp: "Neither ML model training nor Pen drawing is required for this voice project." }
-            ]
-        }
-    ];
+        let currentQuestion = 0;
+        let score = 0;
+        let timer = 25;
+        let timerInterval = null;
+        let optionSelected = false;
 
-    let currentQ = 0, quizScore = 0, quizTimer, quizTimeLeft = 25, answered = false;
+        function startTimer() {
+            timer = 25;
+            optionSelected = false;
+            updateTimerDisplay();
+            
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timer--;
+                updateTimerDisplay();
 
-    function loadQuestion() {
-        answered = false;
-        clearInterval(quizTimer);
-        quizTimeLeft = 25;
-        updateTimerUI();
-        
-        const q = questions[currentQ];
-        document.getElementById('question-number').innerText = `Q${currentQ + 1} / ${questions.length}`;
-        document.getElementById('question-text').innerText = q.q;
-        document.getElementById('progress-fill').style.width = `${((currentQ + 1) / questions.length) * 100}%`;
-        
-        const codeBox = document.getElementById('code-snippet');
-        if (q.code) { codeBox.innerText = q.code; codeBox.style.display = 'block'; } 
-        else { codeBox.style.display = 'none'; }
-
-        const grid = document.getElementById('options-grid');
-        grid.innerHTML = '';
-        document.getElementById('explanation-box').style.display = 'none';
-        document.getElementById('next-btn').style.display = 'none';
-
-        q.options.forEach((opt, idx) => {
-            const btn = document.createElement('button');
-            btn.className = 'option-btn';
-            btn.innerHTML = `<span>${String.fromCharCode(65 + idx)}) ${opt.text}</span>`;
-            btn.onclick = () => selectOption(idx);
-            grid.appendChild(btn);
-        });
-
-        quizTimer = setInterval(() => {
-            quizTimeLeft--;
-            updateTimerUI();
-            if (quizTimeLeft <= 0) { clearInterval(quizTimer); autoTimeOut(); }
-        }, 1000);
-    }
-
-    function updateTimerUI() {
-        document.getElementById('timer-text').innerText = quizTimeLeft;
-        const pct = (quizTimeLeft / 25) * 100;
-        document.getElementById('timer-circle').style.background = `conic-gradient(#f43f5e ${pct}%, #581c87 0%)`;
-    }
-
-    function selectOption(idx) {
-        if (answered) return;
-        answered = true;
-        clearInterval(quizTimer);
-
-        const q = questions[currentQ];
-        const selected = q.options[idx];
-        const btns = document.querySelectorAll('.option-btn');
-
-        btns.forEach((btn, i) => {
-            btn.disabled = true;
-            if (q.options[i].correct) btn.classList.add('correct');
-        });
-
-        if (selected.correct) {
-            btns[idx].classList.add('correct');
-            quizScore++;
-            document.getElementById('current-score').innerText = quizScore * 10;
-            playSound('correct');
-        } else {
-            btns[idx].classList.add('wrong');
-            playSound('wrong');
+                if (timer <= 0) {
+                    clearInterval(timerInterval);
+                    handleTimeout();
+                }
+            }, 1000);
         }
 
-        document.getElementById('explanation-text').innerText = selected.exp;
-        document.getElementById('explanation-box').style.display = 'block';
-        document.getElementById('next-btn').style.display = 'block';
-    }
+        function updateTimerDisplay() {
+            const timerBar = document.getElementById("timer-bar");
+            const timerText = document.getElementById("timer-text");
+            
+            timerText.innerText = `${timer}s`;
+            const percentage = (timer / 25) * 100;
+            timerBar.style.width = `${percentage}%`;
 
-    function autoTimeOut() {
-        if (answered) return;
-        answered = true;
-        const q = questions[currentQ];
-        const btns = document.querySelectorAll('.option-btn');
-        btns.forEach((btn, i) => {
-            btn.disabled = true;
-            if (q.options[i].correct) btn.classList.add('correct');
-        });
-        playSound('wrong');
-        document.getElementById('explanation-text').innerText = "Time expired! Review the STEMpedia script logic.";
-        document.getElementById('explanation-box').style.display = 'block';
-        document.getElementById('next-btn').style.display = 'block';
-    }
+            if (timer <= 5) {
+                timerBar.className = "bg-red-500 h-full transition-all duration-1000 ease-linear";
+            } else if (timer <= 12) {
+                timerBar.className = "bg-amber-400 h-full transition-all duration-1000 ease-linear";
+            } else {
+                timerBar.className = "bg-emerald-400 h-full transition-all duration-1000 ease-linear";
+            }
+        }
 
-    function nextQuestion() {
-        currentQ++;
-        if (currentQ < questions.length) loadQuestion();
-        else showResults();
-    }
+        function loadQuestion() {
+            const q = quizData[currentQuestion];
+            document.getElementById("question-number").innerText = `Question ${currentQuestion + 1} of ${quizData.length}`;
+            document.getElementById("question-text").innerText = q.question;
+            document.getElementById("visual-container").innerHTML = q.visual;
+            
+            const optionsContainer = document.getElementById("options-container");
+            optionsContainer.innerHTML = "";
 
-    function showResults() {
-        document.getElementById('quiz-screen').style.display = 'none';
-        document.getElementById('results-screen').style.display = 'block';
-        document.getElementById('final-score').innerText = `${quizScore}/${questions.length}`;
-        const msg = document.getElementById('feedback-msg');
-        msg.innerText = quizScore >= 7 ? "Great job! Perfect understanding of STEMpedia's PictoBlox logic." : "Review Abby's broadcast blocks and try again!";
-    }
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement("button");
+                btn.className = "option-btn text-left p-4 rounded-xl border-2 border-slate-200 hover:border-sky-400 bg-white font-semibold text-slate-700 shadow-sm transition hover:shadow-md active:scale-98 flex items-center justify-between";
+                btn.onclick = () => selectOption(idx);
+                btn.id = `opt-${idx}`;
+                btn.innerHTML = `<span>${opt}</span><i class="opt-icon fa-regular fa-circle text-slate-300"></i>`;
+                optionsContainer.appendChild(btn);
+            });
 
-    function restartQuiz() {
-        currentQ = 0; quizScore = 0;
-        document.getElementById('current-score').innerText = 0;
-        document.getElementById('results-screen').style.display = 'none';
-        document.getElementById('quiz-screen').style.display = 'block';
-        loadQuestion();
-    }
+            // Reset Feedback & Next Button
+            const feedbackCard = document.getElementById("feedback-card");
+            feedbackCard.className = "hidden rounded-2xl p-4 border-2 transition-all";
+            document.getElementById("next-btn").classList.add("hidden");
 
-    loadQuestion();
-</script>
+            startTimer();
+        }
+
+        function selectOption(index) {
+            if (optionSelected) return;
+            optionSelected = true;
+            clearInterval(timerInterval);
+
+            const q = quizData[currentQuestion];
+            const isCorrect = index === q.correct;
+
+            if (isCorrect) score++;
+            document.getElementById("score").innerText = `Score: ${score}`;
+
+            highlightOptions(q.correct, index);
+            showFeedback(isCorrect, q.explanation);
+        }
+
+        function handleTimeout() {
+            if (optionSelected) return;
+            optionSelected = true;
+
+            const q = quizData[currentQuestion];
+            highlightOptions(q.correct, -1);
+            showFeedback(false, "Time's up! " + q.explanation);
+        }
+
+        function highlightOptions(correctIdx, selectedIdx) {
+            const buttons = document.querySelectorAll(".option-btn");
+            buttons.forEach((btn, idx) => {
+                btn.disabled = true;
+                const icon = btn.querySelector(".opt-icon");
+
+                if (idx === correctIdx) {
+                    btn.className = "option-btn text-left p-4 rounded-xl border-2 border-emerald-500 bg-emerald-50 font-bold text-emerald-800 shadow-sm flex items-center justify-between";
+                    icon.className = "opt-icon fa-solid fa-circle-check text-emerald-500 text-xl";
+                } else if (idx === selectedIdx) {
+                    btn.className = "option-btn text-left p-4 rounded-xl border-2 border-rose-500 bg-rose-50 font-bold text-rose-800 shadow-sm flex items-center justify-between";
+                    icon.className = "opt-icon fa-solid fa-circle-xmark text-rose-500 text-xl";
+                } else {
+                    btn.className = "option-btn text-left p-4 rounded-xl border-2 border-slate-100 bg-slate-50 opacity-60 text-slate-400 flex items-center justify-between";
+                }
+            });
+        }
+
+        function showFeedback(isCorrect, text) {
+            const card = document.getElementById("feedback-card");
+            const title = document.getElementById("feedback-title");
+            const desc = document.getElementById("feedback-text");
+
+            card.classList.remove("hidden");
+            if (isCorrect) {
+                card.className = "rounded-2xl p-4 border-2 border-emerald-300 bg-emerald-50 transition-all";
+                title.className = "flex items-center gap-2 font-bold text-lg mb-1 text-emerald-700";
+                title.innerHTML = `<i class="fa-solid fa-face-smile text-2xl"></i> Correct! Great Job!`;
+            } else {
+                card.className = "rounded-2xl p-4 border-2 border-rose-300 bg-rose-50 transition-all";
+                title.className = "flex items-center gap-2 font-bold text-lg mb-1 text-rose-700";
+                title.innerHTML = `<i class="fa-solid fa-face-frown text-2xl"></i> Oops! Let's Learn!`;
+            }
+
+            desc.innerText = text;
+            document.getElementById("next-btn").classList.remove("hidden");
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            clearInterval(timerInterval);
+            document.getElementById("quiz-box").classList.add("hidden");
+            document.getElementById("next-btn").classList.add("hidden");
+            document.getElementById("result-screen").classList.remove("hidden");
+            document.getElementById("final-score").innerText = `${score}/${quizData.length}`;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById("score").innerText = `Score: 0`;
+            document.getElementById("result-screen").classList.add("hidden");
+            document.getElementById("quiz-box").classList.remove("hidden");
+            loadQuestion();
+        }
+
+        // Initialize App
+        window.onload = loadQuestion;
+    </script>
 </body>
 </html>
+```eof
+
+I have created an interactive Scratch quiz on the **Flappy Bird** project tailored for kids aged 7–9! 
+
+### Features Included:
+1. **10 Diverse Question Types:** Covers event triggers, gravity simulations, jump controls, scrolling obstacles, clone mechanics, randomized gap heights, collision sensing, score counters, and game-over states.
+2. **25-Second Timer:** Dynamic countdown timer bar for each question.
+3. **Visual Placeholders:** Colorful Scratch block graphics and stage visual cues for every question.
+4. **Instant Green/Red Feedback:** Clear visual highlighting of correct (green) and incorrect (red) answers upon selection, accompanied by beginner-friendly explanations.
