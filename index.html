@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scratch Flappy Bird Coding Quiz</title>
+    <title>micro:bit Beginners Block Quiz</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -11,67 +11,54 @@
         
         body {
             font-family: 'Quicksand', sans-serif;
-            background: linear-gradient(135deg, #4ec0ca 0%, #2094fa 100%);
+            background: linear-gradient(135deg, #00C853 0%, #0091EA 100%);
         }
         .font-fredoka {
             font-family: 'Fredoka One', cursive;
         }
         
-        /* Scratch Block Styling */
-        .scratch-block {
+        /* MakeCode Block Styling */
+        .makecode-block {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             font-weight: bold;
             font-size: 14px;
             color: white;
-            padding: 8px 12px;
+            padding: 8px 14px;
             border-radius: 6px;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             box-shadow: 0px 3px 0px rgba(0,0,0,0.2);
             user-select: none;
         }
-        .sb-hat {
-            background-color: #ffbf00;
-            border-top-left-radius: 16px;
-            border-top-right-radius: 16px;
-            color: #4c3e00;
-        }
-        .sb-motion { background-color: #4c97ff; }
-        .sb-looks { background-color: #9966ff; }
-        .sb-control { background-color: #ffab19; }
-        .sb-sensing { background-color: #5cb1d6; }
-        .sb-variables { background-color: #ff8c1a; }
-        .sb-operators { background-color: #59c059; }
-        .sb-slot {
+        .mb-basic { background-color: #008272; }
+        .mb-input { background-color: #D4006D; }
+        .mb-music { background-color: #E65100; }
+        .mb-led { background-color: #5C6BC0; }
+        .mb-loops { background-color: #107C41; }
+        .mb-logic { background-color: #00695C; }
+        .mb-variables { background-color: #DC3545; }
+        .mb-radio { background-color: #E3008C; }
+        
+        .mb-slot {
             background: white;
             color: #333;
             padding: 2px 8px;
             border-radius: 10px;
             font-size: 13px;
         }
-
-        /* Pulse Animation */
-        @keyframes pulse-ring {
-            0% { transform: scale(0.95); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(0.95); }
-        }
-        .animate-pulse-slow {
-            animation: pulse-ring 2s infinite;
-        }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
 
-    <!-- Container -->
-    <div class="bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl p-6 sm:p-8 max-w-2xl w-full border-4 border-yellow-300 relative overflow-hidden">
+    <!-- App Container -->
+    <div class="bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl p-6 sm:p-8 max-w-2xl w-full border-4 border-emerald-300 relative overflow-hidden">
         
-        <!-- Header / Progress Bar -->
+        <!-- Header / Score -->
         <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-2">
-                <span class="text-3xl">🐤</span>
-                <h1 class="text-2xl font-fredoka text-yellow-500 tracking-wide drop-shadow-sm">Flappy Scratch!</h1>
+                <span class="text-3xl">📟</span>
+                <h1 class="text-2xl font-fredoka text-emerald-600 tracking-wide drop-shadow-sm">micro:bit Quest!</h1>
             </div>
             <div class="text-right">
                 <span id="score" class="text-lg font-bold text-sky-600 bg-sky-100 px-3 py-1 rounded-full">Score: 0</span>
@@ -79,8 +66,8 @@
         </div>
 
         <!-- Question Counter & Timer -->
-        <div class="flex justify-between items-center bg-sky-50 rounded-2xl p-3 mb-4 border-2 border-sky-200">
-            <div class="font-bold text-sky-700" id="question-number">Question 1 of 10</div>
+        <div class="flex justify-between items-center bg-emerald-50 rounded-2xl p-3 mb-4 border-2 border-emerald-200">
+            <div class="font-bold text-emerald-700" id="question-number">Question 1 of 10</div>
             
             <!-- 25s Countdown Timer -->
             <div class="flex items-center gap-2">
@@ -92,50 +79,46 @@
             </div>
         </div>
 
-        <!-- Question Container -->
+        <!-- Quiz Container -->
         <div id="quiz-box">
-            <!-- Question Title -->
             <h2 id="question-text" class="text-xl font-bold text-slate-800 mb-4 min-h-[56px] flex items-center">
-                Loading question...
+                Loading micro:bit question...
             </h2>
 
-            <!-- Image/Visual Placeholder -->
-            <div id="visual-container" class="bg-sky-100/70 border-2 border-dashed border-sky-300 rounded-2xl p-4 mb-5 flex flex-col items-center justify-center min-h-[140px] text-center">
-                <!-- Dynamic Visual content will be injected here -->
+            <!-- Visual Block Diagram Placeholder -->
+            <div id="visual-container" class="bg-slate-100 border-2 border-dashed border-slate-300 rounded-2xl p-4 mb-5 flex flex-col items-center justify-center min-h-[130px] text-center">
             </div>
 
-            <!-- 4 Answer Options -->
+            <!-- Options Grid -->
             <div id="options-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
-                <!-- Buttons injected dynamically -->
             </div>
 
-            <!-- Feedback / Explanation Card -->
+            <!-- Feedback & Explanation Card -->
             <div id="feedback-card" class="hidden rounded-2xl p-4 border-2 transition-all">
                 <div class="flex items-center gap-2 font-bold text-lg mb-1" id="feedback-title">
-                    <!-- Icon + Status -->
                 </div>
                 <p id="feedback-text" class="text-sm font-medium text-slate-700 leading-relaxed"></p>
             </div>
         </div>
 
-        <!-- Next / Finish Button -->
-        <button id="next-btn" onclick="nextQuestion()" class="hidden w-full mt-4 bg-yellow-400 hover:bg-yellow-500 text-amber-950 font-fredoka text-xl py-3 rounded-2xl shadow-lg transition transform active:scale-95 flex items-center justify-center gap-2">
+        <!-- Next Button -->
+        <button id="next-btn" onclick="nextQuestion()" class="hidden w-full mt-4 bg-emerald-500 hover:bg-emerald-600 text-white font-fredoka text-xl py-3 rounded-2xl shadow-lg transition transform active:scale-95 flex items-center justify-center gap-2">
             Next Question <i class="fa-solid fa-arrow-right"></i>
         </button>
 
-        <!-- Final Results Screen (Hidden initially) -->
+        <!-- Final Results Screen -->
         <div id="result-screen" class="hidden text-center py-8">
-            <div class="text-6xl mb-4 animate-bounce">🏆</div>
-            <h2 class="text-3xl font-fredoka text-slate-800 mb-2">Quiz Completed!</h2>
-            <p class="text-slate-600 font-semibold mb-6">You're a Flappy Bird Scratch Master!</p>
+            <div class="text-6xl mb-4 animate-bounce">🤖</div>
+            <h2 class="text-3xl font-fredoka text-slate-800 mb-2">Awesome Job!</h2>
+            <p class="text-slate-600 font-semibold mb-6">You are now a certified micro:bit Coder!</p>
             
-            <div class="bg-yellow-50 border-2 border-yellow-200 rounded-2xl p-6 mb-6 inline-block w-full max-w-sm">
+            <div class="bg-emerald-50 border-2 border-emerald-200 rounded-2xl p-6 mb-6 inline-block w-full max-w-sm">
                 <div class="text-sm text-slate-500 uppercase tracking-wider font-bold mb-1">Final Score</div>
-                <div class="text-5xl font-fredoka text-yellow-500" id="final-score">0/10</div>
+                <div class="text-5xl font-fredoka text-emerald-600" id="final-score">0/10</div>
             </div>
 
             <button onclick="restartQuiz()" class="bg-sky-500 hover:bg-sky-600 text-white font-fredoka text-xl py-3 px-8 rounded-2xl shadow-lg transition transform active:scale-95 flex items-center justify-center gap-2 mx-auto">
-                <i class="fa-solid fa-rotate-right"></i> Play Again
+                <i class="fa-solid fa-rotate-right"></i> Try Again
             </button>
         </div>
 
@@ -144,177 +127,154 @@
     <script>
         const quizData = [
             {
-                type: "Event Trigger",
-                question: "1. Which Scratch event block is best to start your Flappy Bird game when the Green Flag is clicked?",
-                visual: `<div class="scratch-block sb-hat"><i class="fa-solid fa-flag"></i> when green flag clicked</div>`,
+                type: "Display Basics",
+                question: "1. Which block is used to light up a picture on the 5x5 LED grid screen?",
+                visual: `<div class="makecode-block mb-basic">show icon <span class="mb-slot">❤️</span></div>`,
                 options: [
-                    "when green flag clicked",
-                    "when space key pressed",
-                    "when this sprite clicked",
-                    "when I receive start"
+                    "show icon",
+                    "show string",
+                    "clear screen",
+                    "pause"
                 ],
                 correct: 0,
-                explanation: "The 'when green flag clicked' block resets and starts the entire game from the very beginning!"
+                explanation: "The 'show icon' block lets you select built-in pictures like a Heart, Smile, or Duck to light up on the micro:bit LEDs!"
             },
             {
-                type: "Flap Mechanics",
-                question: "2. How do you make Flappy Bird jump UP when you press the Space key?",
+                type: "Button Inputs",
+                question: "2. You want code to run ONLY when Button A is pressed. Which input block should you use?",
+                visual: `<div class="makecode-block mb-input">on button <span class="mb-slot">A</span> pressed</div>`,
+                options: [
+                    "on button A pressed",
+                    "on shake",
+                    "on loud sound",
+                    "forever"
+                ],
+                correct: 0,
+                explanation: "'on button A pressed' is an event block that waits until your finger pushes Button A on the micro:bit!"
+            },
+            {
+                type: "Text Scrolling",
+                question: "3. Which block scrolls words or letters across the LED screen?",
+                visual: `<div class="makecode-block mb-basic">show string <span class="mb-slot">\"Hello!\"</span></div>`,
+                options: [
+                    "show number",
+                    "show string",
+                    "show leds",
+                    "plot x y"
+                ],
+                correct: 1,
+                explanation: "In coding, words are called 'strings'. The 'show string' block scrolls text across the display one letter at a time."
+            },
+            {
+                type: "Motion Sensing",
+                question: "4. Which gesture event triggers when you give your micro:bit a firm shake?",
                 visual: `
-                    <div class="flex items-center gap-2 bg-white p-3 rounded-xl border border-sky-200">
-                        <span class="text-3xl">🐤</span>
+                    <div class="flex items-center gap-3 bg-white p-3 rounded-xl border border-slate-200">
+                        <span class="text-3xl animate-bounce">📟</span>
                         <div class="text-left">
-                            <div class="text-xs text-gray-500 font-bold">TARGET ACTION:</div>
-                            <div class="text-sm font-bold text-sky-600">Jump 10 steps UP on Y-axis</div>
+                            <div class="text-xs text-gray-500 font-bold">SENSOR EVENT:</div>
+                            <div class="text-sm font-bold text-pink-600">Detecting sudden movement!</div>
                         </div>
                     </div>
                 `,
                 options: [
-                    "change y by 10",
-                    "change x by 10",
-                    "change y by -10",
-                    "turn 15 degrees"
-                ],
-                correct: 0,
-                explanation: "In Scratch, positive Y values move sprites UP! So 'change y by 10' pushes the bird upward."
-            },
-            {
-                type: "Gravity Simulation",
-                question: "3. Flappy Bird needs gravity to fall down continuously. Which block makes the bird fall?",
-                visual: `
-                    <div class="flex flex-col items-center gap-1">
-                        <span class="text-3xl animate-bounce">🐤</span>
-                        <i class="fa-solid fa-arrow-down text-red-500 text-xl"></i>
-                    </div>
-                `,
-                options: [
-                    "change y by 10",
-                    "change y by -5",
-                    "change x by -5",
-                    "set y to 0"
+                    "on logo touched",
+                    "on shake",
+                    "on button B pressed",
+                    "on screen up"
                 ],
                 correct: 1,
-                explanation: "Negative Y numbers pull the bird downwards toward the ground, simulating real gravity!"
+                explanation: "The micro:bit has an internal accelerometer sensor that detects when you shake it in your hand!"
             },
             {
-                type: "Pipe Obstacle Movement",
-                question: "4. The pipe obstacles move from the right side of the screen to the left. Which block does this?",
+                type: "Forever Loop",
+                question: "5. What is the difference between 'on start' and 'forever' blocks?",
                 visual: `
-                    <div class="flex items-center gap-4 bg-white p-3 rounded-xl border border-sky-200">
-                        <div class="text-2xl">🟢</div>
-                        <i class="fa-solid fa-left-long text-sky-500 text-2xl"></i>
-                        <span class="text-xs font-bold text-slate-500">Pipe moves Left</span>
+                    <div class="flex flex-col gap-2">
+                        <div class="makecode-block mb-basic">on start</div>
+                        <div class="makecode-block mb-basic">forever</div>
                     </div>
                 `,
                 options: [
-                    "change y by 5",
-                    "change x by 5",
-                    "change x by -8",
-                    "point in direction 180"
+                    "'on start' runs non-stop continuously",
+                    "'forever' runs only once when powered on",
+                    "'on start' runs once at boot; 'forever' repeats endlessly",
+                    "Both blocks do the exact same thing"
                 ],
                 correct: 2,
-                explanation: "Negative X values move sprites to the LEFT. Changing X by -8 makes pipes scroll smoothly past the bird!"
+                explanation: "'on start' sets things up once at boot time, while 'forever' repeats its code inside over and over endlessly!"
             },
             {
-                type: "Collision Detection",
-                question: "5. How do we detect if Flappy Bird hits a pipe or crashes into the ground?",
-                visual: `
-                    <div class="scratch-block sb-sensing">
-                        touching <span class="sb-slot">Pipe 🟢</span> ?
-                    </div>
-                `,
+                type: "Sound & Music",
+                question: "6. Which micro:bit block plays a musical tune through the built-in speaker?",
+                visual: `<div class="makecode-block mb-music">play melody <span class="mb-slot">ba-ding</span></div>`,
                 options: [
-                    "if touching Pipe? then",
-                    "if key space pressed? then",
-                    "if mouse down? then",
-                    "if distance < 10 then"
+                    "play melody",
+                    "show leds",
+                    "set volume",
+                    "record audio"
                 ],
                 correct: 0,
-                explanation: "The 'touching [sprite]?' sensing block checks if two sprites are touching each other to trigger Game Over!"
+                explanation: "The 'play melody' block triggers built-in musical sound effects or custom songs on the micro:bit V2 speaker!"
             },
             {
-                type: "Score Counter",
-                question: "6. Which block increases your score by 1 every time you safely clear a pipe?",
-                visual: `
-                    <div class="scratch-block sb-variables">
-                        change <span class="sb-slot">Score 🏆</span> by 1
-                    </div>
-                `,
+                type: "Temperature Sensor",
+                question: "7. Which block reads the room temperature using the micro:bit processor sensor?",
+                visual: `<div class="makecode-block mb-input">temperature (°C)</div>`,
                 options: [
-                    "set Score to 1",
-                    "change Score by 1",
-                    "show variable Score",
-                    "Score = 1"
-                ],
-                correct: 1,
-                explanation: "'change [Score] by 1' adds 1 to your current score. 'set Score to 1' would reset your score to 1 every time!"
-            },
-            {
-                type: "End Game Logic",
-                question: "7. When Flappy Bird crashes, what block stops all scripts so the game ends?",
-                visual: `
-                    <div class="bg-red-100 border-2 border-red-300 p-3 rounded-xl text-red-600 font-bold flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-hand text-xl"></i> GAME OVER!
-                    </div>
-                `,
-                options: [
-                    "stop [all]",
-                    "hide",
-                    "wait 1 secs",
-                    "delete this clone"
-                ],
-                correct: 0,
-                explanation: "The 'stop [all]' control block freezes the entire game, bringing everything to a complete stop on Game Over!"
-            },
-            {
-                type: "Cloning Pipes",
-                question: "8. To create endless incoming pipes without making 100 sprites, what Scratch feature do we use?",
-                visual: `
-                    <div class="scratch-block sb-control">
-                        create clone of <span class="sb-slot">myself</span>
-                    </div>
-                `,
-                options: [
-                    "costume switches",
-                    "broadcast messages",
-                    "Clones (create clone of myself)",
-                    "stamp tool"
+                    "compass heading",
+                    "light level",
+                    "temperature (°C)",
+                    "acceleration"
                 ],
                 correct: 2,
-                explanation: "Cloning allows one Pipe sprite to duplicate itself forever to make continuous obstacles!"
+                explanation: "The 'temperature (°C)' block returns the current temperature in Celsius measured directly on the micro:bit chip."
             },
             {
-                type: "Random Pipe Heights",
-                question: "9. To make pipe gaps appear at random heights, which operator block should we place in 'set y to ...'?",
+                type: "Light Sensing",
+                question: "8. How does the micro:bit sense if a room is dark or light without a camera?",
                 visual: `
-                    <div class="scratch-block sb-operators">
-                        pick random <span class="sb-slot">-80</span> to <span class="sb-slot">80</span>
+                    <div class="flex items-center gap-3 bg-white p-3 rounded-xl border border-slate-200">
+                        <span class="text-3xl">☀️ / 🌙</span>
+                        <div class="text-left text-xs font-bold text-slate-600">
+                            The 5x5 LED matrix doubles up as a light sensor!
+                        </div>
                     </div>
                 `,
                 options: [
-                    "pick random -80 to 80",
-                    "join hello world",
-                    "round 80",
-                    "80 + 80"
+                    "Using the 5x5 LED grid as a light detector",
+                    "Using the micro:bit button A",
+                    "Using the USB port",
+                    "Using the battery connector"
                 ],
                 correct: 0,
-                explanation: "The 'pick random' operator chooses a different height every time a pipe spawns, making the game fun and unpredictable!"
+                explanation: "The red LED screen can actually measure light falling on it! The 'light level' block reads numbers from 0 (dark) to 255 (bright)."
             },
             {
-                type: "Game Initialization",
-                question: "10. When starting a fresh game, what should happen to the Score variable?",
-                visual: `
-                    <div class="scratch-block sb-variables">
-                        set <span class="sb-slot">Score 🏆</span> to 0
-                    </div>
-                `,
+                type: "Wireless Radio",
+                question: "9. How can two micro:bits send secret messages to each other wirelessly?",
+                visual: `<div class="makecode-block mb-radio">radio send string <span class="mb-slot">\"Secret!\"</span></div>`,
                 options: [
-                    "change Score by 1",
-                    "set Score to 0",
-                    "show variable Score",
-                    "hide variable Score"
+                    "Using Radio blocks on the same group",
+                    "Connecting them with a USB wire",
+                    "Shaking both micro:bits at the same time",
+                    "Pressing Button A+B together"
                 ],
-                correct: 1,
-                explanation: "Always reset your score back to 0 at the start of a new game using 'set Score to 0'!"
+                correct: 0,
+                explanation: "The built-in Radio antenna allows micro:bits on the same Radio Group to send string messages and numbers through thin air!"
+            },
+            {
+                type: "Random Numbers",
+                question: "10. You are making a Digital Dice. Which block picks a random number between 1 and 6?",
+                visual: `<div class="makecode-block mb-logic">pick random <span class="mb-slot">1</span> to <span class="mb-slot">6</span></div>`,
+                options: [
+                    "pick random 1 to 6",
+                    "show number 6",
+                    "set roll to 1",
+                    "math add 1 + 6"
+                ],
+                correct: 0,
+                explanation: "'pick random 1 to 6' acts like rolling a real dice—it picks an unpredictable integer every time you shake your micro:bit!"
             }
         ];
 
@@ -369,16 +329,15 @@
 
             q.options.forEach((opt, idx) => {
                 const btn = document.createElement("button");
-                btn.className = "option-btn text-left p-4 rounded-xl border-2 border-slate-200 hover:border-sky-400 bg-white font-semibold text-slate-700 shadow-sm transition hover:shadow-md active:scale-98 flex items-center justify-between";
+                btn.className = "option-btn text-left p-4 rounded-xl border-2 border-slate-200 hover:border-emerald-400 bg-white font-semibold text-slate-700 shadow-sm transition hover:shadow-md active:scale-98 flex items-center justify-between";
                 btn.onclick = () => selectOption(idx);
                 btn.id = `opt-${idx}`;
                 btn.innerHTML = `<span>${opt}</span><i class="opt-icon fa-regular fa-circle text-slate-300"></i>`;
                 optionsContainer.appendChild(btn);
             });
 
-            // Reset Feedback & Next Button
-            const feedbackCard = document.getElementById("feedback-card");
-            feedbackCard.className = "hidden rounded-2xl p-4 border-2 transition-all";
+            // Reset UI States
+            document.getElementById("feedback-card").className = "hidden rounded-2xl p-4 border-2 transition-all";
             document.getElementById("next-btn").classList.add("hidden");
 
             startTimer();
@@ -435,11 +394,11 @@
             if (isCorrect) {
                 card.className = "rounded-2xl p-4 border-2 border-emerald-300 bg-emerald-50 transition-all";
                 title.className = "flex items-center gap-2 font-bold text-lg mb-1 text-emerald-700";
-                title.innerHTML = `<i class="fa-solid fa-face-smile text-2xl"></i> Correct! Great Job!`;
+                title.innerHTML = `<i class="fa-solid fa-face-smile text-2xl"></i> Correct! Well done!`;
             } else {
                 card.className = "rounded-2xl p-4 border-2 border-rose-300 bg-rose-50 transition-all";
                 title.className = "flex items-center gap-2 font-bold text-lg mb-1 text-rose-700";
-                title.innerHTML = `<i class="fa-solid fa-face-frown text-2xl"></i> Oops! Let's Learn!`;
+                title.innerHTML = `<i class="fa-solid fa-face-frown text-2xl"></i> Oops! Let's check why:`;
             }
 
             desc.innerText = text;
@@ -472,7 +431,6 @@
             loadQuestion();
         }
 
-        // Initialize App
         window.onload = loadQuestion;
     </script>
 </body>
