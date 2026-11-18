@@ -1,381 +1,15 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Micro:bit Quiz Challenge | Alphagen Learning</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+const questions = [
 
-<style>
-:root{
- --p:#5e48c4;--dark:#4937a9;--pale:#eae7fe;
- --ghost:#f5f4ff;--yellow:#ffd071;--coral:#ed5661;
- --green:#299c67;--ink:#1a1a1a;
-}
-*{box-sizing:border-box}
-body{
- margin:0;background:var(--ghost);color:var(--ink);
- font-family:Poppins,sans-serif;min-height:100vh;
- display:flex;flex-direction:column;
-}
-header{
- margin:12px 14px 0;padding:13px 20px;
- background:var(--p);color:white;border-radius:16px;
- display:flex;justify-content:space-between;align-items:center;gap:12px;
-}
-.brand{display:flex;align-items:center;gap:12px}
-.logo{
- background:var(--yellow);color:var(--ink);
- border-radius:10px;padding:9px 13px;font-size:12px;font-weight:800;
-}
-header strong{font-size:17px}
-main{
- flex:1;display:flex;align-items:center;justify-content:center;
- padding:18px;
-}
-.quiz-shell{
- width:min(1020px,100%);
-}
-.topline{
- display:flex;justify-content:space-between;align-items:center;
- gap:12px;flex-wrap:wrap;margin-bottom:12px;
-}
-.tag{
- color:var(--p);font-weight:800;letter-spacing:1px;
- font-size:12px;text-transform:uppercase;
-}
-.level{
- background:var(--pale);color:var(--p);
- border-radius:20px;padding:7px 13px;
- font-size:12px;font-weight:800;
-}
-.progress-track{
- width:100%;height:10px;background:#e5e0f7;
- border-radius:10px;overflow:hidden;margin-bottom:16px;
-}
-.progress-fill{
- height:100%;width:0;background:var(--p);
- transition:width .3s;
-}
-.card{
- background:white;border:2px solid var(--pale);
- border-radius:22px;padding:26px;
- box-shadow:0 6px 20px #34226b0b;
-}
-.question-title{
- font-size:clamp(19px,2.5vw,26px);
- line-height:1.4;font-weight:800;margin:0 0 18px;
-}
-.question-context{
- font-size:13px;color:#655f77;font-weight:600;
- margin-bottom:15px;
-}
-.question-visual{
- display:flex;justify-content:center;align-items:center;
- min-height:75px;margin:12px 0 20px;
-}
-.options{
- display:grid;grid-template-columns:1fr 1fr;gap:12px;
-}
-.option{
- background:#faf9ff;border:2px solid #e1dcf2;
- border-radius:14px;padding:15px;
- font:700 13px Poppins;cursor:pointer;
- text-align:center;min-height:72px;
- display:flex;align-items:center;justify-content:center;
- min-width:0;
-}
-.option:hover:not(:disabled){border-color:var(--p);background:#f2efff}
-.option.correct{background:#e9f8ef;border-color:var(--green)}
-.option.wrong{background:#fff0f1;border-color:var(--coral)}
-.option:disabled{cursor:default}
-.feedback{
- margin-top:16px;border-radius:14px;
- padding:15px;background:var(--ghost);
- display:none;font-size:13px;line-height:1.7;
-}
-.feedback.show{display:block}
-.feedback strong{color:var(--p)}
-.bottom-actions{
- display:flex;justify-content:space-between;align-items:center;
- gap:12px;margin-top:18px;flex-wrap:wrap;
-}
-.btn{
- border:0;background:var(--p);color:white;
- border-radius:12px;padding:12px 19px;
- font:700 13px Poppins;cursor:pointer;
-}
-.btn:hover{background:var(--dark)}
-.btn:disabled{opacity:.4;cursor:default}
-.btn.yellow{background:var(--yellow);color:var(--ink)}
-.timer-wrap{
- display:flex;align-items:center;gap:10px;
- background:var(--ghost);border-radius:12px;
- padding:9px 15px;
-}
-.timer-number{
- font-size:23px;font-weight:800;color:var(--p);
- font-variant-numeric:tabular-nums;
-}
-.timer-number.urgent{color:var(--coral)}
-.timer-bar{
- height:6px;width:90px;background:#e2dcf7;
- border-radius:8px;overflow:hidden;
-}
-.timer-fill{
- height:100%;background:var(--p);width:100%;
- transition:width .2s linear;
-}
-.timer-fill.urgent{background:var(--coral)}
-.score{
- font-size:13px;font-weight:800;color:var(--p);
-}
-
-/* MAKECODE-STYLE BLOCKS */
-.block{
- display:inline-flex;align-items:center;gap:5px;
- flex-wrap:wrap;max-width:100%;text-align:left;
- color:white;border-radius:8px;padding:10px 12px;
- font:700 12px Poppins;box-shadow:inset 0 -3px #0002;
-}
-.block.input{background:#d79b37}
-.block.basic{background:#6044bb}
-.block.logic{background:#279b9d}
-.block.variable{background:#d64f59}
-.block.loop{background:#1ca6a6}
-.block.game{background:#e18b32}
-.block.math{background:#9761c7}
-.block.music{background:#d4478b}
-.pill{
- background:#ffffff35;border-radius:16px;padding:3px 8px;
-}
-.num{
- background:white;color:#222;border-radius:15px;
- padding:2px 8px;
-}
-.blockstack{
- background:#f8f7ff;border:1px solid #ded8f5;
- border-radius:15px;padding:15px;
- display:flex;flex-direction:column;align-items:flex-start;
- gap:5px;max-width:100%;
-}
-.indent{margin-left:16px}
-.mini-grid{
- display:grid;grid-template-columns:repeat(5,25px);
- gap:5px;background:#172131;padding:13px;border-radius:13px;
-}
-.dot{
- width:25px;height:25px;border-radius:5px;
- background:#464652;
-}
-.dot.on{background:#ff505a;box-shadow:0 0 8px #ff505a}
-.dot.target{outline:2px solid var(--yellow);outline-offset:1px}
-.start-screen{
- text-align:center;max-width:720px;margin:auto;
-}
-.start-screen h1{
- font-size:clamp(32px,5vw,48px);
- margin:8px 0 15px;
-}
-.start-screen p{
- font-size:14px;color:#655f77;line-height:1.7;
-}
-.start-icons{font-size:65px;margin:15px 0}
-.info-row{
- display:flex;justify-content:center;gap:10px;
- flex-wrap:wrap;margin:20px 0;
-}
-.info-pill{
- background:var(--pale);color:var(--p);
- border-radius:15px;padding:10px 16px;
- font-size:12px;font-weight:800;
-}
-.result-score{
- font-size:62px;font-weight:800;color:var(--p);
- text-align:center;
-}
-.result-grid{
- display:grid;grid-template-columns:repeat(3,1fr);
- gap:12px;margin:20px 0;
-}
-.result-item{
- background:var(--ghost);border:1px solid var(--pale);
- border-radius:14px;padding:14px;text-align:center;
-}
-.result-item strong{
- display:block;font-size:25px;color:var(--p);
-}
-.result-item span{font-size:11px;font-weight:700}
-.review-list{
- margin-top:20px;display:flex;flex-direction:column;gap:9px;
-}
-.review-item{
- background:var(--ghost);border-radius:11px;
- padding:11px 14px;font-size:12px;font-weight:600;
-}
-footer{
- margin:0 14px 12px;padding:10px 16px;
- background:white;border:1px solid var(--pale);
- border-radius:14px;display:flex;justify-content:space-between;
- align-items:center;font-size:12px;font-weight:700;
-}
-@media(max-width:700px){
- main{align-items:flex-start;padding:12px}
- .card{padding:16px}
- .options{grid-template-columns:1fr}
- .result-grid{grid-template-columns:1fr}
- header strong{font-size:13px}
-}
-</style>
-</head>
-
-<body>
-<header>
- <div class="brand">
-  <span class="logo">ALPHAGEN LEARNING</span>
-  <strong>Micro:bit Challenge</strong>
- </div>
- <span style="font-size:12px;font-weight:700">30 Questions</span>
-</header>
-
-<main>
-<div class="quiz-shell">
-
-<!-- START -->
-<section id="startScreen" class="card start-screen">
- <div class="tag">Micro:bit Knowledge Challenge</div>
- <h1>Ready for the<br><span style="color:var(--p)">Ultimate Quiz?</span></h1>
- <div class="start-icons">🎮 🎯 🧠</div>
- <p>Test your coding skills with micro:bit games, sensors and MakeCode blocks.</p>
- <div class="info-row">
-  <span class="info-pill">30 Questions</span>
-  <span class="info-pill">30 Seconds Each</span>
-  <span class="info-pill">6 Thinking Levels</span>
- </div>
- <button class="btn yellow" onclick="startQuiz()">Start Challenge →</button>
-</section>
-
-<!-- QUIZ -->
-<section id="quizScreen" style="display:none">
- <div class="topline">
-  <div class="tag" id="questionCount">Question 1 / 30</div>
-  <span class="level" id="bloomLevel">Remember</span>
-  <span class="score" id="liveScore">Score: 0</span>
- </div>
- <div class="progress-track">
-  <div class="progress-fill" id="progressFill"></div>
- </div>
-
- <div class="card">
-  <div class="topline">
-   <div class="timer-wrap">
-    <span>⏱️</span>
-    <span class="timer-number" id="timerNumber">30</span>
-    <div class="timer-bar">
-     <div class="timer-fill" id="timerFill"></div>
-    </div>
-   </div>
-  </div>
-
-  <h2 class="question-title" id="questionTitle"></h2>
-  <div class="question-context" id="questionContext"></div>
-  <div class="question-visual" id="questionVisual"></div>
-  <div class="options" id="answerOptions"></div>
-  <div class="feedback" id="feedbackBox"></div>
-
-  <div class="bottom-actions">
-   <span class="note" id="answerStatus">Choose your answer.</span>
-   <button class="btn" id="nextButton" onclick="nextQuestion()" disabled>
-    Next Question →
-   </button>
-  </div>
- </div>
-</section>
-
-<!-- RESULTS -->
-<section id="resultScreen" class="card" style="display:none">
- <div class="tag" style="text-align:center">Challenge Complete</div>
- <h1 style="text-align:center;margin:10px 0">Your Micro:bit Results 🏆</h1>
- <div class="result-score" id="resultScore">0 / 30</div>
- <p class="note" id="resultMessage"></p>
-
- <div class="result-grid">
-  <div class="result-item">
-   <strong id="correctCount">0</strong><span>Correct</span>
-  </div>
-  <div class="result-item">
-   <strong id="wrongCount">0</strong><span>Incorrect</span>
-  </div>
-  <div class="result-item">
-   <strong id="timeoutCount">0</strong><span>Time Outs</span>
-  </div>
- </div>
-
- <h3>Bloom's Taxonomy Breakdown</h3>
- <div id="bloomResults" class="result-grid"></div>
-
- <h3>Questions to Review</h3>
- <div id="reviewList" class="review-list"></div>
-
- <div class="bottom-actions">
-  <button class="btn yellow" onclick="restartQuiz()">Try Again ↻</button>
-  <button class="btn" onclick="downloadReport()">Download Results</button>
- </div>
-</section>
-
-</div>
-</main>
-
-<footer>
- <span>Alphagen Learning · Micro:bit</span>
- <span>Learn · Build · Play</span>
-</footer>
-
-<script>
-/* BLOCK HELPERS */
-function block(type,text){
- return `<span class="block ${type}">${text}</span>`;
-}
-function num(n){return `<span class="num">${n}</span>`}
-function pill(t){return `<span class="pill">${t}</span>`}
-function stack(...items){
- return `<div class="blockstack">${items.join("")}</div>`;
-}
-function line(type,text,indent=false){
- return `<div class="${indent?"indent":""}">${block(type,text)}</div>`;
-}
-function led(pattern){
- return `<div class="mini-grid">${
-  pattern.join("").split("").map(v=>
-   `<span class="dot${v==="1"?" on":""}"></span>`
-  ).join("")
- }</div>`;
-}
-
-const heart=[
- "01010","11111","11111","01110","00100"
-];
-const center=[
- "00000","00000","00100","00000","00000"
-];
-const corner=[
- "10000","00000","00000","00000","00000"
-];
-const smile=[
- "00000","10001","00000","10001","01110"
-];
-
-const questions=[
-
-/* REMEMBER: 1-5 */
+/* REMEMBER: 1–5 */
 {
  level:"Remember",
  q:"Which block runs when Button A is pressed?",
  options:[
   block("input",`on button ${pill("A")} pressed`),
-  block("input",`on ${pill("shake")}`)
+  block("input",`on ${pill("shake")}`),
+  block("input",`on button ${pill("B")} pressed`),
+  block("input",`on ${pill("logo pressed")}`)
  ],
  right:0,
  why:"The on button A pressed event runs when Button A is pressed."
@@ -383,40 +17,54 @@ const questions=[
 {
  level:"Remember",
  q:"Which sensor detects shaking in a micro:bit?",
- options:["Accelerometer","Compass"],
- right:0,
- why:"The accelerometer detects motion and shake gestures."
+ options:[
+  "Compass",
+  "Accelerometer",
+  "Microphone",
+  "Temperature sensor"
+ ],
+ right:1,
+ why:"The accelerometer detects motion, including shaking."
 },
 {
  level:"Remember",
  q:"Which block repeats instructions continuously?",
  options:[
+  block("basic",`pause (ms) ${num(100)}`),
+  block("input",`on button ${pill("A")} pressed`),
   block("loop","forever"),
-  block("basic",`pause (ms) ${num(100)}`)
+  block("basic","clear screen")
  ],
- right:0,
- why:"Forever repeatedly runs the blocks inside it."
+ right:2,
+ why:"The forever loop continuously repeats the blocks inside it."
 },
 {
  level:"Remember",
  q:"What is the center coordinate of the 5×5 LED display?",
  visual:led(center),
- options:["X = 2, Y = 2","X = 3, Y = 3"],
- right:0,
- why:"LED coordinates start at zero, so the center is (2,2)."
+ options:[
+  "X = 1, Y = 1",
+  "X = 3, Y = 3",
+  "X = 2, Y = 3",
+  "X = 2, Y = 2"
+ ],
+ right:3,
+ why:"Coordinates start at 0, so the center LED is (2,2)."
 },
 {
  level:"Remember",
- q:"Which block is used to increase the game score?",
+ q:"Which block increases the game score?",
  options:[
   block("game",`change score by ${num(1)}`),
-  block("game","game over")
+  block("game","game over"),
+  block("game",`set score ${num(0)}`),
+  block("game",`change score by ${num(-1)}`)
  ],
  right:0,
- why:"Change score by 1 adds one point."
+ why:"Change score by 1 adds one point to the current score."
 },
 
-/* UNDERSTAND: 6-10 */
+/* UNDERSTAND: 6–10 */
 {
  level:"Understand",
  q:"What happens when this code runs?",
@@ -424,29 +72,38 @@ const questions=[
   line("input",`on button ${pill("A")} pressed`),
   line("basic",`show icon ${pill("Heart")}`,true)
  ),
- options:["A heart appears when A is pressed","The heart appears only when shaken"],
- right:0,
- why:"The code is triggered by Button A."
+ options:[
+  "A heart appears when the micro:bit is shaken",
+  "A heart appears when Button A is pressed",
+  "A heart appears when Button B is pressed",
+  "A heart appears when the logo is touched"
+ ],
+ right:1,
+ why:"The code is triggered specifically by pressing Button A."
 },
 {
  level:"Understand",
- q:"Why do games use a variable called score?",
+ q:"Why does a game use a variable called score?",
  options:[
+  "To control the brightness of the LEDs",
+  "To detect when the micro:bit is shaken",
   "To remember the player's points",
-  "To change the micro:bit's temperature"
+  "To measure how long the game runs"
  ],
- right:0,
- why:"A score variable stores a number that can change during the game."
+ right:2,
+ why:"A variable stores information that can change, such as a player's score."
 },
 {
  level:"Understand",
  q:"In a Flappy Bird game, why is a pause block useful?",
  options:[
-  "To control how fast the game updates",
-  "To permanently stop the game"
+  "To increase the score automatically",
+  "To restart the game after a collision",
+  "To change the bird's position randomly",
+  "To control how fast the game updates"
  ],
- right:0,
- why:"A short pause between updates controls the movement speed."
+ right:3,
+ why:"A pause controls the delay between movement updates."
 },
 {
  level:"Understand",
@@ -454,72 +111,89 @@ const questions=[
  visual:block("logic",`sprite x = ${num(2)}`),
  options:[
   "Whether the sprite is in the center column",
-  "Whether the sprite is at the bottom row"
+  "Whether the sprite is in the bottom row",
+  "Whether the sprite has moved two steps",
+  "Whether the game score equals two"
  ],
  right:0,
- why:"The middle column has X coordinate 2."
+ why:"The expression checks whether the sprite's X coordinate equals 2."
 },
 {
  level:"Understand",
  q:"Why might a game use a random number?",
  options:[
+  "To keep every round exactly the same",
   "To make obstacles appear in different positions",
-  "To make every round identical"
+  "To prevent the player from pressing buttons",
+  "To stop the score from changing"
  ],
- right:0,
- why:"Random values help create unpredictable gameplay."
+ right:1,
+ why:"Random numbers can make obstacle positions unpredictable."
 },
 
-/* APPLY: 11-15 */
+/* APPLY: 11–15 */
 {
  level:"Apply",
- q:"You want the bird to move up when Button A is pressed. Which block would you choose?",
+ q:"You want the bird to move up when Button A is pressed. Which block should you use?",
  options:[
+  block("game",`change sprite x by ${num(-1)}`),
+  block("game",`change sprite y by ${num(1)}`),
   block("game",`change sprite y by ${num(-1)}`),
-  block("game",`change sprite y by ${num(1)}`)
+  block("game",`change sprite x by ${num(1)}`)
  ],
- right:0,
- why:"On the LED grid, decreasing Y moves the sprite upward."
+ right:2,
+ why:"Decreasing the Y coordinate moves the bird upward."
 },
 {
  level:"Apply",
- q:"The bird is at Y = 3. It moves up by 1 LED. What is its new Y coordinate?",
- options:["Y = 2","Y = 4"],
- right:0,
- why:"Moving up decreases Y, so 3 becomes 2."
+ q:"The bird is at Y = 3. It moves up by one LED. What is its new Y coordinate?",
+ options:[
+  "Y = 4",
+  "Y = 3",
+  "Y = 1",
+  "Y = 2"
+ ],
+ right:3,
+ why:"Moving up decreases Y by 1, so 3 becomes 2."
 },
 {
  level:"Apply",
- q:"You want to show a heart when the micro:bit detects a loud sound. Which event should you use?",
+ q:"You want a heart to appear when the micro:bit detects a loud sound. Which event should you use?",
  options:[
   block("input","on loud sound"),
+  block("input",`on button ${pill("A")} pressed`),
+  block("input",`on ${pill("shake")}`),
   block("input",`on button ${pill("B")} pressed`)
  ],
  right:0,
- why:"The on loud sound event reacts to sound detected by the microphone."
+ why:"The on loud sound event responds when the microphone detects a sufficiently loud sound."
 },
 {
  level:"Apply",
- q:"A player collects a coin. Which block updates the score?",
+ q:"A player collects a coin. Which block should update the score?",
  options:[
+  block("game",`set score ${num(0)}`),
   block("game",`change score by ${num(1)}`),
-  block("game",`set score ${num(0)}`)
+  block("game","game over"),
+  block("game",`change score by ${num(-1)}`)
  ],
- right:0,
- why:"Changing the score by 1 increases the player's points."
+ right:1,
+ why:"Changing the score by 1 rewards the player with one point."
 },
 {
  level:"Apply",
- q:"Which block would you use to choose a random obstacle height from 0 to 4?",
+ q:"Which block chooses a random obstacle height from the five LED rows?",
  options:[
+  block("math",`pick random ${num(1)} to ${num(5)}`),
+  block("math",`pick random ${num(0)} to ${num(2)}`),
   block("math",`pick random ${num(0)} to ${num(4)}`),
-  block("math",`pick random ${num(5)} to ${num(9)}`)
+  block("math",`pick random ${num(2)} to ${num(6)}`)
  ],
- right:0,
- why:"The LED rows range from 0 to 4."
+ right:2,
+ why:"The micro:bit's LED rows are numbered 0 through 4."
 },
 
-/* ANALYZE: 16-20 */
+/* ANALYZE: 16–20 */
 {
  level:"Analyze",
  q:"Look at the code. What happens after pressing Button A twice?",
@@ -528,17 +202,27 @@ const questions=[
   line("input",`on button ${pill("A")} pressed`),
   line("variable",`change ${pill("score")} by ${num(1)}`,true)
  ),
- options:["Score becomes 2","Score remains 0"],
- right:0,
- why:"Each press adds 1 to the variable."
+ options:[
+  "Score remains 0",
+  "Score becomes 1",
+  "Score becomes 3",
+  "Score becomes 2"
+ ],
+ right:3,
+ why:"The score starts at 0, and each press adds 1."
 },
 {
  level:"Analyze",
- q:"A bird starts at Y = 2. This code runs twice. Where is the bird?",
+ q:"A bird starts at Y = 2. This block runs twice. Where is the bird?",
  visual:block("game",`change sprite y by ${num(1)}`),
- options:["Y = 4","Y = 0"],
+ options:[
+  "Y = 4",
+  "Y = 0",
+  "Y = 3",
+  "Y = 1"
+ ],
  right:0,
- why:"Each movement adds 1 to Y, moving the bird down."
+ why:"Each movement increases Y by 1, so the bird moves from 2 to 4."
 },
 {
  level:"Analyze",
@@ -548,394 +232,203 @@ const questions=[
   line("game",`sprite move by ${num(1)}`,true)
  ),
  options:[
-  "The sprite may move too fast because there is no pause",
-  "The sprite will never move"
+  "The sprite moves only when Button A is pressed",
+  "The sprite may move too fast without a pause",
+  "The sprite cannot move inside a forever loop",
+  "The sprite's score increases instead of its position"
  ],
- right:0,
- why:"Without a pause, the movement loop may update extremely quickly."
+ right:1,
+ why:"Without a pause, the movement loop may update too quickly."
 },
 {
  level:"Analyze",
  q:"The bird is at (2,2) and an obstacle is also at (2,2). What should happen?",
  options:[
+  "The bird moves to (0,0)",
+  "The obstacle changes its position",
   "A collision is detected",
-  "The bird earns a point automatically"
+  "The score increases automatically"
  ],
- right:0,
- why:"Two sprites at the same position overlap, which can be treated as a collision."
+ right:2,
+ why:"Both sprites occupy the same LED position, so they overlap."
 },
 {
  level:"Analyze",
- q:"The game checks this condition. The sprite is at Y = 4. What happens?",
+ q:"The sprite is at Y = 4. What happens when this condition runs?",
  visual:stack(
   line("logic",`if ${pill("sprite y = 4")} then`),
   line("game","game over",true)
  ),
- options:["Game Over","Score +1"],
- right:0,
- why:"The condition is true when the sprite reaches the bottom row."
+ options:[
+  "The sprite moves up",
+  "The score increases",
+  "The sprite changes direction",
+  "The game ends"
+ ],
+ right:3,
+ why:"The condition is true at Y = 4, so the game over block runs."
 },
 
-/* EVALUATE: 21-25 */
+/* EVALUATE: 21–25 */
 {
  level:"Evaluate",
- q:"A Flappy Bird game feels too fast. Which change is better?",
+ q:"A Flappy Bird game feels too fast. Which change would slow its movement updates?",
  options:[
   block("basic",`pause (ms) ${num(500)}`),
-  block("basic",`pause (ms) ${num(20)}`)
+  block("basic",`pause (ms) ${num(20)}`),
+  block("basic",`pause (ms) ${num(50)}`),
+  block("basic",`pause (ms) ${num(100)}`)
  ],
  right:0,
- why:"A longer pause slows down the movement updates."
+ why:"A longer pause creates more time between movement updates."
 },
 {
  level:"Evaluate",
- q:"Which is a better way to detect a collision between two sprites?",
+ q:"Which block is best for detecting a collision between two sprites?",
  options:[
+  block("logic",`score > ${num(5)}`),
   block("game",`${pill("bird")} is touching ${pill("obstacle")}`),
-  block("logic",`score > ${num(5)}`)
+  block("game",`change score by ${num(1)}`),
+  block("game",`sprite if on edge, bounce`)
  ],
- right:0,
- why:"The touching check directly tests whether sprites overlap."
+ right:1,
+ why:"The touching check directly tests whether the two sprites overlap."
 },
 {
  level:"Evaluate",
- q:"A game always places an obstacle at the same height. What improvement would make it more interesting?",
+ q:"A game always places an obstacle at the same height. What would improve the gameplay?",
  options:[
+  "Increase the score at the start",
+  "Remove the obstacle completely",
   "Use a random Y coordinate",
-  "Keep the same Y coordinate forever"
+  "Make the obstacle stay in the center"
  ],
- right:0,
- why:"Random positions make the game less predictable."
+ right:2,
+ why:"Random obstacle positions make each round less predictable."
 },
 {
  level:"Evaluate",
- q:"Which scoring rule is fairer in a Flappy Bird game?",
+ q:"Which scoring rule is most suitable for a Flappy Bird game?",
  options:[
-  "Add a point when the bird successfully passes an obstacle",
-  "Add a point every time Button A is pressed"
+  "Add a point whenever Button A is pressed",
+  "Add a point whenever the bird moves downward",
+  "Add a point whenever an obstacle appears",
+  "Add a point when the bird successfully passes an obstacle"
  ],
- right:0,
- why:"Rewarding successful obstacle passes measures progress."
+ right:3,
+ why:"Rewarding successful obstacle passes measures the player's progress."
 },
 {
  level:"Evaluate",
- q:"A game ends when the bird touches an obstacle. Which block should be used?",
+ q:"A game should end when the bird touches an obstacle. Which block belongs inside the collision condition?",
  options:[
   block("game","game over"),
-  block("game",`change score by ${num(1)}`)
+  block("game",`change score by ${num(1)}`),
+  block("game",`set score ${num(0)}`),
+  block("game",`sprite if on edge, bounce`)
  ],
  right:0,
- why:"Game Over ends the current game after a collision."
+ why:"The game over block ends the round after a collision."
 },
 
-/* CREATE: 26-30 */
+/* CREATE: 26–30 */
 {
  level:"Create",
- q:"You are designing a bird game. Which combination creates a working jump?",
+ q:"You are designing a bird game. Which code makes Button A move the bird upward?",
  options:[
+  stack(
+   line("input",`on button ${pill("A")} pressed`),
+   line("game",`change sprite y by ${num(1)}`,true)
+  ),
   stack(
    line("input",`on button ${pill("A")} pressed`),
    line("game",`change sprite y by ${num(-1)}`,true)
   ),
   stack(
+   line("input",`on button ${pill("B")} pressed`),
+   line("game",`change sprite y by ${num(-1)}`,true)
+  ),
+  stack(
    line("input",`on button ${pill("A")} pressed`),
-   line("game",`change sprite y by ${num(1)}`,true)
+   line("game",`change sprite x by ${num(-1)}`,true)
   )
  ],
- right:0,
- why:"Button A should move the bird upward by decreasing Y."
+ right:1,
+ why:"Button A must decrease the bird's Y coordinate to move it upward."
 },
 {
  level:"Create",
- q:"You want gravity to pull the bird downward. Which code should you build?",
+ q:"You want gravity to pull the bird downward automatically. Which code should you build?",
  options:[
+  stack(
+   line("loop","forever"),
+   line("game",`change sprite y by ${num(-1)}`,true),
+   line("basic",`pause (ms) ${num(500)}`,true)
+  ),
+  stack(
+   line("loop","forever"),
+   line("game",`change sprite x by ${num(1)}`,true),
+   line("basic",`pause (ms) ${num(500)}`,true)
+  ),
   stack(
    line("loop","forever"),
    line("game",`change sprite y by ${num(1)}`,true),
    line("basic",`pause (ms) ${num(500)}`,true)
   ),
   stack(
-   line("loop","forever"),
-   line("game",`change sprite y by ${num(-1)}`,true),
-   line("basic",`pause (ms) ${num(500)}`,true)
+   line("input",`on button ${pill("A")} pressed`),
+   line("game",`change sprite y by ${num(1)}`,true)
   )
  ],
- right:0,
- why:"Gravity moves the bird down, increasing Y over time."
+ right:2,
+ why:"Gravity repeatedly increases Y, pulling the bird down at timed intervals."
 },
 {
  level:"Create",
- q:"Design a rule for collecting a coin. Which logic is correct?",
+ q:"You are building a coin collection game. Which code awards one point when the player touches a coin?",
  options:[
-  stack(
-   line("logic",`if ${pill("player is touching coin")} then`),
-   line("game",`change score by ${num(1)}`,true)
-  ),
   stack(
    line("logic",`if ${pill("player is touching coin")} then`),
    line("game","game over",true)
+  ),
+  stack(
+   line("logic",`if ${pill("player is touching coin")} then`),
+   line("game",`set score ${num(0)}`,true)
+  ),
+  stack(
+   line("logic",`if ${pill("player is touching coin")} then`),
+   line("game",`change score by ${num(-1)}`,true)
+  ),
+  stack(
+   line("logic",`if ${pill("player is touching coin")} then`),
+   line("game",`change score by ${num(1)}`,true)
   )
  ],
- right:0,
- why:"Collecting a coin should increase the score."
+ right:3,
+ why:"When the player touches the coin, changing score by 1 awards one point."
 },
 {
  level:"Create",
- q:"You want a moving dot to bounce off the edges. Which block should you include?",
+ q:"You want a moving dot to bounce when it reaches an edge. Which block should you include?",
  options:[
-  block("game",`sprite if on edge, bounce`),
-  block("game","game over")
+  block("game","sprite if on edge, bounce"),
+  block("game","game over"),
+  block("game",`set score ${num(0)}`),
+  block("basic","clear screen")
  ],
  right:0,
- why:"The bounce block reverses a sprite's direction at an edge."
+ why:"The sprite if on edge, bounce block reverses the sprite's direction at an edge."
 },
 {
  level:"Create",
- q:"You are building a complete Flappy Bird game. Which feature combination makes the most sense?",
+ q:"You are planning a complete Flappy Bird game. Which combination includes the essential game mechanics?",
  options:[
+  "Button jump + compass + sound level + temperature",
   "Button jump + gravity + obstacles + collision + score",
-  "Button jump + temperature + compass + light level"
+  "Button jump + light sensor + thermometer + score",
+  "Button jump + random icons + compass + music"
  ],
- right:0,
- why:"The first combination contains the main mechanics needed for the game."
+ right:1,
+ why:"A Flappy Bird game needs jumping, gravity, obstacles, collision detection and scoring."
 }
 ];
-
-/* QUIZ ENGINE */
-let currentQuestion=0;
-let score=0;
-let wrong=0;
-let timeouts=0;
-let answered=false;
-let timer=null;
-let remaining=30;
-let quizHistory=[];
-let startTime=null;
-
-function startQuiz(){
- document.getElementById("startScreen").style.display="none";
- document.getElementById("resultScreen").style.display="none";
- document.getElementById("quizScreen").style.display="block";
- currentQuestion=0;score=0;wrong=0;timeouts=0;
- quizHistory=[];
- startTime=Date.now();
- renderQuestion();
-}
-
-function renderQuestion(){
- clearInterval(timer);
- answered=false;
- remaining=30;
-
- const q=questions[currentQuestion];
- document.getElementById("questionCount").textContent=
-  `Question ${currentQuestion+1} / ${questions.length}`;
- document.getElementById("bloomLevel").textContent=q.level;
- document.getElementById("liveScore").textContent=`Score: ${score}`;
- document.getElementById("progressFill").style.width=
-  `${(currentQuestion/questions.length)*100}%`;
- document.getElementById("questionTitle").textContent=q.q;
- document.getElementById("questionContext").textContent=
-  q.context||"";
- document.getElementById("questionVisual").innerHTML=q.visual||"";
- document.getElementById("questionVisual").style.display=
-  q.visual?"flex":"none";
-
- const area=document.getElementById("answerOptions");
- area.innerHTML="";
- q.options.forEach((option,i)=>{
-  const btn=document.createElement("button");
-  btn.className="option";
-  btn.innerHTML=option;
-  btn.onclick=()=>submitAnswer(i);
-  area.appendChild(btn);
- });
-
- document.getElementById("feedbackBox").className="feedback";
- document.getElementById("feedbackBox").innerHTML="";
- document.getElementById("answerStatus").textContent="Choose your answer.";
- document.getElementById("nextButton").disabled=true;
- document.getElementById("nextButton").textContent=
-  currentQuestion===questions.length-1?
-   "See Results →":"Next Question →";
-
- updateTimer();
- timer=setInterval(()=>{
-  remaining--;
-  updateTimer();
-  if(remaining<=0){
-   clearInterval(timer);
-   handleTimeout();
-  }
- },1000);
- window.scrollTo(0,0);
-}
-
-function updateTimer(){
- const n=document.getElementById("timerNumber");
- const bar=document.getElementById("timerFill");
- n.textContent=remaining;
- n.classList.toggle("urgent",remaining<=10);
- bar.classList.toggle("urgent",remaining<=10);
- bar.style.width=`${remaining/30*100}%`;
-}
-
-function submitAnswer(index){
- if(answered)return;
- answered=true;
- clearInterval(timer);
- const q=questions[currentQuestion];
- const correct=index===q.right;
- if(correct)score++;
- else wrong++;
-
- quizHistory.push({
-  question:q.q,
-  level:q.level,
-  correct,
-  timeout:false,
-  selected:index,
-  correctAnswer:q.right
- });
-
- showFeedback(index,correct,false);
- if(correct)celebrate();
-}
-
-function handleTimeout(){
- if(answered)return;
- answered=true;
- timeouts++;
- const q=questions[currentQuestion];
- quizHistory.push({
-  question:q.q,
-  level:q.level,
-  correct:false,
-  timeout:true,
-  selected:null,
-  correctAnswer:q.right
- });
- showFeedback(null,false,true);
-}
-
-function showFeedback(selected,correct,timedOut){
- const q=questions[currentQuestion];
- document.querySelectorAll("#answerOptions .option")
-  .forEach((btn,i)=>{
-   btn.disabled=true;
-   if(i===q.right)btn.classList.add("correct");
-   if(i===selected&&!correct)btn.classList.add("wrong");
-  });
-
- const box=document.getElementById("feedbackBox");
- box.classList.add("show");
- const title=timedOut?"⏰ Time's up!":
-  correct?"✓ Correct!":"✕ Not quite!";
- box.innerHTML=
-  `<strong>${title}</strong><div>${q.why}</div>`;
-
- document.getElementById("answerStatus").textContent=
-  timedOut?"Correct answer highlighted.":correct?
-  "Great work!":"Review the highlighted answer.";
- document.getElementById("nextButton").disabled=false;
- document.getElementById("liveScore").textContent=`Score: ${score}`;
-}
-
-function nextQuestion(){
- if(!answered)return;
- if(currentQuestion<questions.length-1){
-  currentQuestion++;
-  renderQuestion();
- }else{
-  showResults();
- }
-}
-
-function celebrate(){
- if(typeof confetti==="function"){
-  confetti({particleCount:85,spread:75,origin:{y:.65}});
- }
-}
-
-/* RESULTS */
-function showResults(){
- clearInterval(timer);
- document.getElementById("quizScreen").style.display="none";
- document.getElementById("resultScreen").style.display="block";
-
- document.getElementById("resultScore").textContent=
-  `${score} / ${questions.length}`;
- document.getElementById("correctCount").textContent=score;
- document.getElementById("wrongCount").textContent=wrong;
- document.getElementById("timeoutCount").textContent=timeouts;
-
- const percent=score/questions.length*100;
- document.getElementById("resultMessage").textContent=
-  percent>=85?"Excellent understanding of micro:bit programming!":
-  percent>=65?"Good progress! Review a few concepts and try again.":
-  "Keep practising. Every game you build improves your coding skills.";
-
- const levels=[
-  "Remember","Understand","Apply","Analyze","Evaluate","Create"
- ];
- document.getElementById("bloomResults").innerHTML=
-  levels.map(level=>{
-   const records=quizHistory.filter(h=>h.level===level);
-   const correct=records.filter(h=>h.correct).length;
-   return `<div class="result-item">
-    <strong>${correct} / ${records.length}</strong>
-    <span>${level}</span>
-   </div>`;
-  }).join("");
-
- const missed=quizHistory.filter(h=>!h.correct);
- document.getElementById("reviewList").innerHTML=
-  missed.length?
-   missed.map((h,i)=>`
-    <div class="review-item">
-     ${i+1}. ${h.question}
-     <span style="color:var(--coral)">
-      (${h.timeout?"Time Out":"Incorrect"})
-     </span>
-    </div>
-   `).join(""):
-   `<div class="review-item">Perfect! All answers correct.</div>`;
-
- if(percent>=80)celebrate();
- window.scrollTo(0,0);
-}
-
-function restartQuiz(){
- document.getElementById("resultScreen").style.display="none";
- startQuiz();
-}
-
-/* DOWNLOAD REPORT */
-function downloadReport(){
- const levels=[
-  "Remember","Understand","Apply","Analyze","Evaluate","Create"
- ];
- let report="ALPHAGEN LEARNING - MICRO:BIT QUIZ RESULTS\n";
- report+="========================================\n\n";
- report+=`Score: ${score}/${questions.length}\n`;
- report+=`Correct: ${score}\nIncorrect: ${wrong}\nTime Outs: ${timeouts}\n\n`;
- report+="BLOOM'S TAXONOMY BREAKDOWN\n";
- levels.forEach(level=>{
-  const records=quizHistory.filter(h=>h.level===level);
-  report+=`${level}: ${records.filter(h=>h.correct).length}/${records.length}\n`;
- });
- report+="\nQUESTION REVIEW\n";
- quizHistory.forEach((h,i)=>{
-  report+=`${i+1}. ${h.question}\n`;
-  report+=`Result: ${h.correct?"Correct":h.timeout?"Time Out":"Incorrect"}\n\n`;
- });
- const blob=new Blob([report],{type:"text/plain"});
- const url=URL.createObjectURL(blob);
- const a=document.createElement("a");
- a.href=url;a.download="microbit_quiz_results.txt";
- a.click();
- URL.revokeObjectURL(url);
-}
-</script>
-</body>
-</html>
