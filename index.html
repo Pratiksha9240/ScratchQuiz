@@ -4,1040 +4,1169 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Micro:bit Quiz Challenge | Alphagen Learning</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<title>Python For Loop Challenges | Alphagen Learning</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
 <style>
 :root{
- --p:#5e48c4;--dark:#4937a9;--pale:#eae7fe;
- --ghost:#f5f4ff;--yellow:#ffd071;--coral:#ed5661;
- --green:#299c67;--ink:#1a1a1a;
+  --purple:#5e48c4;
+  --dark:#4835a9;
+  --pale:#ebe7ff;
+  --ghost:#f7f5ff;
+  --yellow:#ffd071;
+  --ink:#29243c;
+  --green:#19865e;
+  --red:#c64c59;
 }
 *{box-sizing:border-box}
 body{
- margin:0;background:var(--ghost);color:var(--ink);
- font-family:Poppins,sans-serif;min-height:100vh;
- display:flex;flex-direction:column;
+  margin:0;
+  padding:12px;
+  background:#17112d;
+  font-family:Poppins,sans-serif;
+  color:var(--ink);
 }
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
 header{
- margin:12px 14px 0;padding:13px 20px;
- background:var(--p);color:white;border-radius:16px;
- display:flex;justify-content:space-between;align-items:center;gap:12px;
+  max-width:1320px;
+  margin:0 auto 12px;
+  background:var(--purple);
+  color:white;
+  border-radius:13px;
+  padding:13px 19px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
 }
 .brand{display:flex;align-items:center;gap:12px}
 .logo{
- background:var(--yellow);color:var(--ink);
- border-radius:10px;padding:9px 13px;font-size:12px;font-weight:800;
+  background:var(--yellow);
+  color:var(--ink);
+  padding:9px 12px;
+  border-radius:8px;
+  font-size:10px;
+  font-weight:800;
 }
-header strong{font-size:17px}
+.brand-name{font-size:16px;font-weight:800}
+.progress{
+  background:var(--dark);
+  border-radius:9px;
+  padding:9px 13px;
+  font-size:12px;
+  font-weight:700;
+}
+.progress strong{color:var(--yellow)}
 main{
- flex:1;display:flex;align-items:center;justify-content:center;
- padding:18px;
+  max-width:1320px;
+  min-height:700px;
+  margin:auto;
+  background:white;
+  border-radius:22px;
+  padding:25px 28px;
 }
-.quiz-shell{
- width:min(1020px,100%);
+.slide{display:none}
+.slide.active{display:block}
+.center.active{
+  min-height:640px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
 }
-.topline{
- display:flex;justify-content:space-between;align-items:center;
- gap:12px;flex-wrap:wrap;margin-bottom:12px;
+h1{font-size:40px;margin:15px 0 8px}
+h1 span{color:var(--purple)}
+.subtitle{
+  max-width:560px;
+  color:#666;
+  font-size:13px;
+  line-height:1.9;
 }
 .tag{
- color:var(--p);font-weight:800;letter-spacing:1px;
- font-size:12px;text-transform:uppercase;
-}
-.level{
- background:var(--pale);color:var(--p);
- border-radius:20px;padding:7px 13px;
- font-size:12px;font-weight:800;
-}
-.progress-track{
- width:100%;height:10px;background:#e5e0f7;
- border-radius:10px;overflow:hidden;margin-bottom:16px;
-}
-.progress-fill{
- height:100%;width:0;background:var(--p);
- transition:width .3s;
-}
-.card{
- background:white;border:2px solid var(--pale);
- border-radius:22px;padding:26px;
- box-shadow:0 6px 20px #34226b0b;
-}
-.question-title{
- font-size:clamp(19px,2.5vw,26px);
- line-height:1.4;font-weight:800;margin:0 0 18px;
-}
-.question-context{
- font-size:13px;color:#655f77;font-weight:600;
- margin-bottom:15px;
-}
-.question-visual{
- display:flex;justify-content:center;align-items:center;
- min-height:75px;margin:12px 0 20px;
-}
-.options{
- display:grid;grid-template-columns:1fr 1fr;gap:12px;
-}
-.option{
- background:#faf9ff;border:2px solid #e1dcf2;
- border-radius:14px;padding:15px;
- font:700 13px Poppins;cursor:pointer;
- text-align:center;min-height:72px;
- display:flex;align-items:center;justify-content:center;
- min-width:0;
-}
-.option:hover:not(:disabled){border-color:var(--p);background:#f2efff}
-.option.correct{background:#e9f8ef;border-color:var(--green)}
-.option.wrong{background:#fff0f1;border-color:var(--coral)}
-.option:disabled{cursor:default}
-.feedback{
- margin-top:16px;border-radius:14px;
- padding:15px;background:var(--ghost);
- display:none;font-size:13px;line-height:1.7;
-}
-.feedback.show{display:block}
-.feedback strong{color:var(--p)}
-.bottom-actions{
- display:flex;justify-content:space-between;align-items:center;
- gap:12px;margin-top:18px;flex-wrap:wrap;
+  display:inline-block;
+  background:var(--ghost);
+  color:var(--purple);
+  border:1px solid var(--pale);
+  padding:8px 12px;
+  border-radius:9px;
+  font-size:11px;
+  font-weight:800;
 }
 .btn{
- border:0;background:var(--p);color:white;
- border-radius:12px;padding:12px 19px;
- font:700 13px Poppins;cursor:pointer;
+  border:0;
+  border-radius:10px;
+  padding:11px 15px;
+  font-size:12px;
+  font-weight:800;
 }
-.btn:hover{background:var(--dark)}
-.btn:disabled{opacity:.4;cursor:default}
-.btn.yellow{background:var(--yellow);color:var(--ink)}
-.timer-wrap{
- display:flex;align-items:center;gap:10px;
- background:var(--ghost);border-radius:12px;
- padding:9px 15px;
+.primary{background:var(--purple);color:white}
+.yellow{background:var(--yellow);color:var(--ink)}
+.light{
+  background:var(--ghost);
+  border:1px solid var(--pale);
+  color:var(--purple);
 }
-.timer-number{
- font-size:23px;font-weight:800;color:var(--p);
- font-variant-numeric:tabular-nums;
+.topline,.bottomline{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
 }
-.timer-number.urgent{color:var(--coral)}
-.timer-bar{
- height:6px;width:90px;background:#e2dcf7;
- border-radius:8px;overflow:hidden;
+.workspace{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  margin:16px 0;
 }
-.timer-fill{
- height:100%;background:var(--p);width:100%;
- transition:width .2s linear;
+.panel{
+  min-width:0;
+  border:2px solid var(--pale);
+  border-radius:16px;
+  padding:16px;
 }
-.timer-fill.urgent{background:var(--coral)}
-.score{
- font-size:13px;font-weight:800;color:var(--p);
+.panel h2{
+  font-size:20px;
+  margin:0 0 8px;
+}
+.task{
+  color:#55516b;
+  font-size:12px;
+  line-height:1.85;
+  margin:0 0 13px;
+}
+.small-heading{
+  color:var(--purple);
+  font-size:10px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  margin-bottom:8px;
+}
+.visual{
+  background:var(--ghost);
+  border:1px solid var(--pale);
+  border-radius:13px;
+  padding:12px;
+}
+.scene{
+  height:275px;
+  position:relative;
+  overflow:hidden;
+  border-radius:12px;
+}
+.scene-message{
+  min-height:34px;
+  margin-top:10px;
+  text-align:center;
+  font-size:12px;
+  font-weight:800;
+  color:var(--dark);
+}
+.result{
+  background:#fff2c8;
+  border:1px solid var(--yellow);
+  border-radius:10px;
+  padding:10px;
+  text-align:center;
+}
+.result small{
+  display:block;
+  font-size:10px;
+  font-weight:800;
+}
+.result strong{
+  display:block;
+  margin-top:5px;
+  color:var(--purple);
+  font-size:15px;
+  overflow-wrap:anywhere;
+}
+.editor{
+  width:100%;
+  min-height:340px;
+  resize:vertical;
+  border:0;
+  outline:0;
+  border-radius:11px;
+  background:#10182b;
+  color:#eef4ff;
+  padding:15px;
+  font:12px/1.8 "Fira Code",monospace;
+  tab-size:4;
+}
+.input-box{
+  background:var(--ghost);
+  border:1px solid var(--pale);
+  border-radius:10px;
+  padding:11px;
+  margin-top:10px;
+}
+.field label{
+  display:block;
+  font-size:11px;
+  font-weight:700;
+  margin-bottom:5px;
+}
+.field input{
+  width:100%;
+  border:1px solid #c8c0e8;
+  border-radius:8px;
+  padding:9px;
+  font-size:12px;
+}
+.actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:11px;
+}
+.output{
+  background:#10182b;
+  color:#eaf0ff;
+  border-radius:10px;
+  padding:12px;
+  min-height:65px;
+  max-height:180px;
+  overflow:auto;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  margin-top:10px;
+  font:11px/1.8 "Fira Code",monospace;
+}
+.feedback{
+  margin-top:9px;
+  min-height:24px;
+  font-size:11px;
+  font-weight:700;
+}
+.feedback.good{color:var(--green)}
+.feedback.bad{color:var(--red)}
+.save-tip{
+  font-size:10px;
+  color:#666;
+  margin-top:8px;
+  line-height:1.7;
+}
+.challenge-map{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin:15px 0;
+}
+.map-dot{
+  width:44px;
+  height:44px;
+  display:grid;
+  place-items:center;
+  border:2px solid var(--pale);
+  border-radius:50%;
+  background:#fafafa;
+  color:#aaa;
+  font-size:13px;
+  font-weight:800;
+}
+.map-dot.current{
+  background:var(--yellow);
+  border-color:#e3b746;
+  color:var(--ink);
+}
+.map-dot.done{
+  background:var(--purple);
+  border-color:var(--purple);
+  color:white;
 }
 
-/* MAKECODE-STYLE BLOCKS */
-.block{
- display:inline-flex;align-items:center;gap:5px;
- flex-wrap:wrap;max-width:100%;text-align:left;
- color:white;border-radius:8px;padding:10px 12px;
- font:700 12px Poppins;box-shadow:inset 0 -3px #0002;
+/* Rocket */
+.rocket-scene{
+  background:linear-gradient(#101b4e,#3b5191);
 }
-.block.input{background:#d79b37}
-.block.basic{background:#6044bb}
-.block.logic{background:#279b9d}
-.block.variable{background:#d64f59}
-.block.loop{background:#1ca6a6}
-.block.game{background:#e18b32}
-.block.math{background:#9761c7}
-.block.music{background:#d4478b}
-.pill{
- background:#ffffff35;border-radius:16px;padding:3px 8px;
+.stars{
+  position:absolute;
+  inset:0;
+  background-image:
+    radial-gradient(white 1px,transparent 2px),
+    radial-gradient(#ffffff99 1px,transparent 2px);
+  background-size:48px 45px,73px 65px;
+  background-position:4px 7px,19px 31px;
 }
-.num{
- background:white;color:#222;border-radius:15px;
- padding:2px 8px;
+.rocket{
+  position:absolute;
+  bottom:23px;
+  left:43%;
+  font-size:85px;
+  transform:rotate(-45deg);
+  transition:bottom 1.5s ease,opacity 1s;
 }
-.blockstack{
- background:#f8f7ff;border:1px solid #ded8f5;
- border-radius:15px;padding:15px;
- display:flex;flex-direction:column;align-items:flex-start;
- gap:5px;max-width:100%;
+.rocket.launch{bottom:330px;opacity:0}
+.countdown{
+  position:absolute;
+  top:25px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:54px;
+  font-weight:800;
+  color:var(--yellow);
 }
-.indent{margin-left:16px}
-.mini-grid{
- display:grid;grid-template-columns:repeat(5,25px);
- gap:5px;background:#172131;padding:13px;border-radius:13px;
+.launchpad{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  height:22px;
+  background:#5d667c;
 }
-.dot{
- width:25px;height:25px;border-radius:5px;
- background:#464652;
+
+/* Robot */
+.robot-scene{
+  background:linear-gradient(#dceeff,#f3f8ff);
 }
-.dot.on{background:#ff505a;box-shadow:0 0 8px #ff505a}
-.dot.target{outline:2px solid var(--yellow);outline-offset:1px}
-.start-screen{
- text-align:center;max-width:720px;margin:auto;
+.robot-path{
+  position:absolute;
+  left:8%;
+  right:8%;
+  top:56%;
+  height:12px;
+  background:#b6a7ec;
+  border-radius:10px;
 }
-.start-screen h1{
- font-size:clamp(32px,5vw,48px);
- margin:8px 0 15px;
+.robot{
+  position:absolute;
+  left:7%;
+  top:37%;
+  font-size:62px;
+  transition:left .65s ease;
 }
-.start-screen p{
- font-size:14px;color:#655f77;line-height:1.7;
+.station{
+  position:absolute;
+  top:65%;
+  transform:translateX(-50%);
+  font-size:28px;
+  opacity:.5;
 }
-.start-icons{font-size:65px;margin:15px 0}
-.info-row{
- display:flex;justify-content:center;gap:10px;
- flex-wrap:wrap;margin:20px 0;
+.station.visited{opacity:1}
+.robot-count{
+  position:absolute;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%);
+  padding:9px 16px;
+  border-radius:10px;
+  background:white;
+  color:var(--purple);
+  font-size:16px;
+  font-weight:800;
 }
-.info-pill{
- background:var(--pale);color:var(--p);
- border-radius:15px;padding:10px 16px;
- font-size:12px;font-weight:800;
+
+/* Arcade */
+.arcade-scene{
+  background:linear-gradient(135deg,#25235b,#6c44b7);
 }
-.result-score{
- font-size:62px;font-weight:800;color:var(--p);
- text-align:center;
+.arcade-title{
+  position:absolute;
+  top:20px;
+  width:100%;
+  text-align:center;
+  color:var(--yellow);
+  font-size:20px;
+  font-weight:800;
 }
-.result-grid{
- display:grid;grid-template-columns:repeat(3,1fr);
- gap:12px;margin:20px 0;
+.ticket-machine{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:165px;
+  height:145px;
+  background:#f3d46d;
+  border:7px solid #f6a950;
+  border-radius:19px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  box-shadow:0 8px 0 #2a1e4b;
 }
-.result-item{
- background:var(--ghost);border:1px solid var(--pale);
- border-radius:14px;padding:14px;text-align:center;
+.ticket-machine .symbol{font-size:43px}
+.ticket-machine strong{
+  font-size:25px;
+  color:var(--purple);
 }
-.result-item strong{
- display:block;font-size:25px;color:var(--p);
+.ticket{
+  position:absolute;
+  top:65%;
+  left:50%;
+  font-size:29px;
+  opacity:0;
 }
-.result-item span{font-size:11px;font-weight:700}
-.review-list{
- margin-top:20px;display:flex;flex-direction:column;gap:9px;
+.ticket.fly{animation:ticketFly .65s ease forwards}
+@keyframes ticketFly{
+  0%{opacity:0;transform:translate(0,0) rotate(0)}
+  30%{opacity:1}
+  100%{opacity:0;transform:translate(110px,-115px) rotate(45deg)}
 }
-.review-item{
- background:var(--ghost);border-radius:11px;
- padding:11px 14px;font-size:12px;font-weight:600;
+.navigation{
+  max-width:1320px;
+  margin:12px auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
-footer{
- margin:0 14px 12px;padding:10px 16px;
- background:white;border:1px solid var(--pale);
- border-radius:14px;display:flex;justify-content:space-between;
- align-items:center;font-size:12px;font-weight:700;
+.nav-btn{
+  background:#291c61;
+  border:2px solid var(--purple);
+  color:var(--yellow);
+  border-radius:10px;
+  padding:10px 19px;
+  font-size:12px;
+  font-weight:800;
 }
-@media(max-width:700px){
- main{align-items:flex-start;padding:12px}
- .card{padding:16px}
- .options{grid-template-columns:1fr}
- .result-grid{grid-template-columns:1fr}
- header strong{font-size:13px}
+.nav-info{color:white;font-size:12px}
+@media(max-width:900px){
+  .workspace{grid-template-columns:1fr}
+}
+@media(max-width:520px){
+  main{padding:15px}
+  h1{font-size:29px}
+  .brand-name{font-size:12px}
+  .panel{padding:12px}
+  .nav-info{display:none}
 }
 </style>
 </head>
 
 <body>
 <header>
- <div class="brand">
-  <span class="logo">ALPHAGEN LEARNING</span>
-  <strong>Micro:bit Challenge</strong>
- </div>
- <span style="font-size:12px;font-weight:700">30 Questions</span>
+  <div class="brand">
+    <span class="logo">ALPHAGEN LEARNING</span>
+    <span class="brand-name">Python For Loop Challenges</span>
+  </div>
+  <div class="progress">
+    Completed: <strong id="progress">0</strong> / 3
+  </div>
 </header>
 
 <main>
-<div class="quiz-shell">
-
-<!-- START -->
-<section id="startScreen" class="card start-screen">
- <div class="tag">Micro:bit Knowledge Challenge</div>
- <h1>Ready for the<br><span style="color:var(--p)">Ultimate Quiz?</span></h1>
- <div class="start-icons">🎮 🎯 🧠</div>
- <p>Test your coding skills with micro:bit games, sensors and MakeCode blocks.</p>
- <div class="info-row">
-  <span class="info-pill">30 Questions</span>
-  <span class="info-pill">30 Seconds Each</span>
-  <span class="info-pill">6 Thinking Levels</span>
- </div>
- <button class="btn yellow" onclick="startQuiz()">Start Challenge →</button>
+<section id="intro" class="slide active center">
+  <span class="tag">PYTHON • FOR LOOPS</span>
+  <h1>Loop <span>Quest!</span></h1>
+  <p class="subtitle">
+    Three coding challenges. Write Python, run your program,
+    and watch your code control the animations.
+  </p>
+  <div style="font-size:75px;margin:23px 0">🚀 🤖 🎟️</div>
+  <button class="btn yellow" onclick="start()">
+    Start Challenges →
+  </button>
 </section>
 
-<!-- QUIZ -->
-<section id="quizScreen" style="display:none">
- <div class="topline">
-  <div class="tag" id="questionCount">Question 1 / 30</div>
-  <span class="level" id="bloomLevel">Remember</span>
-  <span class="score" id="liveScore">Score: 0</span>
- </div>
- <div class="progress-track">
-  <div class="progress-fill" id="progressFill"></div>
- </div>
-
- <div class="card">
+<section id="challenge" class="slide">
   <div class="topline">
-   <div class="timer-wrap">
-    <span>⏱️</span>
-    <span class="timer-number" id="timerNumber">30</span>
-    <div class="timer-bar">
-     <div class="timer-fill" id="timerFill"></div>
+    <span class="tag" id="counter"></span>
+    <span class="tag" id="concept"></span>
+  </div>
+
+  <div class="challenge-map" id="challengeMap"></div>
+
+  <div class="workspace">
+    <div class="panel">
+      <h2 id="challengeTitle"></h2>
+      <p class="task" id="task"></p>
+
+      <div class="small-heading">Animated Output</div>
+      <div class="visual">
+        <div id="scene" class="scene"></div>
+        <div class="scene-message" id="sceneMessage">
+          Run your code to begin.
+        </div>
+        <div class="result">
+          <small>YOUR PYTHON OUTPUT</small>
+          <strong id="sceneResult">Waiting...</strong>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn light" onclick="replay()">
+          ↻ Replay Animation
+        </button>
+      </div>
     </div>
-   </div>
+
+    <div class="panel">
+      <div class="small-heading">Write Your Python Code</div>
+      <textarea id="editor" class="editor" spellcheck="false"></textarea>
+
+      <div class="input-box">
+        <div class="small-heading">Test Input</div>
+        <div class="field">
+          <label id="inputLabel" for="testInput"></label>
+          <input id="testInput" type="number">
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn primary" id="runBtn" onclick="runCode()">
+          ▶ Run Code
+        </button>
+        <button class="btn yellow" id="copyBtn" onclick="copyCode()">
+          📋 Copy Code
+        </button>
+        <button class="btn light" onclick="resetCode()">
+          ↻ Reset
+        </button>
+      </div>
+
+      <div class="save-tip">
+        Copy your Python code and save it in CodeHS.
+      </div>
+
+      <div class="output" id="output">
+        Python output will appear here...
+      </div>
+      <div class="feedback" id="feedback"></div>
+    </div>
   </div>
 
-  <h2 class="question-title" id="questionTitle"></h2>
-  <div class="question-context" id="questionContext"></div>
-  <div class="question-visual" id="questionVisual"></div>
-  <div class="options" id="answerOptions"></div>
-  <div class="feedback" id="feedbackBox"></div>
-
-  <div class="bottom-actions">
-   <span class="note" id="answerStatus">Choose your answer.</span>
-   <button class="btn" id="nextButton" onclick="nextQuestion()" disabled>
-    Next Question →
-   </button>
+  <div class="bottomline">
+    <span class="tag" id="hint"></span>
+    <button class="btn primary" id="nextBtn"
+      onclick="nextChallenge()" disabled>
+      Next Challenge →
+    </button>
   </div>
- </div>
 </section>
 
-<!-- RESULTS -->
-<section id="resultScreen" class="card" style="display:none">
- <div class="tag" style="text-align:center">Challenge Complete</div>
- <h1 style="text-align:center;margin:10px 0">Your Micro:bit Results 🏆</h1>
- <div class="result-score" id="resultScore">0 / 30</div>
- <p class="note" id="resultMessage"></p>
-
- <div class="result-grid">
-  <div class="result-item">
-   <strong id="correctCount">0</strong><span>Correct</span>
-  </div>
-  <div class="result-item">
-   <strong id="wrongCount">0</strong><span>Incorrect</span>
-  </div>
-  <div class="result-item">
-   <strong id="timeoutCount">0</strong><span>Time Outs</span>
-  </div>
- </div>
-
- <h3>Bloom's Taxonomy Breakdown</h3>
- <div id="bloomResults" class="result-grid"></div>
-
- <h3>Questions to Review</h3>
- <div id="reviewList" class="review-list"></div>
-
- <div class="bottom-actions">
-  <button class="btn yellow" onclick="restartQuiz()">Try Again ↻</button>
-  <button class="btn" onclick="downloadReport()">Download Results</button>
- </div>
+<section id="finish" class="slide center">
+  <span class="tag">ALL CHALLENGES COMPLETED</span>
+  <h1>Loop <span>Master!</span></h1>
+  <div style="font-size:75px;margin:20px">🏆</div>
+  <p class="subtitle">
+    You completed all three Python for loop challenges!
+  </p>
+  <button class="btn yellow" onclick="restart()">
+    Try Again ↻
+  </button>
 </section>
-
-</div>
 </main>
 
-<footer>
- <span>Alphagen Learning · Micro:bit</span>
- <span>Learn · Build · Play</span>
-</footer>
+<div class="navigation">
+  <button class="nav-btn" id="prevNav" onclick="previous()" disabled>
+    ← Previous
+  </button>
+  <span class="nav-info" id="navInfo">Loop Quest</span>
+  <button class="nav-btn" id="nextNav" onclick="forward()">
+    Next →
+  </button>
+</div>
 
 <script>
-/* BLOCK HELPERS */
-function block(type,text){
- return `<span class="block ${type}">${text}</span>`;
-}
-function num(n){return `<span class="num">${n}</span>`}
-function pill(t){return `<span class="pill">${t}</span>`}
-function stack(...items){
- return `<div class="blockstack">${items.join("")}</div>`;
-}
-function line(type,text,indent=false){
- return `<div class="${indent?"indent":""}">${block(type,text)}</div>`;
-}
-function led(pattern){
- return `<div class="mini-grid">${
-  pattern.join("").split("").map(v=>
-   `<span class="dot${v==="1"?" on":""}"></span>`
-  ).join("")
- }</div>`;
-}
+"use strict";
+const $=id=>document.getElementById(id);
 
-const heart=[
- "01010","11111","11111","01110","00100"
-];
-const center=[
- "00000","00000","00100","00000","00000"
-];
-const corner=[
- "10000","00000","00000","00000","00000"
-];
-const smile=[
- "00000","10001","00000","10001","01110"
-];
+const challenges=[
+{
+  title:"Rocket Launch Countdown",
+  concept:"For Loop + Range",
+  task:"A rocket needs a countdown before launch. Ask the user for a starting number. Use a for loop to count backwards to 1, then print 'Liftoff!'.",
+  hint:"Use range() with a negative step",
+  inputLabel:"Starting countdown number",
+  input:"5",
+  starter:`# ROCKET LAUNCH COUNTDOWN
 
+start = int(input("Countdown starts at: "))
 
-const questions = [
+# Use a for loop to count backwards to 1
 
-/* REMEMBER: 1–5 */
-{
- level:"Remember",
- q:"Which block runs when Button A is pressed?",
- options:[
-  block("input",`on button ${pill("A")} pressed`),
-  block("input",`on ${pill("shake")}`),
-  block("input",`on button ${pill("B")} pressed`),
-  block("input",`on ${pill("logo pressed")}`)
- ],
- right:0,
- why:"The on button A pressed event runs when Button A is pressed."
+# Print Liftoff! after the loop
+`,
+  tests:["3","5","7","1"],
+  expected:n=>[
+    ...Array.from({length:n},(_,i)=>String(n-i)),
+    "Liftoff!"
+  ]
 },
 {
- level:"Remember",
- q:"Which sensor detects shaking in a micro:bit?",
- options:[
-  "Compass",
-  "Accelerometer",
-  "Microphone",
-  "Temperature sensor"
- ],
- right:1,
- why:"The accelerometer detects motion, including shaking."
-},
-{
- level:"Remember",
- q:"Which block repeats instructions continuously?",
- options:[
-  block("basic",`pause (ms) ${num(100)}`),
-  block("input",`on button ${pill("A")} pressed`),
-  block("loop","forever"),
-  block("basic","clear screen")
- ],
- right:2,
- why:"The forever loop continuously repeats the blocks inside it."
-},
-{
- level:"Remember",
- q:"What is the center coordinate of the 5×5 LED display?",
- visual:led(center),
- options:[
-  "X = 1, Y = 1",
-  "X = 3, Y = 3",
-  "X = 2, Y = 3",
-  "X = 2, Y = 2"
- ],
- right:3,
- why:"Coordinates start at 0, so the center LED is (2,2)."
-},
-{
- level:"Remember",
- q:"Which block increases the game score?",
- options:[
-  block("game",`change score by ${num(1)}`),
-  block("game","game over"),
-  block("game",`set score ${num(0)}`),
-  block("game",`change score by ${num(-1)}`)
- ],
- right:0,
- why:"Change score by 1 adds one point to the current score."
-},
+  title:"Robot Delivery Route",
+  concept:"For Loop + Variables",
+  task:"A robot delivers packages to several stations. Ask for the number of stations. Use a for loop to visit every station and print 'Delivered to station 1', 'Delivered to station 2', and so on.",
+  hint:"Use range() to repeat the deliveries",
+  inputLabel:"Number of delivery stations",
+  input:"4",
+  starter:`# ROBOT DELIVERY ROUTE
 
-/* UNDERSTAND: 6–10 */
-{
- level:"Understand",
- q:"What happens when this code runs?",
- visual:stack(
-  line("input",`on button ${pill("A")} pressed`),
-  line("basic",`show icon ${pill("Heart")}`,true)
- ),
- options:[
-  "A heart appears when the micro:bit is shaken",
-  "A heart appears when Button A is pressed",
-  "A heart appears when Button B is pressed",
-  "A heart appears when the logo is touched"
- ],
- right:1,
- why:"The code is triggered specifically by pressing Button A."
-},
-{
- level:"Understand",
- q:"Why does a game use a variable called score?",
- options:[
-  "To control the brightness of the LEDs",
-  "To detect when the micro:bit is shaken",
-  "To remember the player's points",
-  "To measure how long the game runs"
- ],
- right:2,
- why:"A variable stores information that can change, such as a player's score."
-},
-{
- level:"Understand",
- q:"In a Flappy Bird game, why is a pause block useful?",
- options:[
-  "To increase the score automatically",
-  "To restart the game after a collision",
-  "To change the bird's position randomly",
-  "To control how fast the game updates"
- ],
- right:3,
- why:"A pause controls the delay between movement updates."
-},
-{
- level:"Understand",
- q:"What does this comparison check?",
- visual:block("logic",`sprite x = ${num(2)}`),
- options:[
-  "Whether the sprite is in the center column",
-  "Whether the sprite is in the bottom row",
-  "Whether the sprite has moved two steps",
-  "Whether the game score equals two"
- ],
- right:0,
- why:"The expression checks whether the sprite's X coordinate equals 2."
-},
-{
- level:"Understand",
- q:"Why might a game use a random number?",
- options:[
-  "To keep every round exactly the same",
-  "To make obstacles appear in different positions",
-  "To prevent the player from pressing buttons",
-  "To stop the score from changing"
- ],
- right:1,
- why:"Random numbers can make obstacle positions unpredictable."
-},
+stations = int(input("Number of stations: "))
 
-/* APPLY: 11–15 */
-{
- level:"Apply",
- q:"You want the bird to move up when Button A is pressed. Which block should you use?",
- options:[
-  block("game",`change sprite x by ${num(-1)}`),
-  block("game",`change sprite y by ${num(1)}`),
-  block("game",`change sprite y by ${num(-1)}`),
-  block("game",`change sprite x by ${num(1)}`)
- ],
- right:2,
- why:"Decreasing the Y coordinate moves the bird upward."
-},
-{
- level:"Apply",
- q:"The bird is at Y = 3. It moves up by one LED. What is its new Y coordinate?",
- options:[
-  "Y = 4",
-  "Y = 3",
-  "Y = 1",
-  "Y = 2"
- ],
- right:3,
- why:"Moving up decreases Y by 1, so 3 becomes 2."
-},
-{
- level:"Apply",
- q:"You want a heart to appear when the micro:bit detects a loud sound. Which event should you use?",
- options:[
-  block("input","on loud sound"),
-  block("input",`on button ${pill("A")} pressed`),
-  block("input",`on ${pill("shake")}`),
-  block("input",`on button ${pill("B")} pressed`)
- ],
- right:0,
- why:"The on loud sound event responds when the microphone detects a sufficiently loud sound."
-},
-{
- level:"Apply",
- q:"A player collects a coin. Which block should update the score?",
- options:[
-  block("game",`set score ${num(0)}`),
-  block("game",`change score by ${num(1)}`),
-  block("game","game over"),
-  block("game",`change score by ${num(-1)}`)
- ],
- right:1,
- why:"Changing the score by 1 rewards the player with one point."
-},
-{
- level:"Apply",
- q:"Which block chooses a random obstacle height from the five LED rows?",
- options:[
-  block("math",`pick random ${num(1)} to ${num(5)}`),
-  block("math",`pick random ${num(0)} to ${num(2)}`),
-  block("math",`pick random ${num(0)} to ${num(4)}`),
-  block("math",`pick random ${num(2)} to ${num(6)}`)
- ],
- right:2,
- why:"The micro:bit's LED rows are numbered 0 through 4."
-},
+# Use a for loop to visit every station
 
-/* ANALYZE: 16–20 */
-{
- level:"Analyze",
- q:"Look at the code. What happens after pressing Button A twice?",
- visual:stack(
-  line("variable",`set ${pill("score")} to ${num(0)}`),
-  line("input",`on button ${pill("A")} pressed`),
-  line("variable",`change ${pill("score")} by ${num(1)}`,true)
- ),
- options:[
-  "Score remains 0",
-  "Score becomes 1",
-  "Score becomes 3",
-  "Score becomes 2"
- ],
- right:3,
- why:"The score starts at 0, and each press adds 1."
-},
-{
- level:"Analyze",
- q:"A bird starts at Y = 2. This block runs twice. Where is the bird?",
- visual:block("game",`change sprite y by ${num(1)}`),
- options:[
-  "Y = 4",
-  "Y = 0",
-  "Y = 3",
-  "Y = 1"
- ],
- right:0,
- why:"Each movement increases Y by 1, so the bird moves from 2 to 4."
-},
-{
- level:"Analyze",
- q:"What is the problem with this game code?",
- visual:stack(
-  line("loop","forever"),
-  line("game",`sprite move by ${num(1)}`,true)
- ),
- options:[
-  "The sprite moves only when Button A is pressed",
-  "The sprite may move too fast without a pause",
-  "The sprite cannot move inside a forever loop",
-  "The sprite's score increases instead of its position"
- ],
- right:1,
- why:"Without a pause, the movement loop may update too quickly."
-},
-{
- level:"Analyze",
- q:"The bird is at (2,2) and an obstacle is also at (2,2). What should happen?",
- options:[
-  "The bird moves to (0,0)",
-  "The obstacle changes its position",
-  "A collision is detected",
-  "The score increases automatically"
- ],
- right:2,
- why:"Both sprites occupy the same LED position, so they overlap."
-},
-{
- level:"Analyze",
- q:"The sprite is at Y = 4. What happens when this condition runs?",
- visual:stack(
-  line("logic",`if ${pill("sprite y = 4")} then`),
-  line("game","game over",true)
- ),
- options:[
-  "The sprite moves up",
-  "The score increases",
-  "The sprite changes direction",
-  "The game ends"
- ],
- right:3,
- why:"The condition is true at Y = 4, so the game over block runs."
-},
-
-/* EVALUATE: 21–25 */
-{
- level:"Evaluate",
- q:"A Flappy Bird game feels too fast. Which change would slow its movement updates?",
- options:[
-  block("basic",`pause (ms) ${num(500)}`),
-  block("basic",`pause (ms) ${num(20)}`),
-  block("basic",`pause (ms) ${num(50)}`),
-  block("basic",`pause (ms) ${num(100)}`)
- ],
- right:0,
- why:"A longer pause creates more time between movement updates."
-},
-{
- level:"Evaluate",
- q:"Which block is best for detecting a collision between two sprites?",
- options:[
-  block("logic",`score > ${num(5)}`),
-  block("game",`${pill("bird")} is touching ${pill("obstacle")}`),
-  block("game",`change score by ${num(1)}`),
-  block("game",`sprite if on edge, bounce`)
- ],
- right:1,
- why:"The touching check directly tests whether the two sprites overlap."
-},
-{
- level:"Evaluate",
- q:"A game always places an obstacle at the same height. What would improve the gameplay?",
- options:[
-  "Increase the score at the start",
-  "Remove the obstacle completely",
-  "Use a random Y coordinate",
-  "Make the obstacle stay in the center"
- ],
- right:2,
- why:"Random obstacle positions make each round less predictable."
-},
-{
- level:"Evaluate",
- q:"Which scoring rule is most suitable for a Flappy Bird game?",
- options:[
-  "Add a point whenever Button A is pressed",
-  "Add a point whenever the bird moves downward",
-  "Add a point whenever an obstacle appears",
-  "Add a point when the bird successfully passes an obstacle"
- ],
- right:3,
- why:"Rewarding successful obstacle passes measures the player's progress."
-},
-{
- level:"Evaluate",
- q:"A game should end when the bird touches an obstacle. Which block belongs inside the collision condition?",
- options:[
-  block("game","game over"),
-  block("game",`change score by ${num(1)}`),
-  block("game",`set score ${num(0)}`),
-  block("game",`sprite if on edge, bounce`)
- ],
- right:0,
- why:"The game over block ends the round after a collision."
-},
-
-/* CREATE: 26–30 */
-{
- level:"Create",
- q:"You are designing a bird game. Which code makes Button A move the bird upward?",
- options:[
-  stack(
-   line("input",`on button ${pill("A")} pressed`),
-   line("game",`change sprite y by ${num(1)}`,true)
-  ),
-  stack(
-   line("input",`on button ${pill("A")} pressed`),
-   line("game",`change sprite y by ${num(-1)}`,true)
-  ),
-  stack(
-   line("input",`on button ${pill("B")} pressed`),
-   line("game",`change sprite y by ${num(-1)}`,true)
-  ),
-  stack(
-   line("input",`on button ${pill("A")} pressed`),
-   line("game",`change sprite x by ${num(-1)}`,true)
+# Print each delivery
+`,
+  tests:["2","4","6","1"],
+  expected:n=>Array.from(
+    {length:n},
+    (_,i)=>`Delivered to station ${i+1}`
   )
- ],
- right:1,
- why:"Button A must decrease the bird's Y coordinate to move it upward."
 },
 {
- level:"Create",
- q:"You want gravity to pull the bird downward automatically. Which code should you build?",
- options:[
-  stack(
-   line("loop","forever"),
-   line("game",`change sprite y by ${num(-1)}`,true),
-   line("basic",`pause (ms) ${num(500)}`,true)
-  ),
-  stack(
-   line("loop","forever"),
-   line("game",`change sprite x by ${num(1)}`,true),
-   line("basic",`pause (ms) ${num(500)}`,true)
-  ),
-  stack(
-   line("loop","forever"),
-   line("game",`change sprite y by ${num(1)}`,true),
-   line("basic",`pause (ms) ${num(500)}`,true)
-  ),
-  stack(
-   line("input",`on button ${pill("A")} pressed`),
-   line("game",`change sprite y by ${num(1)}`,true)
+  title:"Arcade Ticket Collector",
+  concept:"For Loop + Arithmetic",
+  task:"An arcade machine gives 10 tickets for every game played. Ask how many games the player completed. Use a for loop to add 10 tickets after each game. Print the total after every game in this format: 'Game 1: 10 tickets'.",
+  hint:"Update a total variable inside the loop",
+  inputLabel:"Number of games played",
+  input:"5",
+  starter:`# ARCADE TICKET COLLECTOR
+
+games = int(input("Games played: "))
+tickets = 0
+
+# Use a for loop
+
+# Add 10 tickets after every game
+
+# Print the total after each game
+`,
+  tests:["2","3","5","7"],
+  expected:n=>Array.from(
+    {length:n},
+    (_,i)=>`Game ${i+1}: ${(i+1)*10} tickets`
   )
- ],
- right:2,
- why:"Gravity repeatedly increases Y, pulling the bird down at timed intervals."
-},
-{
- level:"Create",
- q:"You are building a coin collection game. Which code awards one point when the player touches a coin?",
- options:[
-  stack(
-   line("logic",`if ${pill("player is touching coin")} then`),
-   line("game","game over",true)
-  ),
-  stack(
-   line("logic",`if ${pill("player is touching coin")} then`),
-   line("game",`set score ${num(0)}`,true)
-  ),
-  stack(
-   line("logic",`if ${pill("player is touching coin")} then`),
-   line("game",`change score by ${num(-1)}`,true)
-  ),
-  stack(
-   line("logic",`if ${pill("player is touching coin")} then`),
-   line("game",`change score by ${num(1)}`,true)
-  )
- ],
- right:3,
- why:"When the player touches the coin, changing score by 1 awards one point."
-},
-{
- level:"Create",
- q:"You want a moving dot to bounce when it reaches an edge. Which block should you include?",
- options:[
-  block("game","sprite if on edge, bounce"),
-  block("game","game over"),
-  block("game",`set score ${num(0)}`),
-  block("basic","clear screen")
- ],
- right:0,
- why:"The sprite if on edge, bounce block reverses the sprite's direction at an edge."
-},
-{
- level:"Create",
- q:"You are planning a complete Flappy Bird game. Which combination includes the essential game mechanics?",
- options:[
-  "Button jump + compass + sound level + temperature",
-  "Button jump + gravity + obstacles + collision + score",
-  "Button jump + light sensor + thermometer + score",
-  "Button jump + random icons + compass + music"
- ],
- right:1,
- why:"A Flappy Bird game needs jumping, gravity, obstacles, collision detection and scoring."
 }
 ];
 
+let current=-1;
+let completed=new Set();
+let savedCode={};
+let lastRun={};
+let running=false;
+let worker=null;
+let pending=new Map();
+let requestId=0;
+let timers=[];
+let animationToken=0;
 
-/* QUIZ ENGINE */
-let currentQuestion=0;
-let score=0;
-let wrong=0;
-let timeouts=0;
-let answered=false;
-let timer=null;
-let remaining=30;
-let quizHistory=[];
-let startTime=null;
-
-function startQuiz(){
- document.getElementById("startScreen").style.display="none";
- document.getElementById("resultScreen").style.display="none";
- document.getElementById("quizScreen").style.display="block";
- currentQuestion=0;score=0;wrong=0;timeouts=0;
- quizHistory=[];
- startTime=Date.now();
- renderQuestion();
+function schedule(fn,delay){
+  const token=animationToken;
+  timers.push(setTimeout(()=>{
+    if(token===animationToken)fn();
+  },delay));
 }
-
-function renderQuestion(){
- clearInterval(timer);
- answered=false;
- remaining=30;
-
- const q=questions[currentQuestion];
- document.getElementById("questionCount").textContent=
-  `Question ${currentQuestion+1} / ${questions.length}`;
- document.getElementById("bloomLevel").textContent=q.level;
- document.getElementById("liveScore").textContent=`Score: ${score}`;
- document.getElementById("progressFill").style.width=
-  `${(currentQuestion/questions.length)*100}%`;
- document.getElementById("questionTitle").textContent=q.q;
- document.getElementById("questionContext").textContent=
-  q.context||"";
- document.getElementById("questionVisual").innerHTML=q.visual||"";
- document.getElementById("questionVisual").style.display=
-  q.visual?"flex":"none";
-
- const area=document.getElementById("answerOptions");
- area.innerHTML="";
- q.options.forEach((option,i)=>{
-  const btn=document.createElement("button");
-  btn.className="option";
-  btn.innerHTML=option;
-  btn.onclick=()=>submitAnswer(i);
-  area.appendChild(btn);
- });
-
- document.getElementById("feedbackBox").className="feedback";
- document.getElementById("feedbackBox").innerHTML="";
- document.getElementById("answerStatus").textContent="Choose your answer.";
- document.getElementById("nextButton").disabled=true;
- document.getElementById("nextButton").textContent=
-  currentQuestion===questions.length-1?
-   "See Results →":"Next Question →";
-
- updateTimer();
- timer=setInterval(()=>{
-  remaining--;
-  updateTimer();
-  if(remaining<=0){
-   clearInterval(timer);
-   handleTimeout();
-  }
- },1000);
- window.scrollTo(0,0);
+function clearAnimation(){
+  animationToken++;
+  timers.forEach(clearTimeout);
+  timers=[];
 }
-
-function updateTimer(){
- const n=document.getElementById("timerNumber");
- const bar=document.getElementById("timerFill");
- n.textContent=remaining;
- n.classList.toggle("urgent",remaining<=10);
- bar.classList.toggle("urgent",remaining<=10);
- bar.style.width=`${remaining/30*100}%`;
+function show(id){
+  document.querySelectorAll(".slide").forEach(s=>
+    s.classList.remove("active")
+  );
+  $(id).classList.add("active");
+  updateNav();
 }
+function start(){current=0;render()}
 
-function submitAnswer(index){
- if(answered)return;
- answered=true;
- clearInterval(timer);
- const q=questions[currentQuestion];
- const correct=index===q.right;
- if(correct)score++;
- else wrong++;
-
- quizHistory.push({
-  question:q.q,
-  level:q.level,
-  correct,
-  timeout:false,
-  selected:index,
-  correctAnswer:q.right
- });
-
- showFeedback(index,correct,false);
- if(correct)celebrate();
-}
-
-function handleTimeout(){
- if(answered)return;
- answered=true;
- timeouts++;
- const q=questions[currentQuestion];
- quizHistory.push({
-  question:q.q,
-  level:q.level,
-  correct:false,
-  timeout:true,
-  selected:null,
-  correctAnswer:q.right
- });
- showFeedback(null,false,true);
-}
-
-function showFeedback(selected,correct,timedOut){
- const q=questions[currentQuestion];
- document.querySelectorAll("#answerOptions .option")
-  .forEach((btn,i)=>{
-   btn.disabled=true;
-   if(i===q.right)btn.classList.add("correct");
-   if(i===selected&&!correct)btn.classList.add("wrong");
-  });
-
- const box=document.getElementById("feedbackBox");
- box.classList.add("show");
- const title=timedOut?"⏰ Time's up!":
-  correct?"✓ Correct!":"✕ Not quite!";
- box.innerHTML=
-  `<strong>${title}</strong><div>${q.why}</div>`;
-
- document.getElementById("answerStatus").textContent=
-  timedOut?"Correct answer highlighted.":correct?
-  "Great work!":"Review the highlighted answer.";
- document.getElementById("nextButton").disabled=false;
- document.getElementById("liveScore").textContent=`Score: ${score}`;
-}
-
-function nextQuestion(){
- if(!answered)return;
- if(currentQuestion<questions.length-1){
-  currentQuestion++;
-  renderQuestion();
- }else{
-  showResults();
- }
-}
-
-function celebrate(){
- if(typeof confetti==="function"){
-  confetti({particleCount:85,spread:75,origin:{y:.65}});
- }
-}
-
-/* RESULTS */
-function showResults(){
- clearInterval(timer);
- document.getElementById("quizScreen").style.display="none";
- document.getElementById("resultScreen").style.display="block";
-
- document.getElementById("resultScore").textContent=
-  `${score} / ${questions.length}`;
- document.getElementById("correctCount").textContent=score;
- document.getElementById("wrongCount").textContent=wrong;
- document.getElementById("timeoutCount").textContent=timeouts;
-
- const percent=score/questions.length*100;
- document.getElementById("resultMessage").textContent=
-  percent>=85?"Excellent understanding of micro:bit programming!":
-  percent>=65?"Good progress! Review a few concepts and try again.":
-  "Keep practising. Every game you build improves your coding skills.";
-
- const levels=[
-  "Remember","Understand","Apply","Analyze","Evaluate","Create"
- ];
- document.getElementById("bloomResults").innerHTML=
-  levels.map(level=>{
-   const records=quizHistory.filter(h=>h.level===level);
-   const correct=records.filter(h=>h.correct).length;
-   return `<div class="result-item">
-    <strong>${correct} / ${records.length}</strong>
-    <span>${level}</span>
-   </div>`;
+function renderMap(){
+  $("challengeMap").innerHTML=challenges.map((_,i)=>{
+    const cls=completed.has(i)?"done":i===current?"current":"";
+    return `<div class="map-dot ${cls}">
+      ${completed.has(i)?"✓":i+1}
+    </div>`;
   }).join("");
-
- const missed=quizHistory.filter(h=>!h.correct);
- document.getElementById("reviewList").innerHTML=
-  missed.length?
-   missed.map((h,i)=>`
-    <div class="review-item">
-     ${i+1}. ${h.question}
-     <span style="color:var(--coral)">
-      (${h.timeout?"Time Out":"Incorrect"})
-     </span>
-    </div>
-   `).join(""):
-   `<div class="review-item">Perfect! All answers correct.</div>`;
-
- if(percent>=80)celebrate();
- window.scrollTo(0,0);
 }
 
-function restartQuiz(){
- document.getElementById("resultScreen").style.display="none";
- startQuiz();
+function buildScene(){
+  const scene=$("scene");
+
+  if(current===0){
+    scene.className="scene rocket-scene";
+    scene.innerHTML=`
+      <div class="stars"></div>
+      <div class="countdown" id="countdown">READY</div>
+      <div class="rocket" id="rocket">🚀</div>
+      <div class="launchpad"></div>
+    `;
+  }
+
+  if(current===1){
+    scene.className="scene robot-scene";
+    scene.innerHTML=`
+      <div class="robot-count" id="robotCount">
+        Deliveries: 0
+      </div>
+      <div class="robot-path"></div>
+      <div class="robot" id="robot">🤖</div>
+      <div id="stations"></div>
+    `;
+  }
+
+  if(current===2){
+    scene.className="scene arcade-scene";
+    scene.innerHTML=`
+      <div class="arcade-title">ARCADE TICKET MACHINE</div>
+      <div class="ticket-machine">
+        <div class="symbol">🎮</div>
+        <strong id="ticketTotal">0 Tickets</strong>
+      </div>
+      <div class="ticket" id="ticket">🎟️</div>
+    `;
+  }
+  $("sceneMessage").textContent="Run your code to begin.";
+  $("sceneResult").textContent="Waiting...";
 }
 
-/* DOWNLOAD REPORT */
-function downloadReport(){
- const levels=[
-  "Remember","Understand","Apply","Analyze","Evaluate","Create"
- ];
- let report="ALPHAGEN LEARNING - MICRO:BIT QUIZ RESULTS\n";
- report+="========================================\n\n";
- report+=`Score: ${score}/${questions.length}\n`;
- report+=`Correct: ${score}\nIncorrect: ${wrong}\nTime Outs: ${timeouts}\n\n`;
- report+="BLOOM'S TAXONOMY BREAKDOWN\n";
- levels.forEach(level=>{
-  const records=quizHistory.filter(h=>h.level===level);
-  report+=`${level}: ${records.filter(h=>h.correct).length}/${records.length}\n`;
- });
- report+="\nQUESTION REVIEW\n";
- quizHistory.forEach((h,i)=>{
-  report+=`${i+1}. ${h.question}\n`;
-  report+=`Result: ${h.correct?"Correct":h.timeout?"Time Out":"Incorrect"}\n\n`;
- });
- const blob=new Blob([report],{type:"text/plain"});
- const url=URL.createObjectURL(blob);
- const a=document.createElement("a");
- a.href=url;a.download="microbit_quiz_results.txt";
- a.click();
- URL.revokeObjectURL(url);
+function render(){
+  clearAnimation();
+  if(current<0){show("intro");return}
+  if(current>=3){finish();return}
+
+  const c=challenges[current];
+  $("counter").textContent=`Challenge ${current+1} of 3`;
+  $("concept").textContent=c.concept;
+  $("challengeTitle").textContent=c.title;
+  $("task").textContent=c.task;
+  $("hint").textContent=c.hint;
+  $("inputLabel").textContent=c.inputLabel;
+  $("testInput").value=c.input;
+  $("editor").value=savedCode[current]??c.starter;
+  $("output").textContent="Python output will appear here...";
+  $("feedback").textContent="";
+  $("feedback").className="feedback";
+  $("nextBtn").disabled=!completed.has(current);
+  $("nextBtn").textContent=current===2
+    ?"Finish Challenges →":"Next Challenge →";
+
+  renderMap();
+  buildScene();
+  show("challenge");
 }
+
+function resetCode(){
+  if(running||current<0||current>=3)return;
+  $("editor").value=challenges[current].starter;
+  savedCode[current]=$("editor").value;
+  delete lastRun[current];
+  $("output").textContent="Python output will appear here...";
+  $("feedback").textContent="";
+  $("feedback").className="feedback";
+  clearAnimation();
+  buildScene();
+}
+
+async function copyCode(){
+  if(current<0||current>=3)return;
+
+  const code=$("editor").value;
+  savedCode[current]=code;
+
+  try{
+    if(navigator.clipboard&&window.isSecureContext){
+      await navigator.clipboard.writeText(code);
+    }else{
+      const helper=document.createElement("textarea");
+      helper.value=code;
+      helper.style.position="fixed";
+      helper.style.opacity="0";
+      document.body.appendChild(helper);
+      helper.select();
+      const copied=document.execCommand("copy");
+      helper.remove();
+      if(!copied)throw new Error("Copy unavailable");
+    }
+
+    const btn=$("copyBtn");
+    btn.textContent="✓ Copied!";
+    setTimeout(()=>btn.textContent="📋 Copy Code",1800);
+  }catch(error){
+    $("editor").focus();
+    $("editor").select();
+    $("feedback").textContent="Press Ctrl+C to copy the selected code.";
+    $("feedback").className="feedback bad";
+  }
+}
+
+function animate(record){
+  clearAnimation();
+  buildScene();
+
+  if(!record)return;
+
+  const lines=record.output.trim().split(/\r?\n/)
+    .map(x=>x.trim()).filter(Boolean);
+
+  $("sceneResult").textContent=lines[lines.length-1]||"No output";
+
+  if(current===0){
+    const nums=lines.filter(x=>/^\d+$/.test(x));
+    nums.forEach((num,i)=>{
+      schedule(()=>{
+        $("countdown").textContent=num;
+        $("sceneMessage").textContent=`Countdown: ${num}`;
+      },i*600);
+    });
+
+    if(lines.includes("Liftoff!")){
+      schedule(()=>{
+        $("countdown").textContent="LIFTOFF!";
+        $("rocket").classList.add("launch");
+        $("sceneMessage").textContent="Rocket launched!";
+      },nums.length*600+200);
+    }
+  }
+
+  if(current===1){
+    const deliveries=lines.filter(x=>
+      /^Delivered to station \d+$/.test(x)
+    );
+
+    const count=deliveries.length;
+    const container=$("stations");
+    container.innerHTML="";
+
+    for(let i=0;i<count;i++){
+      const station=document.createElement("div");
+      station.className="station";
+      station.id=`station${i}`;
+      station.textContent="📦";
+      station.style.left=(12+(i*76/Math.max(count-1,1)))+"%";
+      container.appendChild(station);
+    }
+
+    deliveries.forEach((line,i)=>{
+      schedule(()=>{
+        $("robot").style.left=(8+(i*76/Math.max(count-1,1)))+"%";
+        $(`station${i}`).classList.add("visited");
+        $("robotCount").textContent=`Deliveries: ${i+1}`;
+        $("sceneMessage").textContent=line;
+      },i*650);
+    });
+  }
+
+  if(current===2){
+    const games=lines.filter(x=>/^Game \d+: \d+ tickets$/.test(x));
+
+    games.forEach((line,i)=>{
+      schedule(()=>{
+        const match=line.match(/Game (\d+): (\d+) tickets/);
+        if(!match)return;
+
+        $("ticketTotal").textContent=`${match[2]} Tickets`;
+        $("sceneMessage").textContent=line;
+
+        const ticket=$("ticket");
+        ticket.classList.remove("fly");
+        void ticket.offsetWidth;
+        ticket.classList.add("fly");
+      },i*650);
+    });
+  }
+}
+
+function replay(){
+  if(running||current<0||current>=3)return;
+  if(lastRun[current])animate(lastRun[current]);
+  else{
+    clearAnimation();
+    buildScene();
+  }
+}
+
+/* Execute actual Python with Pyodide */
+const workerSource=`
+let pyodide=null;
+
+async function getPython(){
+  if(!pyodide){
+    importScripts("https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js");
+    pyodide=await loadPyodide();
+  }
+  return pyodide;
+}
+
+self.onmessage=async event=>{
+  const {id,code,values}=event.data;
+  try{
+    const py=await getPython();
+    py.globals.set("_loop_payload",JSON.stringify({code,values}));
+
+    let output;
+    try{
+      output=await py.runPythonAsync(\`
+import json
+import io
+import contextlib
+import builtins
+import traceback
+
+payload=json.loads(_loop_payload)
+inputs=iter(payload["values"])
+capture=io.StringIO()
+
+def custom_input(prompt=""):
+    try:
+        return next(inputs)
+    except StopIteration:
+        raise EOFError("Not enough input values")
+
+custom_builtins=dict(vars(builtins))
+custom_builtins["input"]=custom_input
+
+scope={
+    "__name__":"__main__",
+    "__builtins__":custom_builtins
+}
+
+try:
+    with contextlib.redirect_stdout(capture):
+        exec(payload["code"],scope)
+except Exception:
+    with contextlib.redirect_stdout(capture):
+        traceback.print_exc(limit=2)
+
+capture.getvalue()
+\`);
+    }finally{
+      py.globals.delete("_loop_payload");
+    }
+
+    self.postMessage({id,success:true,output:String(output)});
+  }catch(error){
+    self.postMessage({
+      id,success:false,error:String(error.message||error)
+    });
+  }
+};
+`;
+
+function createWorker(){
+  const blob=new Blob([workerSource],{type:"text/javascript"});
+  const url=URL.createObjectURL(blob);
+  const w=new Worker(url);
+  URL.revokeObjectURL(url);
+  return w;
+}
+function ensureWorker(){
+  if(worker)return worker;
+  worker=createWorker();
+
+  worker.onmessage=event=>{
+    const {id,success,output,error}=event.data;
+    const p=pending.get(id);
+    if(!p)return;
+
+    clearTimeout(p.timeout);
+    pending.delete(id);
+
+    if(success)p.resolve(output);
+    else p.reject(new Error(error));
+  };
+
+  worker.onerror=event=>{
+    resetWorker(new Error(event.message||"Python failed."));
+  };
+
+  return worker;
+}
+function resetWorker(error){
+  if(worker){worker.terminate();worker=null}
+
+  for(const p of pending.values()){
+    clearTimeout(p.timeout);
+    p.reject(error);
+  }
+  pending.clear();
+}
+function executePython(code,value){
+  return new Promise((resolve,reject)=>{
+    let w;
+    try{w=ensureWorker()}
+    catch(error){reject(error);return}
+
+    const id=++requestId;
+    const timeout=setTimeout(()=>{
+      resetWorker(new Error("Python timed out. Check your loop."));
+    },30000);
+
+    pending.set(id,{resolve,reject,timeout});
+    w.postMessage({id,code,values:[String(value)]});
+  });
+}
+
+function outputMatches(actual,expected){
+  const lines=String(actual).trim().split(/\r?\n/)
+    .map(x=>x.trim());
+
+  return lines.length===expected.length&&
+    lines.every((x,i)=>x===expected[i]);
+}
+
+function hasForLoop(code){
+  return code.split(/\r?\n/).some(line=>
+    /^\s*for\s+.+:/.test(line)
+  );
+}
+
+async function runCode(){
+  if(running||current<0||current>=3)return;
+
+  const index=current;
+  const c=challenges[index];
+  const code=$("editor").value;
+  const input=$("testInput").value.trim();
+
+  savedCode[index]=code;
+
+  if(!input||!Number.isInteger(Number(input))||
+     Number(input)<1||Number(input)>20){
+    $("feedback").textContent="Enter a whole number from 1 to 20.";
+    $("feedback").className="feedback bad";
+    return;
+  }
+
+  if(!hasForLoop(code)){
+    $("feedback").textContent="Use a for loop in your solution.";
+    $("feedback").className="feedback bad";
+    return;
+  }
+
+  running=true;
+  $("runBtn").disabled=true;
+  $("runBtn").textContent="Running...";
+  $("feedback").textContent="Running your Python code...";
+  $("feedback").className="feedback";
+
+  clearAnimation();
+  buildScene();
+
+  try{
+    const output=await executePython(code,input);
+    if(current!==index)return;
+
+    $("output").textContent=output||"(No output)";
+    const record={output,input};
+    lastRun[index]=record;
+    animate(record);
+
+    let passed=outputMatches(output,c.expected(Number(input)));
+    const visiblePass=passed;
+
+    if(passed){
+      for(const test of c.tests){
+        const result=await executePython(code,test);
+        if(!outputMatches(result,c.expected(Number(test)))){
+          passed=false;
+          break;
+        }
+      }
+    }
+
+    if(current!==index)return;
+
+    if(passed){
+      const first=!completed.has(index);
+      completed.add(index);
+
+      $("feedback").textContent=
+        "Correct! Your for loop passed the tests.";
+      $("feedback").className="feedback good";
+      $("nextBtn").disabled=false;
+
+      if(first&&typeof confetti==="function"){
+        confetti({
+          particleCount:90,
+          spread:75,
+          origin:{y:.65},
+          colors:["#5E48C4","#FFD071","#28B5CB"]
+        });
+      }
+    }else{
+      $("feedback").textContent=visiblePass
+        ?"This input works, but another test case failed."
+        :"Check your loop and printed output.";
+      $("feedback").className="feedback bad";
+    }
+
+    renderMap();
+    updateNav();
+  }catch(error){
+    $("output").textContent=String(error.message||error);
+    $("feedback").textContent="Python could not complete the program.";
+    $("feedback").className="feedback bad";
+  }finally{
+    running=false;
+    $("runBtn").disabled=false;
+    $("runBtn").textContent="▶ Run Code";
+  }
+}
+
+function nextChallenge(){
+  if(running||current<0||!completed.has(current))return;
+  savedCode[current]=$("editor").value;
+  current++;
+  render();
+}
+function previous(){
+  if(running||current<0)return;
+  if(current<3)savedCode[current]=$("editor").value;
+  current--;
+  render();
+}
+function forward(){
+  if(current===-1){start();return}
+  if(current>=3)return;
+  nextChallenge();
+}
+function updateNav(){
+  $("prevNav").disabled=current<0;
+  $("nextNav").disabled=current>=3||
+    (current>=0&&!completed.has(current));
+
+  $("navInfo").textContent=current<0
+    ?"Loop Quest"
+    :current>=3
+      ?"All Challenges Completed"
+      :`Challenge ${current+1} / 3`;
+
+  $("progress").textContent=completed.size;
+}
+function finish(){
+  current=3;
+  show("finish");
+  if(typeof confetti==="function"){
+    confetti({particleCount:140,spread:90});
+  }
+}
+function restart(){
+  clearAnimation();
+  current=-1;
+  completed.clear();
+  savedCode={};
+  lastRun={};
+  show("intro");
+}
+
+$("editor").addEventListener("input",()=>{
+  if(current>=0&&current<3){
+    savedCode[current]=$("editor").value;
+  }
+});
+$("editor").addEventListener("keydown",e=>{
+  if(e.key==="Tab"){
+    e.preventDefault();
+    e.target.setRangeText(
+      "    ",
+      e.target.selectionStart,
+      e.target.selectionEnd,
+      "end"
+    );
+  }
+});
+
+updateNav();
 </script>
 </body>
 </html>
