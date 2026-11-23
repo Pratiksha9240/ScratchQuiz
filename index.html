@@ -4,228 +4,432 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PictoBlox Master Challenge | Alphagen Learning</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+<title>PictoBlox Fun Quiz | Alphagen Learning</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Scratch-style block renderer -->
+<script src="https://unpkg.com/scratchblocks@3.6.4/build/scratchblocks.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
 <style>
 :root{
-  --purple:#5E48C4;--dark:#4A3AAD;--mid:#7B6ED4;
-  --pale:#EAE7FE;--ghost:#F5F4FF;
-  --yellow:#FFD071;--black:#1A1A1A;
-  --coral:#ED5661;--green:#168447;
+  --purple:#5E48C4;
+  --dark:#4A3AAD;
+  --mid:#7B6ED4;
+  --pale:#EAE7FE;
+  --ghost:#F5F4FF;
+  --yellow:#FFD071;
+  --black:#1A1A1A;
+  --coral:#ED5661;
+  --green:#16a34a;
 }
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;height:100%}
 body{
-  background:#110b20;font-family:Poppins,sans-serif;
-  display:flex;align-items:center;justify-content:center;
-  overflow:hidden;color:var(--black);
+  background:#140e25;
+  font-family:Poppins,sans-serif;
+  color:var(--black);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
 }
 button{font-family:inherit;cursor:pointer}
 #app{
-  width:1280px;height:720px;background:#fff;
-  border-radius:20px;overflow:hidden;flex-shrink:0;
-  display:flex;flex-direction:column;
-  transform-origin:center center;
+  width:1280px;height:720px;
+  background:white;
+  border-radius:20px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  flex-shrink:0;
+  transform-origin:center;
   box-shadow:0 20px 60px #0005;
 }
 header{
-  height:68px;flex:0 0 68px;background:var(--purple);
-  color:white;display:flex;align-items:center;
-  justify-content:space-between;padding:0 28px;
+  height:68px;flex:0 0 68px;
+  background:var(--purple);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 28px;
 }
-.brand,.header-right{display:flex;align-items:center;gap:15px}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
 .logo{
-  background:var(--yellow);color:var(--black);
-  font-size:13px;font-weight:800;padding:9px 15px;
+  background:var(--yellow);
+  color:var(--black);
+  padding:9px 15px;
   border-radius:10px;
+  font-size:13px;
+  font-weight:800;
 }
-.lesson-title{font-size:17px;font-weight:800}
+.lesson-title{
+  font-size:18px;
+  font-weight:800;
+}
 .score{
-  background:var(--dark);border-radius:10px;
-  padding:9px 15px;font-size:14px;font-weight:800;
+  background:var(--dark);
+  padding:9px 15px;
+  border-radius:10px;
+  font-size:14px;
+  font-weight:800;
 }
 .score strong{color:var(--yellow)}
 main{
-  height:585px;flex:0 0 585px;
+  flex:1;
+  min-height:0;
   padding:18px 48px 25px;
-  overflow-y:auto;overflow-x:hidden;
+  overflow-y:auto;
+  overflow-x:hidden;
   scrollbar-width:thin;
   scrollbar-color:var(--mid) var(--ghost);
 }
 main::-webkit-scrollbar{width:8px}
 main::-webkit-scrollbar-thumb{
-  background:var(--mid);border-radius:10px;
+  background:var(--mid);
+  border-radius:10px;
 }
 footer{
   height:67px;flex:0 0 67px;
   border-top:2px solid var(--pale);
-  display:flex;align-items:center;justify-content:space-between;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
   padding:0 35px;
 }
 .nav{
-  border:0;background:var(--dark);color:var(--yellow);
-  border-radius:10px;padding:10px 19px;
-  font-size:13px;font-weight:800;
+  border:0;
+  background:var(--dark);
+  color:var(--yellow);
+  padding:10px 20px;
+  border-radius:10px;
+  font-size:13px;
+  font-weight:800;
 }
-.nav:disabled{opacity:.35;cursor:not-allowed}
-.progress{display:flex;gap:4px;align-items:center}
-.dot{width:9px;height:9px;background:#ddd7f1;border-radius:50%}
-.dot.active{background:var(--purple);transform:scale(1.3)}
+.nav:disabled{
+  opacity:.35;
+  cursor:not-allowed;
+}
+.progress{
+  display:flex;
+  gap:4px;
+  align-items:center;
+}
+.dot{
+  width:9px;height:9px;
+  background:#d9d4ed;
+  border-radius:50%;
+}
+.dot.active{
+  background:var(--purple);
+  transform:scale(1.25);
+}
 .dot.done{background:#22c55e}
 .center{
-  min-height:100%;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;text-align:center;
+  min-height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
 }
 .badge{
-  display:inline-block;background:var(--ghost);
-  border:2px solid var(--pale);color:var(--purple);
-  padding:7px 15px;border-radius:25px;
-  font-size:12px;font-weight:800;
+  background:var(--ghost);
+  border:2px solid var(--pale);
+  color:var(--purple);
+  border-radius:25px;
+  padding:8px 17px;
+  font-size:12px;
+  font-weight:800;
 }
-h1{font-size:40px;line-height:1.25;margin:18px 0;font-weight:800}
+h1{
+  font-size:42px;
+  line-height:1.2;
+  margin:18px 0;
+  font-weight:800;
+}
 h1 span{color:var(--purple)}
 .intro{
-  font-size:15px;line-height:1.7;
-  color:#50505b;max-width:760px;margin:0 0 22px;
+  font-size:15px;
+  line-height:1.7;
+  color:#555;
+  max-width:780px;
+  margin:0 0 25px;
 }
 .primary{
-  background:var(--yellow);border:0;border-radius:12px;
-  padding:12px 26px;font-size:15px;font-weight:800;
+  border:0;
+  background:var(--yellow);
+  color:var(--black);
+  padding:13px 28px;
+  border-radius:12px;
+  font-size:15px;
+  font-weight:800;
 }
-.primary:hover{background:#e9bd58}
 .section-grid{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:12px;width:720px;margin:12px auto 25px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  width:720px;
+  margin-bottom:25px;
 }
 .section-card{
-  background:var(--ghost);border:2px solid var(--pale);
-  border-radius:13px;padding:13px;text-align:left;
+  background:var(--ghost);
+  border:2px solid var(--pale);
+  padding:13px;
+  border-radius:12px;
+  text-align:left;
 }
-.section-card b{display:block;color:var(--purple);font-size:14px}
-.section-card span{font-size:12px;color:#555}
+.section-card b{
+  display:block;
+  color:var(--purple);
+  font-size:14px;
+}
+.section-card span{
+  font-size:12px;
+  color:#666;
+}
 .qtop{
-  display:flex;justify-content:space-between;
-  align-items:center;margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:10px;
 }
 .qnum{
-  background:var(--ghost);border:1px solid var(--pale);
-  border-radius:9px;padding:7px 12px;
-  color:var(--purple);font-size:12px;font-weight:800;
+  background:var(--ghost);
+  border:1px solid var(--pale);
+  color:var(--purple);
+  padding:7px 13px;
+  border-radius:9px;
+  font-size:12px;
+  font-weight:800;
 }
 .timer{
-  background:#fff2cd;border-radius:20px;
-  padding:7px 14px;font-size:13px;font-weight:800;
+  background:#fff2cb;
+  padding:7px 14px;
+  border-radius:20px;
+  font-size:13px;
+  font-weight:800;
 }
-.timer.low{background:#ffe4e6;color:#b91c1c}
+.timer.low{
+  background:#ffe4e6;
+  color:#be123c;
+}
 .qcard{
-  background:var(--ghost);border:2px solid var(--pale);
-  border-radius:15px;padding:13px 18px;
-  text-align:center;margin-bottom:12px;
+  background:var(--ghost);
+  border:2px solid var(--pale);
+  border-radius:15px;
+  padding:13px 18px;
+  text-align:center;
+  margin-bottom:12px;
 }
 .category{
-  color:var(--purple);font-size:11px;
-  font-weight:800;letter-spacing:.5px;
-  text-transform:uppercase;margin-bottom:5px;
+  color:var(--purple);
+  font-size:11px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  margin-bottom:5px;
 }
 .question{
-  font-size:18px;line-height:1.45;font-weight:800;
+  font-size:19px;
+  font-weight:800;
+  line-height:1.4;
 }
-.visual{
-  display:flex;align-items:center;justify-content:center;
-  min-height:80px;margin:0 auto 12px;
-  max-width:900px;
+.scene{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:25px;
+  min-height:120px;
+  max-width:850px;
+  margin:0 auto 14px;
+  padding:12px 18px;
+  border:2px solid var(--pale);
+  border-radius:15px;
+  background:#faf9ff;
 }
-.block-stack{
-  display:flex;flex-direction:column;align-items:flex-start;
-  gap:4px;width:100%;max-width:700px;
-  background:#f8f7ff;border:1px solid var(--pale);
-  border-radius:12px;padding:12px 15px;
+.scene .emoji{
+  font-size:65px;
+  line-height:1.2;
 }
-.scratch-block{
-  display:inline-block;
-  max-width:100%;padding:8px 13px;
-  border-radius:9px;font-family:Poppins,sans-serif;
-  font-size:13px;font-weight:700;color:white;
-  text-align:left;white-space:pre-wrap;
-  overflow-wrap:anywhere;
-  box-shadow:inset 0 -3px #0002;
+.scene .scene-text{
+  font-size:18px;
+  font-weight:800;
+  color:var(--purple);
+  white-space:pre-line;
 }
-.scratch-block.event{background:#E4AB27;color:#302000}
-.scratch-block.control{background:#F5A623;color:#302000}
-.scratch-block.motion{background:#4C97FF}
-.scratch-block.looks{background:#9966FF}
-.scratch-block.sensing{background:#5CB1D6}
-.scratch-block.operator{background:#59A85A}
-.scratch-block.variable{background:#FF8C1A}
-.scratch-block.ai{background:#C15BA8}
-.scratch-block.sound{background:#CF63CF}
-.scratch-block.qr{background:#3878BF}
-.scratch-block.custom{background:#FF6680}
-.scratch-block.indent{margin-left:25px}
+.block-area{
+  display:flex;
+  justify-content:center;
+  margin:0 auto 14px;
+  max-width:950px;
+}
+.block-panel{
+  background:#faf9ff;
+  border:2px solid var(--pale);
+  border-radius:14px;
+  padding:13px 20px;
+  max-width:100%;
+  overflow-x:auto;
+}
+.sb3{
+  display:block;
+  white-space:pre;
+  font-size:14px;
+}
+.sb3 svg{
+  max-width:100%;
+  height:auto;
+}
 .options{
-  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:10px;max-width:1050px;margin:auto;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
   align-items:start;
+  max-width:1050px;
+  margin:auto;
 }
 .option{
-  min-height:0;padding:10px 14px;
-  border:2px solid var(--pale);border-radius:11px;
-  background:white;text-align:left;
-  font-size:13px;font-weight:700;line-height:1.5;
-  overflow-wrap:anywhere;white-space:pre-wrap;
+  background:white;
+  border:2px solid var(--pale);
+  border-radius:12px;
+  padding:11px 15px;
+  min-height:0;
+  font-size:14px;
+  font-weight:700;
+  text-align:left;
+  line-height:1.5;
+  overflow-wrap:anywhere;
+  white-space:pre-wrap;
 }
 .option:hover:not(:disabled){
-  background:var(--ghost);border-color:var(--purple);
+  background:var(--ghost);
+  border-color:var(--purple);
 }
-.option.correct{background:#dcfce7;border-color:#22c55e;color:#166534}
-.option.wrong{background:#fff0f1;border-color:var(--coral);color:#993040}
+.option.correct{
+  background:#dcfce7;
+  border-color:#22c55e;
+  color:#166534;
+}
+.option.wrong{
+  background:#fff0f1;
+  border-color:var(--coral);
+  color:#993040;
+}
 .option:disabled{cursor:default}
-.option .letter{
-  color:var(--purple);margin-right:7px;font-weight:800;
+.letter{
+  color:var(--purple);
+  margin-right:9px;
+  font-weight:800;
 }
-.option .scratch-block{font-size:12px;line-height:1.5}
-.option .scratch-block + .scratch-block{
-  display:table;margin-top:4px;
+.option-block{
+  display:inline-flex;
+  vertical-align:middle;
+  max-width:calc(100% - 40px);
+}
+.option-block .sb3{
+  font-size:12px;
+}
+.option-block svg{
+  max-width:100%;
+  height:auto;
+}
+.ai-block{
+  display:inline-block;
+  background:#bc5aa7;
+  color:white;
+  border-radius:9px;
+  padding:9px 14px;
+  font-size:12px;
+  font-weight:700;
+  box-shadow:inset 0 -3px #0002;
+}
+.ai-block.reporter{
+  border-radius:30px;
 }
 .feedback{
-  max-width:1050px;margin:12px auto 0;
-  padding:12px 16px;border-radius:12px;
-  font-size:13px;line-height:1.6;
+  max-width:1050px;
+  margin:12px auto 0;
+  padding:12px 16px;
+  border-radius:12px;
+  font-size:13px;
+  line-height:1.6;
 }
 .feedback.good{
-  background:#dcfce7;border:2px solid #86efac;color:#166534;
+  background:#dcfce7;
+  border:2px solid #86efac;
+  color:#166534;
 }
 .feedback.bad{
-  background:#fff0f1;border:2px solid #fda4af;color:#993040;
+  background:#fff0f1;
+  border:2px solid #fda4af;
+  color:#993040;
 }
-.feedback strong{display:block;margin-bottom:4px}
+.feedback strong{
+  display:block;
+  margin-bottom:4px;
+}
 .bottom{
-  display:flex;align-items:center;justify-content:space-between;
-  margin-top:18px;padding-bottom:15px;gap:12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-top:18px;
+  padding-bottom:15px;
 }
-.hint{font-size:12px;font-weight:800;color:var(--purple)}
+.hint{
+  font-size:12px;
+  font-weight:800;
+  color:var(--purple);
+}
 .next-question{
-  background:var(--dark);color:white;border:0;
-  border-radius:10px;padding:10px 18px;
-  font-size:13px;font-weight:800;
+  background:var(--dark);
+  color:white;
+  border:0;
+  padding:10px 18px;
+  border-radius:10px;
+  font-size:13px;
+  font-weight:800;
 }
 .hidden{display:none!important}
 .result-score{
-  background:#fff3cc;border:2px solid var(--yellow);
-  padding:17px 48px;border-radius:17px;margin:15px 0;
+  background:#fff3cc;
+  border:2px solid var(--yellow);
+  border-radius:17px;
+  padding:17px 48px;
+  margin:15px 0;
 }
-.result-score h2{font-size:44px;color:var(--purple);margin:0}
+.result-score h2{
+  color:var(--purple);
+  font-size:44px;
+  margin:0;
+}
 .result-grid{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  gap:10px;width:850px;margin:12px 0 22px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  width:850px;
+  margin:12px 0 22px;
 }
 .result-chip{
-  background:var(--ghost);border:1px solid var(--pale);
-  border-radius:11px;padding:12px 8px;
-  font-size:12px;font-weight:700;
+  background:var(--ghost);
+  border:1px solid var(--pale);
+  border-radius:11px;
+  padding:12px 8px;
+  font-size:12px;
+  font-weight:700;
 }
-.result-chip strong{display:block;color:var(--purple);font-size:20px}
+.result-chip strong{
+  display:block;
+  color:var(--purple);
+  font-size:20px;
+}
 </style>
 </head>
 <body>
@@ -234,13 +438,9 @@ h1 span{color:var(--purple)}
 <header>
   <div class="brand">
     <div class="logo">ALPHAGEN LEARNING</div>
-    <div class="lesson-title">PictoBlox | Master Challenge</div>
+    <div class="lesson-title">PictoBlox | Fun Quiz</div>
   </div>
-  <div class="header-right">
-    <div class="score">
-      ★ Score: <strong id="score">0</strong> / 400
-    </div>
-  </div>
+  <div class="score">★ Score: <strong id="score">0</strong> / 400</div>
 </header>
 
 <main id="content"></main>
@@ -254,258 +454,488 @@ h1 span{color:var(--purple)}
 
 <script>
 /*
-Question data:
-s = section number
-q = question
-o = four options
-a = correct option index (0–3)
-e = explanation
-v = optional visual block lines
-b = optional block-style options
+40 kid-friendly questions.
+Standard blocks use scratchblocks rendering.
+AI extension blocks use labelled visual approximations.
 
-The Space Shooter questions use a hypothetical
-PictoBlox game, not an unprovided project script.
+Question types:
+- text: short choices
+- blocks: visual block choices
+- scene: illustration + choices
+- predict: block code + output choices
 */
 
 const sections=[
-  {name:"QR Code Reader",icon:"▦",range:"1–8"},
-  {name:"AI Home Automation",icon:"⌂",range:"9–18"},
-  {name:"Space Shooter",icon:"✦",range:"19–28"},
-  {name:"PictoBlox Blocks",icon:"▣",range:"29–40"}
+  {name:"QR Code Reader",icon:"▦"},
+  {name:"AI Home Automation",icon:"⌂"},
+  {name:"Space Shooter",icon:"✦"},
+  {name:"PictoBlox Blocks",icon:"▣"}
 ];
 
 const Q=[
-/* 1–8 QR CODE READER */
-{
-s:0,q:"Which PictoBlox extension is used in the QR Code Reader example?",
-o:["Text Recognition","QR Code Scanner","Face Detection","Speech Recognition"],
-a:1,e:"The example uses the QR Code Scanner extension to read QR codes."
-},
-{
-s:0,q:"A QR code stores a website address. What should the scanner give the program after successfully reading it?",
-o:["The website address stored in the code","The number of squares in the code","The colour of the printed paper","The size of the QR image"],
-a:0,e:"The scanner decodes the information stored in the QR code, such as a URL or text."
-},
-{
-s:0,q:"What is the main purpose of checking the decoded QR information with a condition?",
-o:["To enlarge the QR code","To change the camera colour","To decide what action should happen","To create a new backdrop"],
-a:2,e:"A condition allows the program to choose an action based on the scanned information."
-},
-{
-s:0,q:"A QR scanner detects the code 'LIBRARY'. Which comparison should trigger a library welcome message?",
-o:["scanned text = 'SPORTS'","scanned text = 'LIBRARY'","scanned text > 100","scanned text = 'CANTEEN'"],
-a:1,e:"The program should compare the decoded information with the expected text, LIBRARY."
-},
-{
-s:0,q:"A student wants to keep checking for a new QR code. Which control block is most useful?",
-o:["wait 1 seconds","stop all","repeat 2","forever"],
-a:3,e:"A forever loop can repeatedly run the scanning and checking logic until the project stops.",
-b:true
-},
-{
-s:0,q:"The QR code is visible, but the scanner cannot read it clearly. What should you check first?",
-o:["The sprite's name","The number of costumes","Camera visibility and lighting","The score variable"],
-a:2,e:"A clear, well-lit QR code and working camera are important for reliable scanning."
-},
-{
-s:0,q:"A student wants to show 'Access Granted' only when the scanned value is 'PASS'. Which structure is suitable?",
-o:["if scanned value = PASS → say Access Granted","forever → say Access Granted","when flag clicked → say Access Granted","repeat 10 → say Access Granted"],
-a:0,e:"The if condition ensures the message appears only when the expected code is read.",
-b:true
-},
-{
-s:0,q:"Two different QR codes contain the same text. What should a program that checks only the decoded text do?",
-o:["Reject the second QR code automatically","Return different values for each code","Ignore both codes","Treat both as the same text value"],
-a:3,e:"When the program compares only the decoded text, identical text produces the same comparison result."
-},
 
-/* 9–18 HOME AUTOMATION */
-{
-s:1,q:"In the AI Home Automation project, which sprite acts as the virtual assistant?",
-o:["Fan","Abby","Lamp","Radio"],
-a:1,e:"Abby is the assistant that listens for commands and communicates with the user."
-},
-{
-s:1,q:"Which block stores the words recognised from the user's voice?",
-o:["mouse x","answer","speech recognition result","costume number"],
-a:2,e:"The speech recognition result reporter provides the recognised words for checking commands.",
-b:true
-},
-{
-s:1,q:"What is the purpose of the 'contains' operator when checking a voice command?",
-o:["Check whether recognised text includes a phrase","Increase the volume","Move the assistant","Change the microphone"],
-a:0,e:"The contains operator checks whether one piece of text includes another."
-},
-{
-s:1,q:"Abby hears 'Please turn the lights on'. Which condition is most suitable?",
-o:["speech result contains 'fan'","speech result contains 'off'","speech result = 'radio'","speech result contains 'lights on'"],
-a:3,e:"Using contains allows the program to detect the command phrase inside a longer sentence."
-},
-{
-s:1,q:"Abby recognises 'lights on'. How can the Lamp sprite be told to respond?",
-o:["Change the fan's size","Broadcast 'Lights ON'","Move Abby to the lamp","Hide the radio"],
-a:1,e:"Broadcast sends a message that another sprite can receive and respond to."
-},
-{
-s:1,q:"Which event should start the Lamp sprite's response to a 'Lights ON' broadcast?",
-o:["when space key pressed","when this sprite clicked","when I receive Lights ON","when backdrop switches"],
-a:2,e:"The receiving event runs the Lamp sprite's code when the matching broadcast arrives.",
-b:true
-},
-{
-s:1,q:"The lamp changes its appearance from OFF to ON. Which block is useful?",
-o:["switch costume to","change x by 10","ask and wait","set volume to 100"],
-a:0,e:"Switching costumes changes the lamp's appearance to show whether it is on or off.",
-b:true
-},
-{
-s:1,q:"In the home automation project, what makes the fan appear to rotate?",
-o:["Increasing the score","Moving Abby repeatedly","Changing the backdrop only","Changing fan costumes repeatedly"],
-a:3,e:"Cycling through fan costumes creates the appearance of rotation."
-},
-{
-s:1,q:"The fan should stop when the user says 'fan off'. Which logic is suitable for controlling repeated animation?",
-o:["Repeat a fixed number of times regardless of commands","Repeat until the stopping condition is met","Change the fan's x position forever","Switch to a random backdrop"],
-a:1,e:"Repeat until can continue an animation while waiting for a stopping condition."
-},
-{
-s:1,q:"What should Abby do when the recognised words do not match any supported command?",
-o:["Turn on every appliance","Keep increasing the score","Ask the user to try again","Delete all sprites"],
-a:2,e:"A fallback response helps the user understand that the command was not recognised."
-},
+/* =========================
+   QR CODE READER — 1–8
+========================= */
 
-/* 19–28 SPACE SHOOTER */
 {
-s:2,q:"In a Space Shooter game, which block is best for moving the spaceship right when the right arrow is held?",
-o:["change x by 10","change y by 10","next costume","change size by 10"],
-a:0,e:"Increasing x moves a sprite to the right on the PictoBlox stage.",
-b:true
+s:0,type:"scene",
+q:"What can read this QR code?",
+emoji:"▦ 📷",
+scene:"SCAN ME!",
+o:["QR Code Scanner","Text to Speech","Pen","Music"],
+a:0,
+e:"The QR Code Scanner extension reads QR codes."
 },
 {
-s:2,q:"A spaceship starts at x = 0. It changes x by 15 three times. What is its final x position?",
-o:["15","30","45","60"],
-a:2,e:"Each change adds 15 to x. Three changes produce 45."
+s:0,type:"scene",
+q:"What do we need to scan a QR code?",
+emoji:"📷",
+scene:"QR Reader",
+o:["Camera","Keyboard only","Speaker","Mouse only"],
+a:0,
+e:"The camera helps the program see the QR code."
 },
 {
-s:2,q:"Which sensing block helps detect whether a projectile has reached a target sprite?",
-o:["mouse down?","touching Target?","timer","key space pressed?"],
-a:1,e:"The touching block detects contact between sprites, allowing the game to respond.",
-b:true
+s:0,type:"scene",
+q:"The QR code says HELLO. What will we get?",
+emoji:"▦",
+scene:"HELLO",
+o:["HELLO","GOODBYE","123","Nothing"],
+a:0,
+e:"A QR reader gives us the information stored inside the code."
 },
 {
-s:2,q:"A game needs many projectiles without making a new sprite manually each time. What is useful?",
-o:["Hide the backdrop","Set size to 0","Stop all scripts","Create clone of myself"],
-a:3,e:"Clones allow a sprite to create temporary copies for repeated game objects.",
-b:true
-},
-{
-s:2,q:"Which event runs code for each newly created clone?",
-o:["when I start as a clone","when green flag clicked","when key pressed","when backdrop switches"],
-a:0,e:"The when I start as a clone event runs the clone's own behaviour.",
-b:true
-},
-{
-s:2,q:"A projectile clone moves upward. Which change should happen to its y coordinate?",
-o:["Decrease y","Increase x","Increase y","Decrease x"],
-a:2,e:"Increasing y moves a sprite upward on the stage."
-},
-{
-s:2,q:"A projectile reaches the top edge. What is the best way to prevent unused clones from accumulating?",
-o:["Increase the score forever","Delete this clone","Duplicate the projectile","Switch the backdrop"],
-a:1,e:"Deleting clones when they are no longer needed prevents unnecessary copies from remaining in the game."
-},
-{
-s:2,q:"A target is touched by a projectile. Which action correctly increases a score variable?",
-o:["set score to 0","show variable score","set score to 1","change score by 1"],
-a:3,e:"Change score by 1 adds one point to the current score.",
-b:true
-},
-{
-s:2,q:"Why should a score variable normally be set to 0 when a new game begins?",
-o:["To reset points from the previous game","To stop all projectiles","To make the player invisible","To increase movement speed"],
-a:0,e:"Initialising score ensures a new game starts with a fresh score."
-},
-{
-s:2,q:"A target touches a projectile, but the score rises several times for one hit. What is a sensible fix?",
-o:["Increase projectile speed","Add another forever loop","Ensure each hit is processed once, then remove the projectile clone","Remove the score variable"],
-a:2,e:"Processing the collision once and deleting the projectile clone helps prevent repeated scoring for the same hit."
-},
-
-/* 29–40 OTHER BLOCKS */
-{
-s:3,q:"Which block starts a script when the green flag is clicked?",
-o:["when I receive message","when green flag clicked","repeat until","broadcast message"],
-a:1,e:"The green flag event starts the connected script.",
-b:true
-},
-{
-s:3,q:"What is the difference between 'repeat 10' and 'forever'?",
-o:["Both run exactly 10 times","Forever runs only once","Repeat 10 never stops","Repeat 10 has a fixed count; forever continues until stopped"],
-a:3,e:"Repeat executes a fixed number of iterations, while forever continues until its script is stopped."
-},
-{
-s:3,q:"Which block is best for checking whether the player presses the space key?",
-o:["key space pressed?","mouse x","costume number","distance to mouse-pointer"],
-a:0,e:"The key pressed sensing block reports whether the selected keyboard key is being pressed.",
-b:true
-},
-{
-s:3,q:"What is the output of this logic if score = 12?",
-v:[
-["control","if < score > 10 > then"],
-["looks","say [Level Complete!]","indent"],
-["control","else"],
-["looks","say [Keep Playing!]","indent"]
+s:0,type:"blocks",
+q:"Which block checks a condition?",
+o:[
+"if < > then",
+"move (10) steps",
+"next costume",
+"play sound [pop v]"
 ],
-o:["Both messages","Keep Playing!","Level Complete!","No message"],
-a:2,e:"Since 12 is greater than 10, the condition is true and the first branch runs."
+a:0,
+e:"The if block checks whether something is true."
 },
 {
-s:3,q:"A sprite must move until it touches the edge. Which loop is appropriate?",
-o:["repeat 2","repeat until touching edge?","wait until key pressed?","forever without a condition"],
-a:1,e:"Repeat until keeps running its contents until the edge-touching condition becomes true."
+s:0,type:"scene",
+q:"The QR code says PASS. What should our program show?",
+emoji:"▦ ✅",
+scene:"PASS",
+o:["Access Granted","Access Denied","Try Again","Game Over"],
+a:0,
+e:"When the code matches PASS, the program can show Access Granted."
 },
 {
-s:3,q:"What does the 'pick random 1 to 5' block produce?",
-o:["Only 1 and 5","Always 3","Any decimal number","An integer from 1 through 5"],
-a:3,e:"With integer bounds, pick random returns an integer within the inclusive range.",
-b:true
+s:0,type:"blocks",
+q:"Which block keeps checking again and again?",
+o:[
+"repeat (2)",
+"forever",
+"wait (1) seconds",
+"stop [all v]"
+],
+a:1,
+e:"Forever keeps running the blocks inside it."
 },
 {
-s:3,q:"Which operator checks whether BOTH conditions are true?",
-o:["and","or","not","join"],
-a:0,e:"The and operator returns true only when both conditions are true.",
-b:true
+s:0,type:"scene",
+q:"The camera cannot see the QR code clearly. What should we do?",
+emoji:"📷 💡",
+scene:"QR code is blurry",
+o:["Improve the lighting","Change the score","Hide the sprite","Play music"],
+a:0,
+e:"Good lighting helps the camera read the QR code."
 },
 {
-s:3,q:"A sprite should appear in a new position every round. Which block combination is suitable?",
-o:["hide → stop all","say Hello → wait","go to x:(pick random ...) y:(pick random ...)","set size to 100 → next costume"],
-a:2,e:"Random x and y coordinates let a sprite appear at different positions on the stage."
+s:0,type:"blocks",
+q:"Which block can show a message?",
+o:[
+"change x by (10)",
+"say [Welcome!]",
+"next costume",
+"set size to (100) %"
+],
+a:1,
+e:"The say block shows a speech bubble."
+},
+
+/* =========================
+   HOME AUTOMATION — 9–18
+========================= */
+
+{
+s:1,type:"scene",
+q:"Who listens to our voice commands?",
+emoji:"👩‍💻 🎤",
+scene:"Hello! I'm Abby!",
+o:["Abby","Fan","Lamp","Radio"],
+a:0,
+e:"Abby is the AI assistant in our home automation project."
 },
 {
-s:3,q:"A sprite's size changes from 100% to 150%. Which block should be used?",
-o:["change x by 50","set size to 150%","set volume to 150%","set ghost effect to 150"],
-a:1,e:"The set size block directly changes the sprite's displayed size.",
-b:true
+s:1,type:"scene",
+q:"You say 'Lights ON'. What should happen?",
+emoji:"🎤 💡",
+scene:"Lights ON!",
+o:["Lamp glows","Fan stops","Radio disappears","Abby hides"],
+a:0,
+e:"The Lights ON command tells the lamp to turn on."
 },
 {
-s:3,q:"A student wants several sprites to begin their actions at the same moment. What is useful?",
-o:["A separate wait block for each sprite","A different variable for each sprite","A random number in every script","A shared broadcast message received by the sprites"],
-a:3,e:"Sprites can respond to the same broadcast event, coordinating their actions."
+s:1,type:"ai",
+q:"Which AI block listens to our voice?",
+o:[
+"recognize speech for (5) sec in [English]",
+"speech recognition result",
+"set voice to [alto]",
+"speak [Hello]"
+],
+a:0,
+e:"Recognize speech listens to spoken words.",
+aiTypes:["command","reporter","command","command"]
 },
 {
-s:3,q:"Why are custom blocks useful when the same group of instructions is needed many times?",
-o:["They organise reusable instructions","They remove the need for all events","They automatically create sprites","They change every variable into a list"],
-a:0,e:"Custom blocks allow a named sequence of instructions to be reused, making projects easier to organise."
+s:1,type:"ai",
+q:"Which block gives us the words Abby heard?",
+o:[
+"set voice to [alto]",
+"speech recognition result",
+"speak [Hello]",
+"recognize speech for (5) sec in [English]"
+],
+a:1,
+e:"Speech recognition result gives the recognised words.",
+aiTypes:["command","reporter","command","command"]
 },
 {
-s:3,q:"A game is becoming difficult to debug because too many tasks are inside one long script. What is a good improvement?",
-o:["Remove every condition","Use more forever loops without checking them","Separate repeated tasks into clearly named custom blocks","Put all scripts on the backdrop"],
-a:2,e:"Separating responsibilities into smaller, named blocks makes code easier to understand, test and maintain."
+s:1,type:"blocks",
+q:"Which block sends 'Lights ON' to the lamp?",
+o:[
+"say [Lights ON]",
+"broadcast [Lights ON v]",
+"move (10) steps",
+"wait (1) seconds"
+],
+a:1,
+e:"Broadcast sends a message to other sprites."
+},
+{
+s:1,type:"blocks",
+q:"Which block should the lamp use to receive the message?",
+o:[
+"when green flag clicked",
+"when [space v] key pressed",
+"when I receive [Lights ON v]",
+"when this sprite clicked"
+],
+a:2,
+e:"When I receive starts the lamp's code after the broadcast."
+},
+{
+s:1,type:"blocks",
+q:"Which block changes the lamp from OFF to ON?",
+o:[
+"change x by (10)",
+"switch costume to [lamp-on v]",
+"set volume to (100) %",
+"turn cw (15) degrees"
+],
+a:1,
+e:"Changing the costume can make the lamp look switched on."
+},
+{
+s:1,type:"scene",
+q:"How can we make the fan look like it's spinning?",
+emoji:"🌀",
+scene:"Fan ON",
+o:["Keep changing costumes","Hide the fan","Change the backdrop once","Move Abby"],
+a:0,
+e:"Changing fan costumes quickly creates a spinning animation."
+},
+{
+s:1,type:"blocks",
+q:"Which block repeats until the fan should stop?",
+o:[
+"repeat until < >",
+"repeat (2)",
+"wait (1) seconds",
+"stop [all v]"
+],
+a:0,
+e:"Repeat until runs until its condition becomes true."
+},
+{
+s:1,type:"scene",
+q:"You say 'Radio ON'. What should happen?",
+emoji:"📻 🎵",
+scene:"Radio ON",
+o:["Music plays","Lamp disappears","Fan changes colour","Abby moves left"],
+a:0,
+e:"The radio plays music when it receives the ON command."
+},
+
+/* =========================
+   SPACE SHOOTER — 19–28
+========================= */
+
+{
+s:2,type:"scene",
+q:"Which way does the spaceship move when x increases?",
+emoji:"🚀 ➡️",
+scene:"x + 10",
+o:["Right","Left","Up","Down"],
+a:0,
+e:"Increasing x moves a sprite to the right."
+},
+{
+s:2,type:"blocks",
+q:"Which block moves the spaceship right?",
+o:[
+"change y by (10)",
+"change x by (10)",
+"change x by (-10)",
+"next costume"
+],
+a:1,
+e:"Change x by 10 moves the sprite right."
+},
+{
+s:2,type:"scene",
+q:"Which key could we use to fire?",
+emoji:"🚀 ✨",
+scene:"Press SPACE",
+o:["Space","Caps Lock","Escape","Tab"],
+a:0,
+e:"Space is a common choice for firing in a game. We can program it using the key pressed event."
+},
+{
+s:2,type:"blocks",
+q:"Which block checks whether a projectile touches an enemy?",
+o:[
+"touching [Enemy v] ?",
+"mouse x",
+"costume [number v]",
+"timer"
+],
+a:0,
+e:"Touching checks whether two sprites are touching."
+},
+{
+s:2,type:"blocks",
+q:"Which block makes a copy of a sprite?",
+o:[
+"hide",
+"create clone of [myself v]",
+"next costume",
+"set size to (100) %"
+],
+a:1,
+e:"Create clone makes a copy of the sprite."
+},
+{
+s:2,type:"blocks",
+q:"Which block starts the clone's code?",
+o:[
+"when green flag clicked",
+"when I start as a clone",
+"when [space v] key pressed",
+"when backdrop switches to [backdrop1 v]"
+],
+a:1,
+e:"When I start as a clone runs code for each new clone."
+},
+{
+s:2,type:"scene",
+q:"A projectile moves UP. What happens to y?",
+emoji:"✨ ⬆️",
+scene:"Moving up!",
+o:["y increases","y decreases","x increases","x becomes zero"],
+a:0,
+e:"Increasing y moves a sprite up the stage."
+},
+{
+s:2,type:"blocks",
+q:"Which block removes an old projectile clone?",
+o:[
+"hide",
+"delete this clone",
+"next costume",
+"wait (1) seconds"
+],
+a:1,
+e:"Delete this clone removes that copy."
+},
+{
+s:2,type:"blocks",
+q:"You hit an enemy! Which block adds 1 point?",
+o:[
+"set [score v] to (0)",
+"change [score v] by (1)",
+"show variable [score v]",
+"hide variable [score v]"
+],
+a:1,
+e:"Change score by 1 adds one point."
+},
+{
+s:2,type:"scene",
+q:"Your score is 5. You earn 2 more points. New score?",
+emoji:"⭐ ⭐",
+scene:"5 + 2",
+o:["5","6","7","10"],
+a:2,
+e:"5 + 2 = 7 points."
+},
+
+/* =========================
+   OTHER BLOCKS — 29–40
+========================= */
+
+{
+s:3,type:"blocks",
+q:"Which block starts our game?",
+o:[
+"when green flag clicked",
+"wait (1) seconds",
+"forever",
+"move (10) steps"
+],
+a:0,
+e:"The green flag starts the project."
+},
+{
+s:3,type:"blocks",
+q:"Which block runs forever?",
+o:[
+"repeat (10)",
+"forever",
+"wait (1) seconds",
+"stop [all v]"
+],
+a:1,
+e:"Forever repeats the blocks inside it continuously."
+},
+{
+s:3,type:"blocks",
+q:"Which block makes a sprite speak in a bubble?",
+o:[
+"play sound [pop v]",
+"say [Hello!]",
+"move (10) steps",
+"next costume"
+],
+a:1,
+e:"Say displays a speech bubble."
+},
+{
+s:3,type:"blocks",
+q:"Which block changes how a sprite looks?",
+o:[
+"next costume",
+"change x by (10)",
+"wait (1) seconds",
+"set [score v] to (0)"
+],
+a:0,
+e:"Next costume switches to another costume."
+},
+{
+s:3,type:"blocks",
+q:"Which block picks a surprise number?",
+o:[
+"(pick random (1) to (10))",
+"(10 + 1)",
+"(10 = 1)",
+"(join [1] [10])"
+],
+a:0,
+e:"Pick random chooses a number in the given range."
+},
+{
+s:3,type:"blocks",
+q:"Which block waits for 2 seconds?",
+o:[
+"repeat (2)",
+"wait (2) seconds",
+"move (2) steps",
+"change size by (2)"
+],
+a:1,
+e:"Wait pauses the script for the chosen time."
+},
+{
+s:3,type:"blocks",
+q:"Which block checks whether TWO things are true?",
+o:[
+"< > or < >",
+"< > and < >",
+"<not < >>",
+"< > = < >"
+],
+a:1,
+e:"And is true when both conditions are true."
+},
+{
+s:3,type:"scene",
+q:"A sprite is at x = 0. It moves 10 steps right. What is x now?",
+emoji:"🐱 ➡️",
+scene:"x = 0 → x + 10",
+o:["-10","0","10","20"],
+a:2,
+e:"Moving 10 units right changes x from 0 to 10."
+},
+{
+s:3,type:"blocks",
+q:"Which block changes the sprite's size?",
+o:[
+"set size to (150) %",
+"change x by (10)",
+"next backdrop",
+"set volume to (50) %"
+],
+a:0,
+e:"Set size changes how big the sprite looks."
+},
+{
+s:3,type:"blocks",
+q:"Which block checks if the mouse is pressed?",
+o:[
+"key [space v] pressed?",
+"mouse down?",
+"touching [edge v]?",
+"timer"
+],
+a:1,
+e:"Mouse down checks whether a mouse button is pressed."
+},
+{
+s:3,type:"scene",
+q:"A variable called score stores 8. We change it by 2. What is score?",
+emoji:"🏆",
+scene:"score = 8\n+ 2",
+o:["2","6","8","10"],
+a:3,
+e:"The score increases from 8 to 10."
+},
+{
+s:3,type:"blocks",
+q:"Which block stops the whole project?",
+o:[
+"stop [all v]",
+"wait (1) seconds",
+"hide",
+"next costume"
+],
+a:0,
+e:"Stop all stops every running script in the project."
 }
+
 ];
 
-if(Q.length!==40)throw Error("Quiz must have 40 questions.");
+if(Q.length!==40){
+  throw new Error("There must be exactly 40 questions.");
+}
 
 let slide=0;
 let score=0;
@@ -548,128 +978,171 @@ function celebrate(){
   }
 }
 
-function blockType(text){
-  const t=text.toLowerCase();
-  if(t.includes("when ")||t.startsWith("broadcast"))
-    return "event";
-  if(t.includes("repeat")||t.includes("forever")||
-     t.startsWith("if ")||t==="else"||
-     t.includes("wait")||t.includes("stop all"))
-    return "control";
-  if(t.includes("speech")||t.includes("recognize"))
-    return "ai";
-  if(t.includes("qr")||t.includes("scan"))
-    return "qr";
-  if(t.includes("costume")||t.includes("say ")||
-     t.includes("size")||t.includes("hide"))
-    return "looks";
-  if(t.includes("touching")||t.includes("key ")||
-     t.includes("mouse"))
-    return "sensing";
-  if(t.includes("random")||t.includes("contains")||
-     t.includes(" and ")||t.includes(" or "))
-    return "operator";
-  if(t.includes("score")||t.includes("variable"))
-    return "variable";
-  if(t.includes("sound")||t.includes("volume"))
-    return "sound";
-  return "motion";
+/* Standard PictoBlox/Scratch block rendering */
+
+function blockMarkup(code){
+  return `<code class="sb3">${esc(code)}</code>`;
 }
 
-function makeBlock(text,type){
-  return `<span class="scratch-block ${type||blockType(text)}">${esc(text)}</span>`;
+function renderBlocks(){
+  if(typeof scratchblocks!=="undefined"){
+    try{
+      scratchblocks.renderMatching(
+        "code.sb3",
+        {
+          style:"scratch3",
+          languages:["en"],
+          scale:1.05
+        }
+      );
+    }catch(error){
+      console.warn("Block rendering unavailable",error);
+    }
+  }
 }
 
-function renderVisual(q){
-  if(!q.v)return "";
-  return `<div class="visual"><div class="block-stack">
-    ${q.v.map(line=>
-      `<div class="${line[2]==="indent"?"scratch-block-indent":""}"
-       style="${line[2]==="indent"?"margin-left:25px":""}">
-        ${makeBlock(line[1],line[0])}
-      </div>`
-    ).join("")}
-  </div></div>`;
+function aiBlockMarkup(text,type){
+  return `<span class="ai-block ${
+    type==="reporter"?"reporter":""
+  }">${esc(text)}</span>`;
 }
 
-function optionHTML(text,isBlock){
-  if(!isBlock)return esc(text);
-  return makeBlock(text);
+function optionMarkup(q,text,i){
+  if(q.type==="blocks"){
+    return `<span class="option-block">${blockMarkup(text)}</span>`;
+  }
+
+  if(q.type==="ai"){
+    return aiBlockMarkup(text,q.aiTypes[i]);
+  }
+
+  return esc(text);
+}
+
+function renderScene(q){
+  if(q.type!=="scene")return "";
+
+  return `
+    <div class="scene">
+      <div class="emoji">${esc(q.emoji)}</div>
+      <div class="scene-text">${esc(q.scene)}</div>
+    </div>
+  `;
 }
 
 function updateProgress(){
-  const root=document.getElementById("progress");
-  root.innerHTML=Q.map((_,i)=>{
-    const cls=completed[i]?"done":slide===i+1?"active":"";
-    return `<span class="dot ${cls}"></span>`;
-  }).join("");
+  document.getElementById("progress").innerHTML=
+    Q.map((_,i)=>{
+      const cls=completed[i]
+        ?"done"
+        :slide===i+1?"active":"";
+      return `<span class="dot ${cls}"></span>`;
+    }).join("");
 }
 
 function updateNav(){
   document.getElementById("prev").disabled=slide===0;
+
   const next=document.getElementById("next");
-  next.disabled=slide===41||
+
+  next.disabled=
+    slide===41 ||
     (slide>=1&&slide<=40&&!completed[slide-1]);
-  next.innerHTML=slide===40?"View Results →":"Next →";
+
+  next.innerHTML=slide===40
+    ?"View Results →"
+    :"Next →";
 }
 
 function render(){
   clearInterval(timer);
+
   const root=document.getElementById("content");
   root.scrollTop=0;
-  if(slide===0)renderIntro(root);
-  else if(slide===41)renderResults(root);
-  else renderQuestion(root,slide-1);
+
+  if(slide===0){
+    renderIntro(root);
+  }else if(slide===41){
+    renderResults(root);
+  }else{
+    renderQuestion(root,slide-1);
+  }
+
   updateProgress();
   updateNav();
+
+  renderBlocks();
 }
 
 function renderIntro(root){
   root.innerHTML=`
-  <div class="center">
-    <span class="badge">ALPHAGEN LEARNING • PICTOBLOX</span>
-    <h1>PictoBlox<br><span>Master Challenge</span></h1>
-    <p class="intro">
-      40 questions • 40 seconds each • 400 points<br>
-      Explore AI, game logic, debugging and coding blocks.
-    </p>
-    <div class="section-grid">
-      ${sections.map((s,i)=>`
+    <div class="center">
+      <span class="badge">
+        ALPHAGEN LEARNING • PICTOBLOX
+      </span>
+
+      <h1>
+        PictoBlox<br>
+        <span>Fun Quiz!</span>
+      </h1>
+
+      <p class="intro">
+        Ready to test your coding skills?<br>
+        40 fun questions • 40 seconds each
+      </p>
+
+      <div class="section-grid">
         <div class="section-card">
-          <b>${s.icon} ${esc(s.name)}</b>
-          <span>Questions ${s.range}</span>
+          <b>▦ QR Code Reader</b>
+          <span>8 Questions</span>
         </div>
-      `).join("")}
+
+        <div class="section-card">
+          <b>⌂ AI Home Automation</b>
+          <span>10 Questions</span>
+        </div>
+
+        <div class="section-card">
+          <b>✦ Space Shooter</b>
+          <span>10 Questions</span>
+        </div>
+
+        <div class="section-card">
+          <b>▣ PictoBlox Blocks</b>
+          <span>12 Questions</span>
+        </div>
+      </div>
+
+      <button class="primary" onclick="nextSlide()">
+        Let's Play! →
+      </button>
     </div>
-    <button class="primary" onclick="nextSlide()">
-      Start Challenge →
-    </button>
-  </div>`;
+  `;
 }
 
 function renderQuestion(root,i){
   const q=Q[i];
-  timeLeft=remaining[i];
   const s=sections[q.s];
+
+  timeLeft=remaining[i];
 
   root.innerHTML=`
     <div class="qtop">
       <span class="qnum">
         Question ${i+1} of 40 • ${esc(s.name)}
       </span>
+
       <span class="timer" id="timerBox">
-        ◷ <span id="timerText">${timeLeft}</span>s
+        ⏱ <span id="timerText">${timeLeft}</span>s
       </span>
     </div>
 
     <div class="qcard">
-      <div class="category">
-        ${esc(s.icon)} ${esc(s.name)}
-      </div>
+      <div class="category">${esc(s.name)}</div>
       <div class="question">${esc(q.q)}</div>
     </div>
 
-    ${renderVisual(q)}
+    ${renderScene(q)}
 
     <div class="options">
       ${q.o.map((option,j)=>`
@@ -678,7 +1151,7 @@ function renderQuestion(root,i){
           <span class="letter">
             ${String.fromCharCode(65+j)})
           </span>
-          ${optionHTML(option,q.b)}
+          ${optionMarkup(q,option,j)}
         </button>
       `).join("")}
     </div>
@@ -687,8 +1160,9 @@ function renderQuestion(root,i){
 
     <div class="bottom">
       <span class="hint">
-        Think • Predict • Debug
+        Think and choose!
       </span>
+
       <button class="next-question hidden"
         id="qnext" onclick="nextSlide()">
         ${i===39?"View Results":"Next Question"} →
@@ -696,13 +1170,18 @@ function renderQuestion(root,i){
     </div>
   `;
 
-  if(completed[i])restoreQuestion(i);
-  else startTimer(i);
+  if(completed[i]){
+    restoreQuestion(i);
+  }else{
+    startTimer(i);
+  }
 }
 
 function startTimer(i){
   clearInterval(timer);
+
   if(completed[i])return;
+
   timeLeft=remaining[i];
   updateTimer();
 
@@ -711,9 +1190,11 @@ function startTimer(i){
       clearInterval(timer);
       return;
     }
+
     timeLeft=Math.max(0,timeLeft-1);
     remaining[i]=timeLeft;
     updateTimer();
+
     if(timeLeft===0){
       clearInterval(timer);
       finishQuestion(i,false,true);
@@ -724,46 +1205,59 @@ function startTimer(i){
 function updateTimer(){
   const el=document.getElementById("timerText");
   const box=document.getElementById("timerBox");
+
   if(el)el.textContent=timeLeft;
-  if(box)box.classList.toggle("low",timeLeft<=10);
+
+  if(box){
+    box.classList.toggle("low",timeLeft<=10);
+  }
 }
 
 function selectAnswer(i,j){
   if(completed[i]||slide!==i+1)return;
+
   answers[i]=j;
   finishQuestion(i,j===Q[i].a,false);
 }
 
 function markOptions(i){
   const q=Q[i];
+
   document.querySelectorAll(".option").forEach((btn,j)=>{
     btn.disabled=true;
-    if(j===q.a)btn.classList.add("correct");
-    else if(j===answers[i])btn.classList.add("wrong");
+
+    if(j===q.a){
+      btn.classList.add("correct");
+    }else if(j===answers[i]){
+      btn.classList.add("wrong");
+    }
   });
 }
 
 function showFeedback(i,correct,timedOut=false){
   const root=document.getElementById("feedback");
   if(!root)return;
-  const q=Q[i];
 
   root.innerHTML=`
     <div class="feedback ${correct?"good":"bad"}">
       <strong>
-        ${correct
-          ?"✓ Correct! +10 Points"
-          :timedOut
-            ?"Time is up!"
-            :"Explanation"}
+        ${
+          correct
+            ?"✓ Great Job! +10 Points"
+            :timedOut
+              ?"Time is up!"
+              :"Let's Learn!"
+        }
       </strong>
-      <div>${esc(q.e)}</div>
+
+      <div>${esc(Q[i].e)}</div>
     </div>
   `;
 }
 
 function finishQuestion(i,correct,timedOut){
   if(completed[i])return;
+
   completed[i]=true;
   correctResults[i]=correct;
   clearInterval(timer);
@@ -776,7 +1270,10 @@ function finishQuestion(i,correct,timedOut){
 
   markOptions(i);
   showFeedback(i,correct,timedOut);
-  document.getElementById("qnext").classList.remove("hidden");
+
+  document.getElementById("qnext")
+    .classList.remove("hidden");
+
   updateProgress();
   updateNav();
 }
@@ -784,77 +1281,110 @@ function finishQuestion(i,correct,timedOut){
 function restoreQuestion(i){
   markOptions(i);
   showFeedback(i,correctResults[i],remaining[i]===0);
-  document.getElementById("qnext").classList.remove("hidden");
+
+  document.getElementById("qnext")
+    .classList.remove("hidden");
 }
 
 function renderResults(root){
   const groups=sections.map((s,index)=>{
     const ids=Q.map((q,i)=>q.s===index?i:-1)
       .filter(i=>i!==-1);
-    const correct=ids.filter(i=>correctResults[i]).length;
-    return {name:s.name,correct,total:ids.length};
+
+    return {
+      name:s.name,
+      correct:ids.filter(i=>correctResults[i]).length,
+      total:ids.length
+    };
   });
 
   const correctCount=correctResults.filter(Boolean).length;
+
   const message=score>=350
-    ?"Excellent work! You've demonstrated strong PictoBlox knowledge."
+    ?"Amazing! You're a PictoBlox superstar!"
     :score>=270
-      ?"Great progress! Review the explanations to strengthen your skills."
+      ?"Great job! You know lots of coding blocks!"
       :score>=180
-        ?"Good effort! Keep practising your project logic and debugging."
-        :"Keep building and experimenting. Every project helps you improve.";
+        ?"Good work! Keep practising!"
+        :"Keep building fun projects. You'll get better every time!";
 
   root.innerHTML=`
-  <div class="center">
-    <span class="badge">CHALLENGE COMPLETED</span>
-    <h1>Mission<br><span>Complete!</span></h1>
+    <div class="center">
+      <span class="badge">QUIZ COMPLETED!</span>
 
-    <div class="result-score">
-      <div style="font-size:13px;font-weight:800">FINAL SCORE</div>
-      <h2>${score} / 400</h2>
-      <div style="font-size:12px">${correctCount} / 40 correct</div>
-    </div>
+      <h1>
+        Well Done,<br>
+        <span>Coder!</span>
+      </h1>
 
-    <div class="result-grid">
-      ${groups.map(g=>`
-        <div class="result-chip">
-          <strong>${g.correct}/${g.total}</strong>
-          ${esc(g.name)}
+      <div class="result-score">
+        <div style="font-size:13px;font-weight:800">
+          YOUR SCORE
         </div>
-      `).join("")}
-    </div>
 
-    <p class="intro">${esc(message)}</p>
-    <button class="primary" onclick="restart()">Retake Quiz ↻</button>
-  </div>`;
+        <h2>${score} / 400</h2>
+
+        <div style="font-size:12px">
+          ${correctCount} of 40 correct
+        </div>
+      </div>
+
+      <div class="result-grid">
+        ${groups.map(g=>`
+          <div class="result-chip">
+            <strong>${g.correct}/${g.total}</strong>
+            ${esc(g.name)}
+          </div>
+        `).join("")}
+      </div>
+
+      <p class="intro">${esc(message)}</p>
+
+      <button class="primary" onclick="restart()">
+        Play Again ↻
+      </button>
+    </div>
+  `;
 
   if(score>=270)celebrate();
 }
 
 function nextSlide(){
   if(slide>=1&&slide<=40&&!completed[slide-1])return;
-  if(slide<41){slide++;render()}
+
+  if(slide<41){
+    slide++;
+    render();
+  }
 }
 
 function previousSlide(){
-  if(slide>0){slide--;render()}
+  if(slide>0){
+    slide--;
+    render();
+  }
 }
 
 function restart(){
   slide=0;
   score=0;
+
   completed=Array(40).fill(false);
   correctResults=Array(40).fill(false);
   answers=Array(40).fill(null);
   remaining=Array(40).fill(40);
+
   clearInterval(timer);
+
   document.getElementById("score").textContent="0";
   render();
 }
 
 document.addEventListener("keydown",e=>{
-  if(["INPUT","TEXTAREA","SELECT"].includes(e.target.tagName))
+  if(["INPUT","TEXTAREA","SELECT"].includes(e.target.tagName)){
     return;
+  }
+
   if(e.key==="ArrowRight")nextSlide();
   if(e.key==="ArrowLeft")previousSlide();
 });
